@@ -7,7 +7,7 @@ class Player(models.Model):
     creator = models.ForeignKey(
         to=Profile,
         on_delete=models.CASCADE,
-        blank=True,
+        blank=False,
         null=True
     )
     player_id = models.IntegerField(
@@ -35,28 +35,36 @@ class Player(models.Model):
         blank=True,
         null=True,
     )
-
+    tournaments_played = models.IntegerField(
+        default=0,
+        editable=False,
+        blank=True,
+        null=True,
+    )
     tournaments_won = models.IntegerField(
         default=0,
         editable=False,
         blank=True,
         null=True,
     )
-
+    matches_played = models.IntegerField(
+        default=0,
+        editable=False,
+        blank=True,
+        null=True,
+    )
     matches_won = models.IntegerField(
         default=0,
         editable=False,
         blank=True,
         null=True,
     )
-
     avg_place = models.FloatField(
         default=0,
         editable=False,
         blank=True,
         null=True,
     )
-
     date_created = models.DateTimeField(
         auto_now_add=True
     )
