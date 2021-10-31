@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+
+from apps.tournaments.urls import router_tournaments
 from .views import Registration
 
 from apps.players.urls import router_players
@@ -24,5 +26,6 @@ urlpatterns = [
     path('register/', Registration.as_view(), name='registration'),
     path('auth/', include('rest_framework.urls')),
     path('profile/', include('apps.user_profiles.urls')),
-    path('players/', include(router_players.urls))
+    path('players/', include(router_players.urls)),
+    path('tournaments/', include(router_tournaments.urls))
 ]

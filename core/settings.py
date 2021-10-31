@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'django_filters',
 
     'apps.user_profiles.apps.UserProfilesConfig',
-    'apps.players.apps.PlayersConfig'
+    'apps.players.apps.PlayersConfig',
+    'apps.tournaments.apps.TournamentsConfig'
 ]
 
 MIDDLEWARE = [
