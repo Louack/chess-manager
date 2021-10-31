@@ -1,3 +1,14 @@
-from django.shortcuts import render
+from rest_framework import generics
+from .permissions import ProfileAccess
 
-# Create your views here.
+from .models import Profile
+from ..user_profiles.serializers import ProfileSerializer
+
+
+class ProfileView(generics.RetrieveAPIView):
+    serializer_class = ProfileSerializer
+    permission_classes = [ProfileAccess]
+
+    def get_queryset(self):
+        queryset = Profile.objects.filter(user=self.request.user)
+        return queryset

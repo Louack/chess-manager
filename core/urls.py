@@ -20,5 +20,7 @@ from .views import Registration
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/', Registration.as_view(), name='registration'),
-    path('auth/', include('rest_framework.urls'))
+    path('auth/', include('rest_framework.urls')),
+    path('profile/', include('apps.user_profiles.urls')),
+    path('players/', include('apps.players.urls'))
 ]
