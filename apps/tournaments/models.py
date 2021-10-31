@@ -30,6 +30,10 @@ class Tournament(models.Model):
         default=4,
         editable=False
     )
+    finished_rounds = models.IntegerField(
+        default=0,
+        editable=False
+    )
     status = models.CharField(
         editable=False,
         max_length=1,

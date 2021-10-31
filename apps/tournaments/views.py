@@ -17,3 +17,4 @@ class TournamentViewset(viewsets.ModelViewSet):
     def get_serializer_context(self):
         context = super().get_serializer_context()
         context['profile'] = self.request.user.profile
+        return context
