@@ -41,5 +41,5 @@ class Tournament(models.Model):
             blank=False,
             null=False
         ),
-        size=8,
+        size=8
     )
