@@ -5,7 +5,7 @@ from .models import Profile
 from ..user_profiles.serializers import ProfileSerializer
 
 
-class ProfileView(generics.RetrieveAPIView):
+class ProfileView(generics.ListAPIView):
     serializer_class = ProfileSerializer
     permission_classes = [ProfileAccess]
 

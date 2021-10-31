@@ -1,18 +1,9 @@
-from django.core.management import call_command
-from django.test import TestCase
+from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
 
 
-class TestRegistration(TestCase):
-    @classmethod
-    def setUpClass(cls):
-        call_command('loaddata', 'fixtures/test_data.json', verbosity=0)
-
-    @classmethod
-    def tearDownClass(cls):
-        pass
-
+class TestRegistration(APITestCase):
     def test_registration_success(self):
         response = self.client.post(reverse('registration'),
                                     data={'username': 'registration_user',

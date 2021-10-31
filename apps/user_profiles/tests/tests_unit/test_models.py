@@ -1,5 +1,4 @@
 from django.test import TestCase
-
 from django.core.management import call_command
 from apps.user_profiles.models import Profile
 from django.contrib.auth.models import User
@@ -9,7 +8,8 @@ from apps.players.models import Player
 class TestPlayerModel(TestCase):
     @classmethod
     def setUpClass(cls):
-        call_command('loaddata', 'fixtures/test_data.json', verbosity=0)
+        call_command('loaddata', 'fixtures/test_data_users.json', verbosity=0)
+        call_command('loaddata', 'fixtures/test_data_players.json', verbosity=0)
         cls.user = User.objects.create(
             username='test_profile_user',
             password='test_user_password'

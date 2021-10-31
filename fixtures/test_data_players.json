@@ -1,0 +1,20 @@
+[
+  {
+    "model": "players.player",
+    "pk": 1,
+    "fields": {
+      "creator": 1,
+      "player_id": 1,
+      "username": "test_player_1",
+      "last_name": "test last name",
+      "first_name": "test first name",
+      "rank": 1,
+      "tournaments_played": 0,
+      "tournaments_won": 0,
+      "matches_played": 0,
+      "matches_won": 0,
+      "avg_place": 0.0,
+      "date_created": "2021-10-29T19:19:51.981Z"
+    }
+  }
+]
