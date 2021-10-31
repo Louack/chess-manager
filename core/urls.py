@@ -17,10 +17,12 @@ from django.contrib import admin
 from django.urls import path, include
 from .views import Registration
 
+from apps.players.urls import router_players
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/', Registration.as_view(), name='registration'),
     path('auth/', include('rest_framework.urls')),
     path('profile/', include('apps.user_profiles.urls')),
-    path('players/', include('apps.players.urls'))
+    path('players/', include(router_players.urls))
 ]
