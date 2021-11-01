@@ -8,6 +8,7 @@ from apps.players.models import Player
 class TestPlayerModel(TestCase):
     @classmethod
     def setUpClass(cls):
+        super().setUpClass()
         cls.user = User.objects.create(
             username='test_profile_user',
             password='test_user_password'
@@ -24,7 +25,7 @@ class TestPlayerModel(TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        pass
+        super().tearDownClass()
 
     def test_profile_creation(self):
         self.assertEqual(type(self.profile), Profile)

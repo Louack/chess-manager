@@ -87,7 +87,7 @@ class Tournament(models.Model):
         previous_player_ids = []
         for player_id in self.players_list:
             try:
-                Player.objects.get(player_id=player_id)
+                Player.objects.get(creator=self.creator, number=player_id)
                 if player_id in previous_player_ids:
                     raise APIException(f'The same ID is present sevreal times')
                 previous_player_ids.append(player_id)
