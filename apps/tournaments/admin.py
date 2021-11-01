@@ -17,6 +17,7 @@ class TournamentAdmin(admin.ModelAdmin):
 @admin.register(Participant)
 class ParticipantAdmin(admin.ModelAdmin):
     list_display = (
+        'participant_id',
         'tournament',
         'player'
     )

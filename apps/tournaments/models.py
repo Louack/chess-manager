@@ -60,6 +60,7 @@ class Tournament(models.Model):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.__original_started = self.started
+        self.__original_completed = self.completed
 
     def check_tournament_id(self):
         if not self.tournament_id:
@@ -94,21 +95,33 @@ class Tournament(models.Model):
                 players_do_not_exist.append(player_id)
         return players_do_not_exist
 
+    def create_round_or_end_tournament(self):
+        if self.finished_rounds <= self.total_rounds:
+            pass
+        else:
+            self.completed = True
+            super().save()
+
     def update_participants(self, save=False, delete=False):
+        participant_id = 1
         for player_id in self.players_list:
             player = Player.objects.get(player_id=player_id)
             if save:
                 Participant.objects.create(
+                    participant_id=participant_id,
                     tournament=self,
                     player=player
                 )
             if delete:
                 Participant.objects.get(player=player, tournament=self).delete()
+            participant_id += 1
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
         self.check_tournament_id()
-        if not self.started or self.started != self.__original_started:
+        if self.completed != self.__original_completed:
+            super().save()
+        elif not self.started or self.started != self.__original_started:
             self.check_ready_to_start()
         else:
             raise APIException('An on-going or completed tournament cannot be modified')
@@ -120,6 +133,11 @@ class Tournament(models.Model):
 
 
 class Participant(models.Model):
+    participant_id = models.IntegerField(
+        editable=False,
+        blank=True,
+        null=True
+    )
     tournament = models.ForeignKey(
         to=Tournament,
         on_delete=models.CASCADE,
