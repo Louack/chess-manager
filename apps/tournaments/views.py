@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 
 from apps.tournaments.models import Tournament, Participant
-from apps.tournaments.permissions import TournamentAccess
+from apps.tournaments.permissions import TournamentAccess, ParticipantAccess
 from apps.tournaments.serializers import TournamentSerializer, ParticipantSerializer
 
 
@@ -21,6 +21,8 @@ class TournamentViewset(viewsets.ModelViewSet):
 
 
 class ParticipantViewset(viewsets.ModelViewSet):
+    http_method_names = ['get', 'head', 'options', 'trace']
+    permission_classes = [ParticipantAccess]
     serializer_class = ParticipantSerializer
     lookup_field = 'number'
 
