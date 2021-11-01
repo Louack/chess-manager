@@ -13,7 +13,7 @@ class TournamentAccess(BasePermission):
 
 class ParticipantAccess(BasePermission):
     def has_permission(self, request, view):
-        if request.user.is_authenticated:
+        if view.tournament.creator == request.user.profile:
             return True
 
     def has_object_permission(self, request, view, obj):
