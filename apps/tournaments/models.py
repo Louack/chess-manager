@@ -60,7 +60,6 @@ class Tournament(models.Model):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.__original_started = self.started
-        self.__original_players_list = self.players_list
 
     def check_tournament_id(self):
         if not self.tournament_id:
@@ -77,28 +76,34 @@ class Tournament(models.Model):
                 raise APIException(f'The players list is incomplete')
             elif self.ready_to_start and len(self.players_list) == 8:
                 self.started = True
-                self.update_players_existing_tournaments(save=True)
                 super().save()
+                self.update_participants(save=True)
             else:
                 super().save()
 
     def check_players_list(self):
         players_do_not_exist = []
+        previous_player_ids = []
         for player_id in self.players_list:
             try:
                 Player.objects.get(player_id=player_id)
+                if player_id in previous_player_ids:
+                    raise APIException(f'The same ID is present sevreal times')
+                previous_player_ids.append(player_id)
             except ObjectDoesNotExist:
                 players_do_not_exist.append(player_id)
         return players_do_not_exist
 
-    def update_players_existing_tournaments(self, save=False, delete=False):
+    def update_participants(self, save=False, delete=False):
         for player_id in self.players_list:
             player = Player.objects.get(player_id=player_id)
             if save:
-                player.existing_tournaments += 1
+                Participant.objects.create(
+                    tournament=self,
+                    player=player
+                )
             if delete:
-                player.existing_tournaments -= 1
-            player.save()
+                Participant.objects.get(player=player, tournament=self).delete()
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
@@ -110,6 +115,23 @@ class Tournament(models.Model):
 
     def delete(self, using=None, keep_parents=False):
         if self.started:
-            self.update_players_existing_tournaments(delete=True)
+            self.update_participants(delete=True)
         return super().delete()
+
+
+class Participant(models.Model):
+    tournament = models.ForeignKey(
+        to=Tournament,
+        on_delete=models.CASCADE,
+        editable=False,
+        blank=False,
+        null=False
+    )
+    player = models.ForeignKey(
+        to=Player,
+        on_delete=models.PROTECT,
+        editable=False,
+        blank=False,
+        null=False
+    )
 

@@ -65,12 +65,6 @@ class Player(models.Model):
         blank=True,
         null=True,
     )
-    existing_tournaments = models.IntegerField(
-        default=0,
-        editable=False,
-        blank=True,
-        null=True,
-    )
     date_created = models.DateTimeField(
         auto_now_add=True
     )
@@ -87,9 +81,6 @@ class Player(models.Model):
             self.creator.save()
             self.player_id = self.creator.players_created
             self.rank = self.creator.players_created
-
-    def check_init_rank(self):
-        self.player_id = self.creator.players_created
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
