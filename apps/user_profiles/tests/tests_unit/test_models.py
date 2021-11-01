@@ -8,13 +8,13 @@ from apps.players.models import Player
 class TestPlayerModel(TestCase):
     @classmethod
     def setUpClass(cls):
-        call_command('loaddata', 'fixtures/test_data_users.json', verbosity=0)
-        call_command('loaddata', 'fixtures/test_data_players.json', verbosity=0)
         cls.user = User.objects.create(
             username='test_profile_user',
             password='test_user_password'
         )
+
         cls.profile = Profile.objects.get(user=cls.user)
+
         cls.player = Player.objects.create(
             creator=cls.profile,
             username='test_player',

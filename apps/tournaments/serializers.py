@@ -22,7 +22,6 @@ class TournamentSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         if instance.started:
-            print('hey')
             raise APIException('An on-going or completed tournament cannot be modified')
         else:
             return super().update(instance, validated_data)

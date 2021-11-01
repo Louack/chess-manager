@@ -80,3 +80,19 @@ class Player(models.Model):
 
     def __str__(self):
         return f'Joueur {self.username}'
+
+    def check_player_id_and_rank(self):
+        if not self.player_id and not self.rank:
+            self.creator.players_created += 1
+            self.creator.save()
+            self.player_id = self.creator.players_created
+            self.rank = self.creator.players_created
+
+    def check_init_rank(self):
+        self.player_id = self.creator.players_created
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        self.check_player_id_and_rank()
+        super().save()
+
