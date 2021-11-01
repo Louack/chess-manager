@@ -65,6 +65,12 @@ class Player(models.Model):
         blank=True,
         null=True,
     )
+    existing_tournaments = models.IntegerField(
+        default=0,
+        editable=False,
+        blank=True,
+        null=True,
+    )
     date_created = models.DateTimeField(
         auto_now_add=True
     )

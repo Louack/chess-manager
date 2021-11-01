@@ -8,5 +8,7 @@ class Tournament(admin.ModelAdmin):
     list_display = (
         'tournament_id',
         'creator',
-        'status'
+        'ready_to_start',
+        'started',
+        'completed'
     )
