@@ -8,7 +8,7 @@ from apps.players.serializers import PlayerSerializer
 class PlayerViewset(viewsets.ModelViewSet):
     permission_classes = [PlayersAccess]
     serializer_class = PlayerSerializer
-    lookup_field = 'player_id'
+    lookup_field = 'number'
 
     def get_queryset(self):
         queryset = Player.objects.filter(creator=self.request.user.profile)

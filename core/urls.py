@@ -17,7 +17,6 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from apps.tournaments.urls import router_tournaments
 from .views import Registration
 
 from apps.players.urls import router_players
@@ -29,5 +28,5 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/profile/', include('apps.user_profiles.urls')),
     path('api/players/', include(router_players.urls)),
-    path('api/tournaments/', include(router_tournaments.urls))
+    path('api/', include('apps.tournaments.urls'))
 ]

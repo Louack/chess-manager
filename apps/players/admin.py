@@ -5,7 +5,7 @@ from .models import Player
 @admin.register(Player)
 class PlayerAdmin(admin.ModelAdmin):
     list_display = (
-        'player_id',
+        'number',
         'username',
         'creator',
         'first_name',

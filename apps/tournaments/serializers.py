@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.exceptions import APIException
 
-from apps.tournaments.models import Tournament
+from apps.tournaments.models import Tournament, Participant
 
 
 class TournamentSerializer(serializers.ModelSerializer):
@@ -25,3 +25,9 @@ class TournamentSerializer(serializers.ModelSerializer):
             raise APIException('An on-going or completed tournament cannot be modified')
         else:
             return super().update(instance, validated_data)
+
+
+class ParticipantSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Participant
+        fields = '__all__'

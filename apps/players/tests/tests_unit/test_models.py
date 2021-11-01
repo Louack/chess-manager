@@ -30,7 +30,7 @@ class TestPlayerModel(TestCase):
         self.assertEqual(type(self.new_player), Player)
 
     def test_player_id(self):
-        self.assertEqual(self.new_player.player_id, 1)
+        self.assertEqual(self.new_player.number, 1)
 
     def test_player_rank(self):
         self.assertEqual(self.new_player.rank, 1)

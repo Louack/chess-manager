@@ -14,7 +14,7 @@ class Tournament(models.Model):
         blank=False,
         null=True
     )
-    tournament_id = models.IntegerField(
+    number = models.IntegerField(
         editable=False,
         blank=True,
         null=True
@@ -62,11 +62,11 @@ class Tournament(models.Model):
         self.__original_started = self.started
         self.__original_completed = self.completed
 
-    def check_tournament_id(self):
-        if not self.tournament_id:
+    def check_tournament_number(self):
+        if not self.number:
             self.creator.tournaments_created += 1
             self.creator.save()
-            self.tournament_id = self.creator.tournaments_created
+            self.number = self.creator.tournaments_created
 
     def check_ready_to_start(self):
         invalid_players = self.check_players_list()
@@ -103,22 +103,22 @@ class Tournament(models.Model):
             super().save()
 
     def update_participants(self, save=False, delete=False):
-        participant_id = 1
+        number = 1
         for player_id in self.players_list:
             player = Player.objects.get(player_id=player_id)
             if save:
                 Participant.objects.create(
-                    participant_id=participant_id,
+                    number=number,
                     tournament=self,
                     player=player
                 )
             if delete:
                 Participant.objects.get(player=player, tournament=self).delete()
-            participant_id += 1
+            number += 1
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
-        self.check_tournament_id()
+        self.check_tournament_number()
         if self.completed != self.__original_completed:
             super().save()
         elif not self.started or self.started != self.__original_started:
@@ -133,7 +133,7 @@ class Tournament(models.Model):
 
 
 class Participant(models.Model):
-    participant_id = models.IntegerField(
+    number = models.IntegerField(
         editable=False,
         blank=True,
         null=True

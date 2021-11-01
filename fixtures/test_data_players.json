@@ -4,7 +4,7 @@
     "pk": 1,
     "fields": {
       "creator": 1,
-      "player_id": 1,
+      "number": 1,
       "username": "test_player_1",
       "last_name": "test last name",
       "first_name": "test first name",

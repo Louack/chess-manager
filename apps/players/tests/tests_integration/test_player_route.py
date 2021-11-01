@@ -25,6 +25,7 @@ class TestPlayerRoute(APITestCase):
             'first_name': 'modified_fname',
             'last_name': 'modified_lname'
         }
+        cls.kwargs = {'number': 1}
 
     @classmethod
     def tearDownClass(cls):
@@ -38,7 +39,7 @@ class TestPlayerRoute(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_player_retrieve(self):
-        response = self.client.get(reverse('players-detail', kwargs={'player_id': 1}))
+        response = self.client.get(reverse('players-detail', kwargs=self.kwargs))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_player_post(self):
@@ -47,11 +48,11 @@ class TestPlayerRoute(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_player_put(self):
-        response = self.client.put(reverse('players-detail', kwargs={'player_id': 1}),
+        response = self.client.put(reverse('players-detail', kwargs=self.kwargs),
                                    data=self.player_put_form)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_player_delete(self):
-        response = self.client.delete(reverse('players-detail', kwargs={'player_id': 1}))
+        response = self.client.delete(reverse('players-detail', kwargs=self.kwargs))
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 

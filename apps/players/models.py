@@ -10,7 +10,7 @@ class Player(models.Model):
         blank=False,
         null=True
     )
-    player_id = models.IntegerField(
+    number = models.IntegerField(
         editable=False,
         blank=True,
         null=True
@@ -75,15 +75,15 @@ class Player(models.Model):
     def __str__(self):
         return f'Joueur {self.username}'
 
-    def check_player_id_and_rank(self):
-        if not self.player_id and not self.rank:
+    def check_player_number_and_rank(self):
+        if not self.number and not self.rank:
             self.creator.players_created += 1
             self.creator.save()
-            self.player_id = self.creator.players_created
+            self.number = self.creator.players_created
             self.rank = self.creator.players_created
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
-        self.check_player_id_and_rank()
+        self.check_player_number_and_rank()
         super().save()
 

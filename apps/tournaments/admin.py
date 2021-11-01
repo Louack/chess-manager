@@ -6,7 +6,7 @@ from apps.tournaments.models import Tournament, Participant
 @admin.register(Tournament)
 class TournamentAdmin(admin.ModelAdmin):
     list_display = (
-        'tournament_id',
+        'number',
         'creator',
         'ready_to_start',
         'started',
@@ -17,7 +17,7 @@ class TournamentAdmin(admin.ModelAdmin):
 @admin.register(Participant)
 class ParticipantAdmin(admin.ModelAdmin):
     list_display = (
-        'participant_id',
+        'number',
         'tournament',
         'player'
     )
