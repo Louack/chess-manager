@@ -39,18 +39,12 @@ class Tournament(models.Model):
         ),
         size=8,
     )
-    ready_to_start = models.BooleanField(
+    locked = models.BooleanField(
         default=False,
         blank=True,
         null=True
     )
-    started = models.BooleanField(
-        editable=False,
-        default=False,
-        blank=True,
-        null=True
-    )
-    completed = models.BooleanField(
+    created = models.BooleanField(
         editable=False,
         default=False,
         blank=True,
@@ -59,8 +53,8 @@ class Tournament(models.Model):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.__original_started = self.started
-        self.__original_completed = self.completed
+        self.__original_locked = self.locked
+        self.__original_finished_rounds = self.finished_rounds
 
     def check_tournament_number(self):
         if not self.number:
@@ -68,44 +62,37 @@ class Tournament(models.Model):
             self.creator.save()
             self.number = self.creator.tournaments_created
 
-    def check_ready_to_start(self):
-        invalid_players = self.check_players_list()
-        if invalid_players:
-            raise APIException(f'The following player IDs do not exist: {invalid_players}')
-        else:
-            if self.ready_to_start and len(self.players_list) != 8:
-                raise APIException(f'The players list is incomplete')
-            elif self.ready_to_start and len(self.players_list) == 8:
-                self.started = True
-                super().save()
-                self.update_participants(save=True)
-            else:
-                super().save()
-
     def check_players_list(self):
         players_do_not_exist = []
         previous_player_ids = []
         for player_id in self.players_list:
+            if player_id in previous_player_ids:
+                raise APIException(f'The same ID is present several times')
+            previous_player_ids.append(player_id)
             try:
                 Player.objects.get(creator=self.creator, number=player_id)
-                if player_id in previous_player_ids:
-                    raise APIException(f'The same ID is present sevreal times')
-                previous_player_ids.append(player_id)
             except ObjectDoesNotExist:
                 players_do_not_exist.append(player_id)
-        return players_do_not_exist
+        if players_do_not_exist:
+            raise APIException(f'The following player IDs do not exist: {players_do_not_exist}')
 
     def create_round_or_end_tournament(self):
         if self.finished_rounds <= self.total_rounds:
             pass
         else:
-            self.completed = True
+            pass
+
+    def lock_tournament(self):
+        if len(self.players_list) == 8:
             super().save()
+            self.update_participants(save=True)
+            self.create_round_or_end_tournament()
+        else:
+            raise APIException(f'The players list is incomplete')
 
     def update_participants(self, save=False, delete=False):
-        number = 1
-        for player_id in self.players_list:
-            player = Player.objects.get(player_id=player_id)
+        for number, player_id in enumerate(self.players_list, 1):
+            player = Player.objects.get(number=player_id)
             if save:
                 Participant.objects.create(
                     number=number,
@@ -114,20 +101,34 @@ class Tournament(models.Model):
                 )
             if delete:
                 Participant.objects.get(player=player, tournament=self).delete()
-            number += 1
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
-        self.check_tournament_number()
-        if self.completed != self.__original_completed:
+        if not self.locked:
+            self.created = True
+            self.check_tournament_number()
+            self.check_players_list()
             super().save()
-        elif not self.started or self.started != self.__original_started:
-            self.check_ready_to_start()
-        else:
-            raise APIException('An on-going or completed tournament cannot be modified')
+        elif not self.created and self.locked:
+            self.created = True
+            self.check_tournament_number()
+            self.check_players_list()
+            self.lock_tournament()
+        elif self.created and self.locked and self.locked != self.__original_locked:
+            self.check_players_list()
+            self.lock_tournament()
+        elif self.created and self.locked and self.locked == self.__original_locked:
+            if self.update_finished_rounds():
+                super().save()
+            else:
+                raise APIException('A locked tournament cannot be modified')
+
+    def update_finished_rounds(self):
+        if self.finished_rounds != self.__original_finished_rounds:
+            return True
 
     def delete(self, using=None, keep_parents=False):
-        if self.started:
+        if self.locked:
             self.update_participants(delete=True)
         return super().delete()
 
@@ -152,4 +153,3 @@ class Participant(models.Model):
         blank=False,
         null=False
     )
-

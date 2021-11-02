@@ -16,13 +16,13 @@ class TournamentSerializer(serializers.ModelSerializer):
             creator=creator,
             tournament_name=validated_data['tournament_name'],
             players_list=validated_data['players_list'],
-            ready_to_start=validated_data['ready_to_start']
+            locked=validated_data['locked']
         )
         return tournament
 
     def update(self, instance, validated_data):
-        if instance.started:
-            raise APIException('An on-going or completed tournament cannot be modified')
+        if instance.locked:
+            raise APIException('An locked tournament cannot be modified')
         else:
             return super().update(instance, validated_data)
 
