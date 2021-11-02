@@ -12,12 +12,19 @@ class TournamentSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         creator = self.context['profile']
 
-        tournament = Tournament.objects.create(
-            creator=creator,
-            tournament_name=validated_data['tournament_name'],
-            players_list=validated_data['players_list'],
-            locked=validated_data['locked']
-        )
+        if 'players_list' in validated_data.keys():
+            tournament = Tournament.objects.create(
+                creator=creator,
+                tournament_name=validated_data['tournament_name'],
+                players_list=validated_data['players_list'],
+                locked=validated_data['locked']
+            )
+        else:
+            tournament = Tournament.objects.create(
+                creator=creator,
+                tournament_name=validated_data['tournament_name'],
+                locked=validated_data['locked']
+            )
         return tournament
 
     def update(self, instance, validated_data):

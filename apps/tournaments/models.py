@@ -33,11 +33,13 @@ class Tournament(models.Model):
         editable=False
     )
     players_list = ArrayField(
-        models.IntegerField(
+        base_field=models.IntegerField(
             blank=True,
-            null=True,
         ),
+        blank=True,
+        default=list,
         size=8,
+
     )
     locked = models.BooleanField(
         default=False,
@@ -56,7 +58,7 @@ class Tournament(models.Model):
         self.__original_locked = self.locked
         self.__original_finished_rounds = self.finished_rounds
 
-    def check_tournament_number(self):
+    def add_tournament_number(self):
         if not self.number:
             self.creator.tournaments_created += 1
             self.creator.save()
@@ -86,7 +88,7 @@ class Tournament(models.Model):
         self.created = True
         self.check_players_list()
         self.handle_lock_at_creation()
-        self.check_tournament_number()
+        self.add_tournament_number()
         super().save()
 
     def handle_lock_at_creation(self):
@@ -115,7 +117,7 @@ class Tournament(models.Model):
     def lock_tournament(self):
         if len(self.players_list) == 8:
             super().save()
-            self.update_participants()
+            self.add_participants()
             self.create_round_or_end_tournament()
         else:
             raise APIException(f'The players list is incomplete')
@@ -131,7 +133,7 @@ class Tournament(models.Model):
         if self.finished_rounds != self.__original_finished_rounds:
             return True
 
-    def update_participants(self):
+    def add_participants(self):
         for number, player_id in enumerate(self.players_list, 1):
             player = Player.objects.get(number=player_id)
             Participant.objects.create(
