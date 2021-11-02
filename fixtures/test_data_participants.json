@@ -1,0 +1,74 @@
+[
+  {
+    "model": "tournaments.participant",
+    "pk": 1,
+    "fields": {
+      "number": 1,
+      "tournament": 2,
+      "player": 1
+    }
+  },
+  {
+    "model": "tournaments.participant",
+    "pk": 2,
+    "fields": {
+      "number": 2,
+      "tournament": 2,
+      "player": 2
+    }
+  },
+  {
+    "model": "tournaments.participant",
+    "pk": 3,
+    "fields": {
+      "number": 3,
+      "tournament": 2,
+      "player": 3
+    }
+  },
+  {
+    "model": "tournaments.participant",
+    "pk": 4,
+    "fields": {
+      "number": 4,
+      "tournament": 2,
+      "player": 4
+    }
+  },
+  {
+    "model": "tournaments.participant",
+    "pk": 5,
+    "fields": {
+      "number": 5,
+      "tournament": 2,
+      "player": 5
+    }
+  },
+  {
+    "model": "tournaments.participant",
+    "pk": 6,
+    "fields": {
+      "number": 6,
+      "tournament": 2,
+      "player": 6
+    }
+  },
+  {
+    "model": "tournaments.participant",
+    "pk": 7,
+    "fields": {
+      "number": 7,
+      "tournament": 2,
+      "player": 7
+    }
+  },
+  {
+    "model": "tournaments.participant",
+    "pk": 8,
+    "fields": {
+      "number": 8,
+      "tournament": 2,
+      "player": 8
+    }
+  }
+]

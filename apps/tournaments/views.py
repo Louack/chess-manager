@@ -40,7 +40,9 @@ class TournamentViewset(viewsets.ModelViewSet):
     lookup_field = 'number'
 
     def get_queryset(self):
-        queryset = Tournament.objects.filter(creator=self.request.user.profile)
+        queryset = Tournament.objects.filter(
+            creator=self.request.user.profile
+        )
         return queryset
 
     def get_serializer_context(self):
@@ -61,5 +63,7 @@ class ParticipantViewset(ChessBaseViewset):
         super().initial(request, *args, **kwargs)
 
     def get_queryset(self):
-        queryset = Participant.objects.filter(tournament=self.tournament)
+        queryset = Participant.objects.filter(
+            tournament=self.tournament
+        )
         return queryset
