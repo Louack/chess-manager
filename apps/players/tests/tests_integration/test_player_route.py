@@ -12,6 +12,8 @@ class TestPlayerRoute(APITestCase):
     def setUpClass(cls):
         call_command('loaddata', 'fixtures/test_data_users.json', verbosity=0)
         call_command('loaddata', 'fixtures/test_data_players.json', verbosity=0)
+        call_command('loaddata', 'fixtures/test_data_tournaments.json', verbosity=0)
+        call_command('loaddata', 'fixtures/test_data_participants.json', verbosity=0)
 
         cls.user = User.objects.get(pk=1)
 
@@ -52,7 +54,13 @@ class TestPlayerRoute(APITestCase):
                                    data=self.player_put_form)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_player_delete(self):
-        response = self.client.delete(reverse('players-detail', kwargs=self.kwargs))
+    def test_player_delete_success(self):
+        response = self.client.delete(reverse('players-detail', kwargs={"number": 10}))
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_player_delete_fail(self):
+        response = self.client.delete(reverse('players-detail', kwargs=self.kwargs))
+        self.assertIn(b'This player is participating to at least one tournament.',
+                      response.content)
+
 

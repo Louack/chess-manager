@@ -1,8 +1,10 @@
 from rest_framework import viewsets
+from rest_framework.exceptions import APIException
 
 from apps.players.models import Player
 from apps.players.permissions import PlayersAccess
 from apps.players.serializers import PlayerSerializer
+from apps.tournaments.models import Participant
 
 
 class PlayerViewset(viewsets.ModelViewSet):
@@ -19,3 +21,12 @@ class PlayerViewset(viewsets.ModelViewSet):
         context['profile'] = self.request.user.profile
         return context
 
+    def destroy(self, request, *args, **kwargs):
+        player = self.get_object()
+        participants = [player for player in Participant.objects.filter(
+            player=player
+        )]
+        if participants:
+            raise APIException('This player is participating to at least one tournament.')
+        else:
+            return super().destroy(request, *args, **kwargs)
