@@ -21,6 +21,6 @@ router_participants.register(
 )
 
 urlpatterns = [
-    path(r'', include(router_tournaments.urls)),
-    path(r'', include(router_participants.urls))
+    path(r'', include(router_tournaments.urls), name='tournaments'),
+    path(r'', include(router_participants.urls), name='participants')
 ]

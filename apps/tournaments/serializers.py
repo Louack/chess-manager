@@ -22,7 +22,7 @@ class TournamentSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         if instance.locked:
-            raise APIException('An locked tournament cannot be modified')
+            raise APIException('A locked tournament cannot be modified')
         else:
             return super().update(instance, validated_data)
 

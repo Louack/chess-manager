@@ -82,55 +82,63 @@ class Tournament(models.Model):
         else:
             pass
 
-    def lock_tournament(self):
-        if len(self.players_list) == 8:
-            super().save()
-            self.update_participants(save=True)
-            self.create_round_or_end_tournament()
+    def handle_first_save(self):
+        self.created = True
+        self.check_players_list()
+        self.handle_lock_at_creation()
+        self.check_tournament_number()
+        super().save()
+
+    def handle_lock_at_creation(self):
+        if self.locked:
+            self.lock_tournament()
         else:
-            raise APIException(f'The players list is incomplete')
-
-    def update_participants(self, save=False, delete=False):
-        for number, player_id in enumerate(self.players_list, 1):
-            player = Player.objects.get(number=player_id)
-            if save:
-                Participant.objects.create(
-                    number=number,
-                    tournament=self,
-                    player=player
-                )
-            if delete:
-                Participant.objects.get(player=player, tournament=self).delete()
-
-    def save(self, force_insert=False, force_update=False, using=None,
-             update_fields=None):
-        if not self.locked:
-            self.created = True
-            self.check_tournament_number()
-            self.check_players_list()
             super().save()
-        elif not self.created and self.locked:
-            self.created = True
-            self.check_tournament_number()
-            self.check_players_list()
+
+    def handle_lock_at_update(self):
+        if self.locked and not self.__original_locked:
             self.lock_tournament()
-        elif self.created and self.locked and self.locked != self.__original_locked:
-            self.check_players_list()
-            self.lock_tournament()
-        elif self.created and self.locked and self.locked == self.__original_locked:
+        elif self.locked and self.__original_locked:
             if self.update_finished_rounds():
                 super().save()
             else:
                 raise APIException('A locked tournament cannot be modified')
+        elif not self.locked and not self.__original_locked:
+            super().save()
+        else:
+            raise APIException('A locked tournament cannot be modified')
+
+    def handle_tournament_update(self):
+        self.check_players_list()
+        self.handle_lock_at_update()
+
+    def lock_tournament(self):
+        if len(self.players_list) == 8:
+            super().save()
+            self.update_participants()
+            self.create_round_or_end_tournament()
+        else:
+            raise APIException(f'The players list is incomplete')
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        if not self.created:
+            self.handle_first_save()
+        else:
+            self.handle_tournament_update()
 
     def update_finished_rounds(self):
         if self.finished_rounds != self.__original_finished_rounds:
             return True
 
-    def delete(self, using=None, keep_parents=False):
-        if self.locked:
-            self.update_participants(delete=True)
-        return super().delete()
+    def update_participants(self):
+        for number, player_id in enumerate(self.players_list, 1):
+            player = Player.objects.get(number=player_id)
+            Participant.objects.create(
+                number=number,
+                tournament=self,
+                player=player
+            )
 
 
 class Participant(models.Model):
