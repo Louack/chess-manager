@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.tournaments.models import Tournament, Participant
+from apps.tournaments.models import Tournament, Participant, Round, Match
 
 
 @admin.register(Tournament)
@@ -11,6 +11,28 @@ class TournamentAdmin(admin.ModelAdmin):
         'locked'
     )
 
+
+@admin.register(Round)
+class RoundAdmin(admin.ModelAdmin):
+    list_display = (
+        'number',
+        'tournament',
+        'finished_matches',
+        'previous_pairs'
+    )
+
+
+@admin.register(Match)
+class RoundAdmin(admin.ModelAdmin):
+    list_display = (
+        'number',
+        'round',
+        'played',
+        'number_participant_1',
+        'result_participant_1',
+        'number_participant_2',
+        'result_participant_2',
+    )
 
 @admin.register(Participant)
 class ParticipantAdmin(admin.ModelAdmin):

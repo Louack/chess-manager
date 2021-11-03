@@ -211,6 +211,11 @@ class Match(models.Model):
         blank=False,
         null=False
     )
+    played = models.BooleanField(
+        default=False,
+        blank=True,
+        null=True
+    )
     number_participant_1 = models.IntegerField(
         editable=False,
         blank=True,
