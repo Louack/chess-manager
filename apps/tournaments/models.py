@@ -163,3 +163,71 @@ class Participant(models.Model):
         blank=False,
         null=False
     )
+
+
+class Round(models.Model):
+    number = models.IntegerField(
+        editable=False,
+        blank=True,
+        null=True
+    )
+    tournament = models.ForeignKey(
+        to=Tournament,
+        on_delete=models.CASCADE,
+        editable=False,
+        blank=False,
+        null=False
+    )
+    finished_matches = models.IntegerField(
+        default=0,
+        editable=False,
+        blank=True,
+        null=True
+    )
+    previous_pairs = ArrayField(
+        base_field=ArrayField(
+            base_field=models.IntegerField(
+                editable=False
+            ),
+            editable=False,
+            size=2,
+            default=list,
+        ),
+        editable=False,
+        default=list,
+    )
+
+
+class Match(models.Model):
+    number = models.IntegerField(
+        editable=False,
+        blank=True,
+        null=True
+    )
+    round = models.ForeignKey(
+        to=Round,
+        on_delete=models.CASCADE,
+        editable=False,
+        blank=False,
+        null=False
+    )
+    number_participant_1 = models.IntegerField(
+        editable=False,
+        blank=True,
+        null=True
+    )
+    result_participant_1 = models.FloatField(
+        editable=False,
+        blank=True,
+        null=True
+    )
+    number_participant_2 = models.IntegerField(
+        editable=False,
+        blank=True,
+        null=True
+    )
+    result_participant_2 = models.FloatField(
+        editable=False,
+        blank=True,
+        null=True
+    )
