@@ -70,10 +70,10 @@ class Player(models.Model):
     )
 
     class Meta:
-        verbose_name = 'Joueur'
+        verbose_name = 'Player'
 
     def __str__(self):
-        return f'Joueur {self.username}'
+        return self.username
 
     def check_player_number_and_rank(self):
         if not self.number and not self.rank:

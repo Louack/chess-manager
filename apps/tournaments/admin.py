@@ -27,12 +27,12 @@ class RoundAdmin(admin.ModelAdmin):
     list_display = (
         'number',
         'round',
-        'played',
         'number_participant_1',
         'result_participant_1',
         'number_participant_2',
         'result_participant_2',
     )
+
 
 @admin.register(Participant)
 class ParticipantAdmin(admin.ModelAdmin):

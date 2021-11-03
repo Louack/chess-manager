@@ -53,10 +53,16 @@ class Tournament(models.Model):
         null=True
     )
 
+    class Meta:
+        verbose_name = 'Tournament'
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.__original_locked = self.locked
         self.__original_finished_rounds = self.finished_rounds
+
+    def __str__(self):
+        return self.tournament_name
 
     def add_tournament_number(self):
         if not self.number:
@@ -143,28 +149,6 @@ class Tournament(models.Model):
             )
 
 
-class Participant(models.Model):
-    number = models.IntegerField(
-        editable=False,
-        blank=True,
-        null=True
-    )
-    tournament = models.ForeignKey(
-        to=Tournament,
-        on_delete=models.CASCADE,
-        editable=False,
-        blank=False,
-        null=False
-    )
-    player = models.ForeignKey(
-        to=Player,
-        on_delete=models.PROTECT,
-        editable=False,
-        blank=False,
-        null=False
-    )
-
-
 class Round(models.Model):
     number = models.IntegerField(
         editable=False,
@@ -196,6 +180,12 @@ class Round(models.Model):
         editable=False,
         default=list,
     )
+
+    class Meta:
+        verbose_name = 'Round'
+
+    def __str__(self):
+        return f'Round {self.number}'
 
 
 class Match(models.Model):
@@ -236,3 +226,38 @@ class Match(models.Model):
         blank=True,
         null=True
     )
+
+    class Meta:
+        verbose_name = 'Match'
+        verbose_name_plural = 'Matches'
+
+    def __str__(self):
+        return f'Match {self.number}'
+
+
+class Participant(models.Model):
+    number = models.IntegerField(
+        editable=False,
+        blank=True,
+        null=True
+    )
+    tournament = models.ForeignKey(
+        to=Tournament,
+        on_delete=models.CASCADE,
+        editable=False,
+        blank=False,
+        null=False
+    )
+    player = models.ForeignKey(
+        to=Player,
+        on_delete=models.PROTECT,
+        editable=False,
+        blank=False,
+        null=False
+    )
+
+    class Meta:
+        verbose_name = 'Participant'
+
+    def __str__(self):
+        return f'Participant {self.number}'
