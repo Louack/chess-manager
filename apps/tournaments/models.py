@@ -235,12 +235,55 @@ class Round(models.Model):
         return sorted_participant_numbers
 
     def match_participants(self):
-        sorted_participants = self.sort_participants()
         pairs_list = []
-        for i in range(0, len(sorted_participants) - 1, 2):
-            pair = (sorted_participants[i], sorted_participants[i + 1])
+        sorted_participants = self.sort_participants()
+        if self.number == 1:
+            pairs_list = self.get_first_round_pairs(pairs_list, sorted_participants)
+        else:
+            pairs_list = self.get_last_rounds_pairs(pairs_list, sorted_participants)
+        print(pairs_list)
+        return pairs_list
+
+    @staticmethod
+    def get_first_round_pairs(pairs_list, participants):
+        half = len(participants) // 2
+        for i in range(half):
+            pair = [
+                participants[i],
+                participants[i + half]
+            ]
             pairs_list.append(pair)
         return pairs_list
+
+    def get_last_rounds_pairs(self, pairs_list, participants):
+        previous_pairs = self.get_previous_participants_pairs()
+        print(previous_pairs)
+        n = 1
+        try:
+            while len(participants) > 0:
+                if [participants[0], participants[0 + n]] in previous_pairs \
+                        or [participants[0 + n], participants[0]] in previous_pairs:
+                    n += 1
+                else:
+                    pairs_list.append([participants[0], participants[0 + n]])
+                    del participants[0 + n]
+                    del participants[0]
+                    n = 1
+        except IndexError:
+            pairs_list.append([participants[0], participants[1]])
+            del participants[1]
+            del participants[0]
+        return pairs_list
+
+    def get_previous_participants_pairs(self):
+        previous_participants_pairs = []
+        for number in range(1, self.number):
+            round_obj = Round.objects.get(
+                number=number,
+                tournament=self.tournament
+            )
+            previous_participants_pairs.extend(round_obj.participants_pairs)
+        return previous_participants_pairs
 
 
 class Match(models.Model):
