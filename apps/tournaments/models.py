@@ -85,8 +85,12 @@ class Tournament(models.Model):
             raise APIException(f'The following player IDs do not exist: {players_do_not_exist}')
 
     def create_round_or_end_tournament(self):
-        if self.finished_rounds <= self.total_rounds:
-            pass
+        if self.finished_rounds < self.total_rounds:
+            new_round = Round.objects.create(
+                number=self.finished_rounds + 1,
+                tournament=self,
+            )
+            new_round.initialize_matches()
         else:
             pass
 
@@ -109,6 +113,7 @@ class Tournament(models.Model):
         elif self.locked and self.__original_locked:
             if self.update_finished_rounds():
                 super().save()
+                self.create_round_or_end_tournament()
             else:
                 raise APIException('A locked tournament cannot be modified')
         elif not self.locked and not self.__original_locked:
@@ -145,7 +150,8 @@ class Tournament(models.Model):
             Participant.objects.create(
                 number=number,
                 tournament=self,
-                player=player
+                player=player,
+                rank=player.rank
             )
 
 
@@ -168,7 +174,7 @@ class Round(models.Model):
         blank=True,
         null=True
     )
-    previous_pairs = ArrayField(
+    participants_pairs = ArrayField(
         base_field=ArrayField(
             base_field=models.IntegerField(
                 editable=False
@@ -184,15 +190,68 @@ class Round(models.Model):
     class Meta:
         verbose_name = 'Round'
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.__original_finished_matches = self.finished_matches
+
     def __str__(self):
         return f'Round {self.number}'
 
+    def initialize_matches(self):
+        self.participants_pairs = self.match_participants()
+        self.save()
+        for number, pair in enumerate(self.participants_pairs, 1):
+            Match.objects.create(
+                number=number,
+                tournament=self.tournament,
+                round=self,
+                number_participant_1=pair[0],
+                number_participant_2=pair[1],
+            )
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        matches_number = len(Match.objects.filter(round=self))
+        if self.finished_matches != self.__original_finished_matches:
+            if self.finished_matches == matches_number:
+                self.tournament.finished_rounds += 1
+                self.tournament.save()
+        super().save()
+
+    def sort_participants(self):
+        participants = [
+            participant.number for participant in Participant.objects.filter(
+                tournament=self.tournament
+            )
+        ]
+        return participants
+
+    def match_participants(self):
+        sorted_participants = self.sort_participants()
+        pairs_list = []
+        for i in range(0, len(sorted_participants) - 1, 2):
+            pair = (sorted_participants[i], sorted_participants[i + 1])
+            pairs_list.append(pair)
+        return pairs_list
+
 
 class Match(models.Model):
+    RESULT_CHOICES = (
+        (0.0, 0.0),
+        (0.5, 0.5),
+        (1.0, 1.0)
+    )
     number = models.IntegerField(
         editable=False,
         blank=True,
         null=True
+    )
+    tournament = models.ForeignKey(
+        to=Tournament,
+        on_delete=models.CASCADE,
+        editable=False,
+        blank=False,
+        null=False
     )
     round = models.ForeignKey(
         to=Round,
@@ -212,9 +271,9 @@ class Match(models.Model):
         null=True
     )
     result_participant_1 = models.FloatField(
-        editable=False,
         blank=True,
-        null=True
+        null=True,
+        choices=RESULT_CHOICES
     )
     number_participant_2 = models.IntegerField(
         editable=False,
@@ -222,17 +281,45 @@ class Match(models.Model):
         null=True
     )
     result_participant_2 = models.FloatField(
-        editable=False,
         blank=True,
-        null=True
+        null=True,
+        choices=RESULT_CHOICES
     )
 
     class Meta:
         verbose_name = 'Match'
         verbose_name_plural = 'Matches'
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.__original_played = self.played
+
     def __str__(self):
         return f'Match {self.number}'
+
+    def check_results(self):
+        if self.result_participant_1 and self.result_participant_2:
+            results_sum = self.result_participant_1 + self.result_participant_2
+            if results_sum != 1:
+                raise APIException('Results of points sum must be equal to 1.')
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        if self.__original_played:
+            raise APIException('Match has already been played')
+        else:
+            self.check_results()
+            if self.played:
+                print(self.result_participant_1)
+                print(self.result_participant_2)
+                if type(self.result_participant_1 and self.result_participant_2) == float:
+                    super().save()
+                    self.round.finished_matches += 1
+                    self.round.save()
+                else:
+                    raise APIException('Results must be entered before locking match')
+            else:
+                super().save()
 
 
 class Participant(models.Model):
@@ -254,6 +341,17 @@ class Participant(models.Model):
         editable=False,
         blank=False,
         null=False
+    )
+    rank = models.IntegerField(
+        editable=False,
+        blank=True,
+        null=True,
+    )
+    total_points = models.FloatField(
+        default=0,
+        editable=False,
+        blank=True,
+        null=True,
     )
 
     class Meta:

@@ -8,6 +8,7 @@ class TournamentAdmin(admin.ModelAdmin):
     list_display = (
         'number',
         'creator',
+        'finished_rounds',
         'locked'
     )
 
@@ -15,18 +16,20 @@ class TournamentAdmin(admin.ModelAdmin):
 @admin.register(Round)
 class RoundAdmin(admin.ModelAdmin):
     list_display = (
-        'number',
         'tournament',
+        'number',
         'finished_matches',
-        'previous_pairs'
+        'participants_pairs'
     )
 
 
 @admin.register(Match)
-class RoundAdmin(admin.ModelAdmin):
+class MatchAdmin(admin.ModelAdmin):
     list_display = (
-        'number',
+        'tournament',
         'round',
+        'number',
+        'played',
         'number_participant_1',
         'result_participant_1',
         'number_participant_2',

@@ -5,7 +5,8 @@
     "fields": {
       "number": 1,
       "tournament": 2,
-      "player": 1
+      "player": 1,
+      "rank": 1
     }
   },
   {
@@ -14,7 +15,8 @@
     "fields": {
       "number": 2,
       "tournament": 2,
-      "player": 2
+      "player": 2,
+      "rank": 2
     }
   },
   {
@@ -23,7 +25,8 @@
     "fields": {
       "number": 3,
       "tournament": 2,
-      "player": 3
+      "player": 3,
+      "rank": 3
     }
   },
   {
@@ -32,7 +35,8 @@
     "fields": {
       "number": 4,
       "tournament": 2,
-      "player": 4
+      "player": 4,
+      "rank": 4
     }
   },
   {
@@ -41,7 +45,8 @@
     "fields": {
       "number": 5,
       "tournament": 2,
-      "player": 5
+      "player": 5,
+      "rank": 5
     }
   },
   {
@@ -50,7 +55,8 @@
     "fields": {
       "number": 6,
       "tournament": 2,
-      "player": 6
+      "player": 6,
+      "rank": 6
     }
   },
   {
@@ -59,7 +65,8 @@
     "fields": {
       "number": 7,
       "tournament": 2,
-      "player": 7
+      "player": 7,
+      "rank": 7
     }
   },
   {
@@ -68,7 +75,8 @@
     "fields": {
       "number": 8,
       "tournament": 2,
-      "player": 8
+      "player": 8,
+      "rank": 8
     }
   }
 ]
