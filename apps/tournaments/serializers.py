@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.exceptions import APIException
 
-from apps.tournaments.models import Tournament, Participant
+from apps.tournaments.models import Tournament, Participant, Round, Match
 
 
 class TournamentSerializer(serializers.ModelSerializer):
@@ -30,6 +30,24 @@ class TournamentSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         if instance.locked:
             raise APIException('A locked tournament cannot be modified')
+        else:
+            return super().update(instance, validated_data)
+
+
+class RoundSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Round
+        fields = '__all__'
+
+
+class MatchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Match
+        fields = '__all__'
+
+    def update(self, instance, validated_data):
+        if instance.played:
+            raise APIException('A played match cannot be modified')
         else:
             return super().update(instance, validated_data)
 

@@ -11,7 +11,7 @@ class TournamentAccess(BasePermission):
             return True
 
 
-class ParticipantAccess(BasePermission):
+class RoundAccess(BasePermission):
     def has_permission(self, request, view):
         if view.tournament.creator == request.user.profile:
             return True
@@ -20,3 +20,22 @@ class ParticipantAccess(BasePermission):
         if obj.tournament.creator == request.user.profile:
             return True
 
+
+class MatchAccess(BasePermission):
+    def has_permission(self, request, view):
+        if view.tournament.creator == request.user.profile:
+            return True
+
+    def has_object_permission(self, request, view, obj):
+        if obj.tournament.creator == request.user.profile:
+            return True
+
+
+class ParticipantAccess(BasePermission):
+    def has_permission(self, request, view):
+        if view.tournament.creator == request.user.profile:
+            return True
+
+    def has_object_permission(self, request, view, obj):
+        if obj.tournament.creator == request.user.profile:
+            return True
