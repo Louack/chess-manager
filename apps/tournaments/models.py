@@ -111,11 +111,7 @@ class Tournament(models.Model):
         if self.locked and not self.__original_locked:
             self.lock_tournament()
         elif self.locked and self.__original_locked:
-            if self.update_finished_rounds():
-                super().save()
-                self.create_round_or_end_tournament()
-            else:
-                raise APIException('A locked tournament cannot be modified')
+            self.check_finished_rounds_update()
         elif not self.locked and not self.__original_locked:
             super().save()
         else:
@@ -140,9 +136,12 @@ class Tournament(models.Model):
         else:
             self.handle_tournament_update()
 
-    def update_finished_rounds(self):
+    def check_finished_rounds_update(self):
         if self.finished_rounds != self.__original_finished_rounds:
-            return True
+            super().save()
+            self.create_round_or_end_tournament()
+        else:
+            raise APIException('A locked tournament cannot be modified')
 
     def add_participants(self):
         for number, player_id in enumerate(self.players_list, 1):
@@ -303,6 +302,14 @@ class Match(models.Model):
             if results_sum != 1:
                 raise APIException('Results of points sum must be equal to 1.')
 
+    def check_locking_validity(self):
+        if type(self.result_participant_1 and
+                self.result_participant_2) == float:
+            self.round.finished_matches += 1
+            self.round.save()
+        else:
+            raise APIException('Results must be entered before locking match')
+
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
         if self.__original_played:
@@ -310,16 +317,8 @@ class Match(models.Model):
         else:
             self.check_results()
             if self.played:
-                print(self.result_participant_1)
-                print(self.result_participant_2)
-                if type(self.result_participant_1 and self.result_participant_2) == float:
-                    super().save()
-                    self.round.finished_matches += 1
-                    self.round.save()
-                else:
-                    raise APIException('Results must be entered before locking match')
-            else:
-                super().save()
+                self.check_locking_validity()
+            super().save()
 
 
 class Participant(models.Model):
