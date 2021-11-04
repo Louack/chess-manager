@@ -1,0 +1,58 @@
+[
+  {
+    "model": "tournaments.match",
+    "pk": 1,
+    "fields": {
+      "number": 1,
+      "tournament": 2,
+      "round": 1,
+      "played": false,
+      "number_participant_1": 1,
+      "result_participant_1": null,
+      "number_participant_2": 2,
+      "result_participant_2": null
+    }
+  },
+  {
+    "model": "tournaments.match",
+    "pk": 2,
+    "fields": {
+      "number": 2,
+      "tournament": 2,
+      "round": 1,
+      "played": true,
+      "number_participant_1": 3,
+      "result_participant_1": 1.0,
+      "number_participant_2": 4,
+      "result_participant_2": 0.0
+    }
+  },
+  {
+    "model": "tournaments.match",
+    "pk": 3,
+    "fields": {
+      "number": 3,
+      "tournament": 2,
+      "round": 1,
+      "played": false,
+      "number_participant_1": 5,
+      "result_participant_1": null,
+      "number_participant_2": 6,
+      "result_participant_2": null
+    }
+  },
+  {
+    "model": "tournaments.match",
+    "pk": 4,
+    "fields": {
+      "number": 4,
+      "tournament": 2,
+      "round": 1,
+      "played": false,
+      "number_participant_1": 7,
+      "result_participant_1": null,
+      "number_participant_2": 8,
+      "result_participant_2": null
+    }
+  }
+]

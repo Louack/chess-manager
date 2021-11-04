@@ -47,7 +47,7 @@ class MatchSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         if instance.played:
-            raise APIException('A played match cannot be modified')
+            raise APIException('A played match cannot be modified.')
         else:
             return super().update(instance, validated_data)
 

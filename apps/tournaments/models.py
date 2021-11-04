@@ -308,12 +308,12 @@ class Match(models.Model):
             self.round.finished_matches += 1
             self.round.save()
         else:
-            raise APIException('Results must be entered before locking match')
+            raise APIException('Results must be entered before locking match.')
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
         if self.__original_played:
-            raise APIException('Match has already been played')
+            raise APIException('Match has already been played.')
         else:
             self.check_results()
             if self.played:
