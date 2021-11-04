@@ -42,5 +42,7 @@ class ParticipantAdmin(admin.ModelAdmin):
     list_display = (
         'number',
         'tournament',
-        'player'
+        'player',
+        'total_points',
+        'rank'
     )

@@ -219,11 +219,20 @@ class Round(models.Model):
 
     def sort_participants(self):
         participants = [
-            participant.number for participant in Participant.objects.filter(
+            participant for participant in Participant.objects.filter(
                 tournament=self.tournament
             )
         ]
-        return participants
+        sorted_participants = sorted(
+            participants, key=lambda participant: (
+                -participant.total_points,
+                participant.rank
+            )
+        )
+        sorted_participant_numbers = [
+            participant.number for participant in sorted_participants
+        ]
+        return sorted_participant_numbers
 
     def match_participants(self):
         sorted_participants = self.sort_participants()
@@ -302,9 +311,10 @@ class Match(models.Model):
             if results_sum != 1:
                 raise APIException('Results of points sum must be equal to 1.')
 
-    def check_locking_validity(self):
+    def finalize_match(self):
         if type(self.result_participant_1 and
                 self.result_participant_2) == float:
+            self.update_participants_total_points()
             self.round.finished_matches += 1
             self.round.save()
         else:
@@ -317,8 +327,27 @@ class Match(models.Model):
         else:
             self.check_results()
             if self.played:
-                self.check_locking_validity()
+                self.finalize_match()
             super().save()
+
+    def update_participants_total_points(self):
+        results = (
+            {
+                "participant_number": self.number_participant_1,
+                "point": self.result_participant_1
+            },
+            {
+                "participant_number": self.number_participant_2,
+                "point": self.result_participant_2
+            }
+        )
+        for result in results:
+            participant = Participant.objects.get(
+                tournament=self.tournament,
+                number=result["participant_number"]
+            )
+            participant.total_points += result["point"]
+            participant.save()
 
 
 class Participant(models.Model):
