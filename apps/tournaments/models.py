@@ -166,7 +166,7 @@ class Tournament(models.Model):
         return participants
 
     def finalize_tournament(self):
-        sorted_participants = self.sort_participants(finalize=True)
+        sorted_participants = self.sort_participants()
         players = [participant.player for participant in sorted_participants]
         for place, player in enumerate(players, 1):
             player.calcultate_new_average_place(place)
@@ -176,7 +176,7 @@ class Tournament(models.Model):
             player.save()
         get_new_ranks()
 
-    def sort_participants(self, finalize=False):
+    def sort_participants(self, numbers=False):
         participants = self.get_participants()
         sorted_participants = sorted(
             participants, key=lambda participant: (
@@ -187,10 +187,24 @@ class Tournament(models.Model):
         sorted_participant_numbers = [
             participant.number for participant in sorted_participants
         ]
-        if finalize:
-            return sorted_participants
-        else:
+        if numbers:
             return sorted_participant_numbers
+        else:
+            return sorted_participants
+
+    def get_ranking(self):
+        if self.locked:
+            ranking = dict()
+            sorted_participants = self.sort_participants()
+            for place, participant in enumerate(sorted_participants, 1):
+                ranking[place] = {
+                    "participant": f"{participant.player.username}",
+                    "total points": f"{participant.total_points}",
+                    "rank": f"{participant.rank}"
+                }
+            return ranking
+        else:
+            return "This tournament is not started yet."
 
 
 class Round(models.Model):
@@ -254,7 +268,7 @@ class Round(models.Model):
 
     def match_participants(self):
         pairs_list = []
-        sorted_participants = self.tournament.sort_participants()
+        sorted_participants = self.tournament.sort_participants(numbers=True)
         if self.number == 1:
             pairs_list = self.get_first_round_pairs(
                 pairs_list,
@@ -291,8 +305,8 @@ class Round(models.Model):
                     n += 1
                 else:
                     pairs_list.append(pair)
-                    participants = [participant for participant in
-                                    participants if participant not in pair]
+                    participants = [participant for participant in participants
+                                    if participant not in pair]
                     n = 1
         except IndexError:
             pairs_list.append(
@@ -310,6 +324,30 @@ class Round(models.Model):
             )
             previous_participants_pairs.extend(round_obj.participants_pairs)
         return previous_participants_pairs
+
+    def get_matches_results(self):
+        results = dict()
+        matches = [match for match in self.match_set.all()]
+        for match in matches:
+            participant_1 = Participant.objects.get(
+                number=match.number_participant_1,
+                tournament=self.tournament
+            )
+            participant_2 = Participant.objects.get(
+                number=match.number_participant_2,
+                tournament=self.tournament
+            )
+            results[match.number] = {
+                "participant 1": {
+                    "usenrame": f"{participant_1.player.username}",
+                    "point": f"{match.result_participant_1}"
+                },
+                "participant 2": {
+                    "usenrame": f"{participant_2.player.username}",
+                    "point": f"{match.result_participant_2}"
+                }
+            }
+        return results
 
 
 class Match(models.Model):

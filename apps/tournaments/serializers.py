@@ -5,9 +5,15 @@ from apps.tournaments.models import Tournament, Participant, Round, Match
 
 
 class TournamentSerializer(serializers.ModelSerializer):
+    ranking = serializers.SerializerMethodField()
+
     class Meta:
         model = Tournament
         fields = '__all__'
+
+    @staticmethod
+    def get_ranking(instance):
+        return instance.get_ranking()
 
     def create(self, validated_data):
         creator = self.context['profile']
@@ -35,9 +41,15 @@ class TournamentSerializer(serializers.ModelSerializer):
 
 
 class RoundSerializer(serializers.ModelSerializer):
+    results = serializers.SerializerMethodField()
+
     class Meta:
         model = Round
         fields = '__all__'
+
+    @staticmethod
+    def get_results(instance):
+        return instance.get_matches_results()
 
 
 class MatchSerializer(serializers.ModelSerializer):
