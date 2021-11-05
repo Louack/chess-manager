@@ -6,14 +6,18 @@ from apps.players.permissions import PlayersAccess
 from apps.players.serializers import (PlayerListSerializer,
                                       PlayerDetailSerializer)
 from apps.tournaments.models import Participant
+from core.pagination import CustomPagination
 
 
 class PlayerViewset(viewsets.ModelViewSet):
     permission_classes = [PlayersAccess]
     lookup_field = 'number'
+    pagination_class = CustomPagination
 
     def get_queryset(self):
-        queryset = Player.objects.filter(creator=self.request.user.profile)
+        queryset = Player.objects.filter(
+            creator=self.request.user.profile
+        ).order_by('number')
         return queryset
 
     def get_serializer_class(self):

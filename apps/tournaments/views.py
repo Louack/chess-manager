@@ -18,6 +18,7 @@ from apps.tournaments.serializers import (TournamentListSerializer,
                                           MatchDetailSerializer,
                                           ParticipantListSerializer,
                                           ParticipantDetailSerializer)
+from core.pagination import CustomPagination
 
 
 class ChessBaseViewset(viewsets.ModelViewSet):
@@ -50,11 +51,12 @@ class ChessBaseViewset(viewsets.ModelViewSet):
 class TournamentViewset(viewsets.ModelViewSet):
     permission_classes = [TournamentAccess]
     lookup_field = 'number'
+    pagination_class = CustomPagination
 
     def get_queryset(self):
         queryset = Tournament.objects.filter(
             creator=self.request.user.profile
-        )
+        ).order_by('number')
         return queryset
 
     def get_serializer_class(self):
@@ -82,7 +84,7 @@ class RoundViewset(ChessBaseViewset):
     def get_queryset(self):
         queryset = Round.objects.filter(
             tournament=self.tournament
-        )
+        ).order_by('number')
         return queryset
 
     def get_serializer_class(self):
@@ -107,7 +109,7 @@ class MatchViewset(ChessBaseViewset):
         queryset = Match.objects.filter(
             tournament=self.tournament,
             round=self.round_obj
-        )
+        ).order_by('number')
         return queryset
 
     def get_serializer_class(self):
@@ -130,7 +132,7 @@ class ParticipantViewset(ChessBaseViewset):
     def get_queryset(self):
         queryset = Participant.objects.filter(
             tournament=self.tournament
-        )
+        ).order_by('number')
         return queryset
 
     def get_serializer_class(self):
