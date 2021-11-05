@@ -4,12 +4,33 @@ from rest_framework.exceptions import APIException
 from apps.tournaments.models import Tournament, Participant, Round, Match
 
 
-class TournamentSerializer(serializers.ModelSerializer):
+class TournamentListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tournament
+        fields = (
+            'number',
+            'tournament_name',
+            'locked',
+            'players_list',
+            'total_rounds',
+            'finished_rounds',
+        )
+
+
+class TournamentDetailSerializer(serializers.ModelSerializer):
     ranking = serializers.SerializerMethodField()
 
     class Meta:
         model = Tournament
-        fields = '__all__'
+        fields = (
+            'number',
+            'tournament_name',
+            'locked',
+            'players_list',
+            'total_rounds',
+            'finished_rounds',
+            'ranking'
+        )
 
     @staticmethod
     def get_ranking(instance):
@@ -40,22 +61,59 @@ class TournamentSerializer(serializers.ModelSerializer):
             return super().update(instance, validated_data)
 
 
-class RoundSerializer(serializers.ModelSerializer):
+class RoundListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Round
+        fields = (
+            'number',
+            'tournament',
+            'finished_matches',
+            'participants_pairs'
+        )
+
+
+class RoundDetailSerializer(serializers.ModelSerializer):
     results = serializers.SerializerMethodField()
 
     class Meta:
         model = Round
-        fields = '__all__'
+        fields = (
+            'number',
+            'tournament',
+            'finished_matches',
+            'participants_pairs',
+            'results'
+        )
 
     @staticmethod
     def get_results(instance):
         return instance.get_matches_results()
 
 
-class MatchSerializer(serializers.ModelSerializer):
+class MatchListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Match
-        fields = '__all__'
+        fields = (
+            'number',
+            'tournament',
+            'round',
+            'played'
+        )
+
+
+class MatchDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Match
+        fields = fields = (
+            'number',
+            'tournament',
+            'round',
+            'played',
+            'number_participant_1',
+            'result_participant_1',
+            'number_participant_2',
+            'result_participant_2'
+        )
 
     def update(self, instance, validated_data):
         if instance.played:
@@ -64,7 +122,23 @@ class MatchSerializer(serializers.ModelSerializer):
             return super().update(instance, validated_data)
 
 
-class ParticipantSerializer(serializers.ModelSerializer):
+class ParticipantListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Participant
-        fields = '__all__'
+        fields = (
+            'number',
+            'tournament',
+            'player'
+        )
+
+
+class ParticipantDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Participant
+        fields = (
+            'number',
+            'tournament',
+            'player',
+            'total_points',
+            'rank'
+        )

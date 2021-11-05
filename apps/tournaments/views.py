@@ -10,10 +10,14 @@ from apps.tournaments.permissions import (TournamentAccess,
                                           ParticipantAccess,
                                           RoundAccess,
                                           MatchAccess)
-from apps.tournaments.serializers import (TournamentSerializer,
-                                          ParticipantSerializer,
-                                          RoundSerializer,
-                                          MatchSerializer)
+from apps.tournaments.serializers import (TournamentListSerializer,
+                                          TournamentDetailSerializer,
+                                          RoundListSerializer,
+                                          RoundDetailSerializer,
+                                          MatchListSerializer,
+                                          MatchDetailSerializer,
+                                          ParticipantListSerializer,
+                                          ParticipantDetailSerializer)
 
 
 class ChessBaseViewset(viewsets.ModelViewSet):
@@ -45,7 +49,6 @@ class ChessBaseViewset(viewsets.ModelViewSet):
 
 class TournamentViewset(viewsets.ModelViewSet):
     permission_classes = [TournamentAccess]
-    serializer_class = TournamentSerializer
     lookup_field = 'number'
 
     def get_queryset(self):
@@ -53,6 +56,12 @@ class TournamentViewset(viewsets.ModelViewSet):
             creator=self.request.user.profile
         )
         return queryset
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return TournamentListSerializer
+        else:
+            return TournamentDetailSerializer
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
@@ -63,7 +72,6 @@ class TournamentViewset(viewsets.ModelViewSet):
 class RoundViewset(ChessBaseViewset):
     http_method_names = ['get', 'head', 'options', 'trace']
     permission_classes = [RoundAccess]
-    serializer_class = RoundSerializer
     lookup_field = 'number'
 
     def initial(self, request, *args, **kwargs):
@@ -77,11 +85,16 @@ class RoundViewset(ChessBaseViewset):
         )
         return queryset
 
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return RoundListSerializer
+        else:
+            return RoundDetailSerializer
+
 
 class MatchViewset(ChessBaseViewset):
     http_method_names = ['get', 'put', 'patch', 'head', 'options', 'trace']
     permission_classes = [MatchAccess]
-    serializer_class = MatchSerializer
     lookup_field = 'number'
 
     def initial(self, request, *args, **kwargs):
@@ -97,11 +110,16 @@ class MatchViewset(ChessBaseViewset):
         )
         return queryset
 
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return MatchListSerializer
+        else:
+            return MatchDetailSerializer
+
 
 class ParticipantViewset(ChessBaseViewset):
     http_method_names = ['get', 'head', 'options', 'trace']
     permission_classes = [ParticipantAccess]
-    serializer_class = ParticipantSerializer
     lookup_field = 'number'
 
     def initial(self, request, *args, **kwargs):
@@ -114,3 +132,9 @@ class ParticipantViewset(ChessBaseViewset):
             tournament=self.tournament
         )
         return queryset
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return ParticipantListSerializer
+        else:
+            return ParticipantDetailSerializer

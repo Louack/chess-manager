@@ -199,8 +199,8 @@ class Tournament(models.Model):
             for place, participant in enumerate(sorted_participants, 1):
                 ranking[place] = {
                     "participant": f"{participant.player.username}",
-                    "total points": f"{participant.total_points}",
-                    "rank": f"{participant.rank}"
+                    "total points": participant.total_points,
+                    "rank": participant.rank
                 }
             return ranking
         else:
@@ -340,11 +340,11 @@ class Round(models.Model):
             results[match.number] = {
                 "participant 1": {
                     "usenrame": f"{participant_1.player.username}",
-                    "point": f"{match.result_participant_1}"
+                    "point": match.result_participant_1
                 },
                 "participant 2": {
                     "usenrame": f"{participant_2.player.username}",
-                    "point": f"{match.result_participant_2}"
+                    "point": match.result_participant_2
                 }
             }
         return results

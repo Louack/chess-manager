@@ -3,7 +3,19 @@ from rest_framework import serializers
 from apps.players.models import Player
 
 
-class PlayerSerializer(serializers.ModelSerializer):
+class PlayerListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Player
+        fields = (
+            'number',
+            'username',
+            'last_name',
+            'first_name',
+            'rank'
+        )
+
+
+class PlayerDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Player
         exclude = ('id', 'creator')
