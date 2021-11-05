@@ -34,7 +34,18 @@ class TournamentDetailSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_ranking(instance):
-        return instance.get_ranking()
+        if instance.locked:
+            ranking = dict()
+            sorted_participants = instance.sort_participants()
+            for place, participant in enumerate(sorted_participants, 1):
+                ranking[place] = {
+                    "participant": f"{participant.player.username}",
+                    "total points": participant.total_points,
+                    "rank": participant.rank
+                }
+            return ranking
+        else:
+            return "This tournament is not started."
 
     def create(self, validated_data):
         creator = self.context['profile']
@@ -87,7 +98,28 @@ class RoundDetailSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_results(instance):
-        return instance.get_matches_results()
+        results = dict()
+        matches = [match for match in instance.match_set.all()]
+        for match in matches:
+            participant_1 = Participant.objects.get(
+                number=match.number_participant_1,
+                tournament=instance.tournament
+            )
+            participant_2 = Participant.objects.get(
+                number=match.number_participant_2,
+                tournament=instance.tournament
+            )
+            results[match.number] = {
+                "participant 1": {
+                    "usenrame": f"{participant_1.player.username}",
+                    "point": match.result_participant_1
+                },
+                "participant 2": {
+                    "usenrame": f"{participant_2.player.username}",
+                    "point": match.result_participant_2
+                }
+            }
+        return results
 
 
 class MatchListSerializer(serializers.ModelSerializer):

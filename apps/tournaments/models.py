@@ -192,20 +192,6 @@ class Tournament(models.Model):
         else:
             return sorted_participants
 
-    def get_ranking(self):
-        if self.locked:
-            ranking = dict()
-            sorted_participants = self.sort_participants()
-            for place, participant in enumerate(sorted_participants, 1):
-                ranking[place] = {
-                    "participant": f"{participant.player.username}",
-                    "total points": participant.total_points,
-                    "rank": participant.rank
-                }
-            return ranking
-        else:
-            return "This tournament is not started yet."
-
 
 class Round(models.Model):
     number = models.IntegerField(
@@ -324,30 +310,6 @@ class Round(models.Model):
             )
             previous_participants_pairs.extend(round_obj.participants_pairs)
         return previous_participants_pairs
-
-    def get_matches_results(self):
-        results = dict()
-        matches = [match for match in self.match_set.all()]
-        for match in matches:
-            participant_1 = Participant.objects.get(
-                number=match.number_participant_1,
-                tournament=self.tournament
-            )
-            participant_2 = Participant.objects.get(
-                number=match.number_participant_2,
-                tournament=self.tournament
-            )
-            results[match.number] = {
-                "participant 1": {
-                    "usenrame": f"{participant_1.player.username}",
-                    "point": match.result_participant_1
-                },
-                "participant 2": {
-                    "usenrame": f"{participant_2.player.username}",
-                    "point": match.result_participant_2
-                }
-            }
-        return results
 
 
 class Match(models.Model):
