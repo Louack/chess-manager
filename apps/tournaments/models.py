@@ -238,10 +238,15 @@ class Round(models.Model):
         pairs_list = []
         sorted_participants = self.sort_participants()
         if self.number == 1:
-            pairs_list = self.get_first_round_pairs(pairs_list, sorted_participants)
+            pairs_list = self.get_first_round_pairs(
+                pairs_list,
+                sorted_participants
+            )
         else:
-            pairs_list = self.get_last_rounds_pairs(pairs_list, sorted_participants)
-        print(pairs_list)
+            pairs_list = self.get_last_rounds_pairs(
+                pairs_list,
+                sorted_participants
+            )
         return pairs_list
 
     @staticmethod
@@ -257,22 +262,25 @@ class Round(models.Model):
 
     def get_last_rounds_pairs(self, pairs_list, participants):
         previous_pairs = self.get_previous_participants_pairs()
-        print(previous_pairs)
         n = 1
         try:
             while len(participants) > 0:
-                if [participants[0], participants[0 + n]] in previous_pairs \
-                        or [participants[0 + n], participants[0]] in previous_pairs:
+                pair = [
+                    participants[0],
+                    participants[0 + n]
+                ]
+                if pair in previous_pairs or pair[::-1] in previous_pairs:
                     n += 1
                 else:
-                    pairs_list.append([participants[0], participants[0 + n]])
-                    del participants[0 + n]
-                    del participants[0]
+                    pairs_list.append(pair)
+                    participants = [participant for participant in
+                                    participants if participant not in pair]
                     n = 1
         except IndexError:
-            pairs_list.append([participants[0], participants[1]])
-            del participants[1]
-            del participants[0]
+            pairs_list.append(
+                participants[0],
+                participants[1]
+            )
         return pairs_list
 
     def get_previous_participants_pairs(self):
