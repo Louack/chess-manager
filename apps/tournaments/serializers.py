@@ -39,7 +39,7 @@ class TournamentDetailSerializer(serializers.ModelSerializer):
             sorted_participants = instance.sort_participants()
             for place, participant in enumerate(sorted_participants, 1):
                 ranking[place] = {
-                    "participant": f"{participant.player.username}",
+                    "participant": participant.player.username,
                     "total points": participant.total_points,
                     "rank": participant.rank
                 }
@@ -111,11 +111,11 @@ class RoundDetailSerializer(serializers.ModelSerializer):
             )
             results[match.number] = {
                 "participant 1": {
-                    "usenrame": f"{participant_1.player.username}",
+                    "usenrame": participant_1.player.username,
                     "point": match.result_participant_1
                 },
                 "participant 2": {
-                    "usenrame": f"{participant_2.player.username}",
+                    "usenrame": participant_2.player.username,
                     "point": match.result_participant_2
                 }
             }
