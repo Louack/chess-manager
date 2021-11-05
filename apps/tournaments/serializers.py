@@ -5,19 +5,46 @@ from apps.tournaments.models import Tournament, Participant, Round, Match
 
 
 class TournamentListSerializer(serializers.ModelSerializer):
+    open = serializers.SerializerMethodField()
+    on_going = serializers.SerializerMethodField()
+    completed = serializers.SerializerMethodField()
+
     class Meta:
         model = Tournament
         fields = (
             'number',
             'tournament_name',
-            'locked',
+            'open',
+            'on_going',
+            'completed',
             'players_list',
             'total_rounds',
             'finished_rounds',
         )
 
+    @staticmethod
+    def get_open(obj):
+        if obj.locked or obj.finished_rounds == obj.total_rounds:
+            return False
+        else:
+            return True
 
-class TournamentDetailSerializer(serializers.ModelSerializer):
+    @staticmethod
+    def get_on_going(obj):
+        if obj.locked and obj.finished_rounds != obj.total_rounds:
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def get_completed(obj):
+        if obj.finished_rounds == obj.total_rounds:
+            return True
+        else:
+            return False
+
+
+class TournamentDetailSerializer(TournamentListSerializer):
     ranking = serializers.SerializerMethodField()
 
     class Meta:
@@ -25,12 +52,20 @@ class TournamentDetailSerializer(serializers.ModelSerializer):
         fields = (
             'number',
             'tournament_name',
-            'locked',
+            'open',
+            'on_going',
+            'completed',
             'players_list',
             'total_rounds',
             'finished_rounds',
-            'ranking'
+            'ranking',
+            'locked'
         )
+        extra_kwargs = {
+            'locked': {
+                'write_only': True
+            }
+        }
 
     @staticmethod
     def get_ranking(instance):
