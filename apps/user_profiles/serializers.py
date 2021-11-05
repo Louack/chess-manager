@@ -8,7 +8,12 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('username', 'tournaments_created', 'players_created')
+        fields = (
+            'username',
+            'tournaments_created',
+            'players_created'
+        )
 
-    def get_username(self, instance):
+    @staticmethod
+    def get_username(instance):
         return instance.user.username

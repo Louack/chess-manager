@@ -39,7 +39,7 @@ class TournamentDetailSerializer(serializers.ModelSerializer):
             sorted_participants = instance.sort_participants()
             for place, participant in enumerate(sorted_participants, 1):
                 ranking[place] = {
-                    "participant": participant.player.username,
+                    "participant": participant.number,
                     "total points": participant.total_points,
                     "rank": participant.rank
                 }
@@ -77,7 +77,6 @@ class RoundListSerializer(serializers.ModelSerializer):
         model = Round
         fields = (
             'number',
-            'tournament',
             'finished_matches',
             'participants_pairs'
         )
@@ -90,7 +89,6 @@ class RoundDetailSerializer(serializers.ModelSerializer):
         model = Round
         fields = (
             'number',
-            'tournament',
             'finished_matches',
             'participants_pairs',
             'results'
@@ -111,11 +109,11 @@ class RoundDetailSerializer(serializers.ModelSerializer):
             )
             results[match.number] = {
                 "participant 1": {
-                    "usenrame": participant_1.player.username,
+                    "username": participant_1.player.username,
                     "point": match.result_participant_1
                 },
                 "participant 2": {
-                    "usenrame": participant_2.player.username,
+                    "username": participant_2.player.username,
                     "point": match.result_participant_2
                 }
             }
@@ -127,8 +125,6 @@ class MatchListSerializer(serializers.ModelSerializer):
         model = Match
         fields = (
             'number',
-            'tournament',
-            'round',
             'played'
         )
 
@@ -138,8 +134,6 @@ class MatchDetailSerializer(serializers.ModelSerializer):
         model = Match
         fields = fields = (
             'number',
-            'tournament',
-            'round',
             'played',
             'number_participant_1',
             'result_participant_1',
@@ -155,22 +149,53 @@ class MatchDetailSerializer(serializers.ModelSerializer):
 
 
 class ParticipantListSerializer(serializers.ModelSerializer):
+    tournament_number = serializers.SerializerMethodField()
+    player_number = serializers.SerializerMethodField()
+
     class Meta:
         model = Participant
         fields = (
             'number',
-            'tournament',
-            'player'
+            'tournament_number',
+            'player_number',
+            'rank'
         )
 
+    @staticmethod
+    def get_tournament_number(instance):
+        return instance.tournament.number
 
-class ParticipantDetailSerializer(serializers.ModelSerializer):
+    @staticmethod
+    def get_player_number(instance):
+        return instance.player.number
+
+
+class ParticipantDetailSerializer(ParticipantListSerializer):
+    username = serializers.SerializerMethodField()
+    last_name = serializers.SerializerMethodField()
+    first_name = serializers.SerializerMethodField()
+
     class Meta:
         model = Participant
         fields = (
             'number',
-            'tournament',
-            'player',
+            'tournament_number',
+            'player_number',
+            'username',
+            'last_name',
+            'first_name',
             'total_points',
             'rank'
         )
+
+    @staticmethod
+    def get_username(instance):
+        return instance.player.username
+
+    @staticmethod
+    def get_last_name(instance):
+        return instance.player.last_name
+
+    @staticmethod
+    def get_first_name(instance):
+        return instance.player.first_name
