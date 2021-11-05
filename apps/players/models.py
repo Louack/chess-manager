@@ -1,4 +1,5 @@
 from django.db import models
+from rest_framework.exceptions import APIException
 
 from apps.user_profiles.models import Profile
 
@@ -85,6 +86,7 @@ class Player(models.Model):
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
         self.check_player_number_and_rank()
+        self.check_username_field_uniqueness()
         super().save()
 
     def calcultate_new_average_place(self, place):
@@ -94,6 +96,15 @@ class Player(models.Model):
             places_sum = self.avg_place * self.tournaments_played
             places_sum += place
             self.avg_place = places_sum / (self.tournaments_played + 1)
+
+    def check_username_field_uniqueness(self):
+        usernames = [
+            player.username for player
+            in Player.objects.filter(creator=self.creator)
+            .exclude(number=self.number)
+        ]
+        if self.username in usernames:
+            raise APIException('This username is already used.')
 
 
 def get_new_ranks():
