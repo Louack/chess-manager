@@ -75,14 +75,18 @@ class Tournament(models.Model):
         previous_player_ids = []
         for player_id in self.players_list:
             if player_id in previous_player_ids:
-                raise APIException(f'The same ID is present several times')
+                raise APIException('The same ID is present several times')
             previous_player_ids.append(player_id)
             try:
-                Player.objects.get(creator=self.creator, number=player_id)
+                Player.objects.get(
+                    creator=self.creator,
+                    number=player_id
+                )
             except ObjectDoesNotExist:
                 players_do_not_exist.append(player_id)
         if players_do_not_exist:
-            raise APIException(f'The following player IDs do not exist: {players_do_not_exist}')
+            raise APIException('The following player IDs do '
+                               f'not exist: {players_do_not_exist}')
 
     def create_round_or_end_tournament(self):
         if self.finished_rounds < self.total_rounds:
@@ -127,7 +131,7 @@ class Tournament(models.Model):
             self.add_participants()
             self.create_round_or_end_tournament()
         else:
-            raise APIException(f'The players list is incomplete')
+            raise APIException('The players list is incomplete')
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
@@ -189,10 +193,6 @@ class Round(models.Model):
     class Meta:
         verbose_name = 'Round'
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.__original_finished_matches = self.finished_matches
-
     def __str__(self):
         return f'Round {self.number}'
 
@@ -210,11 +210,15 @@ class Round(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
-        matches_number = len(Match.objects.filter(round=self))
-        if self.finished_matches != self.__original_finished_matches:
-            if self.finished_matches == matches_number:
-                self.tournament.finished_rounds += 1
-                self.tournament.save()
+        participants = [
+            participant for participant in Participant.objects.filter(
+                tournament=self.tournament
+            )
+        ]
+        matches_number = len(participants) // 2
+        if self.finished_matches == matches_number:
+            self.tournament.finished_rounds += 1
+            self.tournament.save()
         super().save()
 
     def sort_participants(self):
@@ -358,9 +362,9 @@ class Match(models.Model):
 
     def check_results(self):
         if self.result_participant_1 and self.result_participant_2:
-            results_sum = self.result_participant_1 + self.result_participant_2
-            if results_sum != 1:
-                raise APIException('Results of points sum must be equal to 1.')
+            res_sum = self.result_participant_1 + self.result_participant_2
+            if res_sum != 1:
+                raise APIException('Points sum must be equal to 1.')
 
     def finalize_match(self):
         if type(self.result_participant_1 and
@@ -369,7 +373,7 @@ class Match(models.Model):
             self.round.finished_matches += 1
             self.round.save()
         else:
-            raise APIException('Results must be entered before locking match.')
+            raise APIException('Results must be entered before locking.')
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):

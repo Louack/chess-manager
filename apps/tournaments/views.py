@@ -2,11 +2,18 @@ from rest_framework import viewsets
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.exceptions import APIException
 
-from apps.tournaments.models import Tournament, Participant, Round, Match
-from apps.tournaments.permissions import TournamentAccess, ParticipantAccess, RoundAccess, \
-    MatchAccess
-from apps.tournaments.serializers import TournamentSerializer, ParticipantSerializer, \
-    RoundSerializer, MatchSerializer
+from apps.tournaments.models import (Tournament,
+                                     Participant,
+                                     Round,
+                                     Match)
+from apps.tournaments.permissions import (TournamentAccess,
+                                          ParticipantAccess,
+                                          RoundAccess,
+                                          MatchAccess)
+from apps.tournaments.serializers import (TournamentSerializer,
+                                          ParticipantSerializer,
+                                          RoundSerializer,
+                                          MatchSerializer)
 
 
 class ChessBaseViewset(viewsets.ModelViewSet):

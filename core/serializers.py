@@ -23,9 +23,9 @@ class RegistrationSerializer(serializers.ModelSerializer):
         password2 = self.validated_data['password2']
 
         if password != password2:
-            raise serializers.ValidationError({'Password': 'Passwords are not matching.'})
+            raise serializers.ValidationError(
+                {'Password': 'Passwords are not matching.'}
+            )
 
         new_user.set_password(password)
         new_user.save()
-
-

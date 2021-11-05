@@ -4,17 +4,21 @@ from rest_framework.test import APITestCase
 from django.core.management import call_command
 from apps.user_profiles.models import Profile
 from django.contrib.auth.models import User
-from apps.tournaments.models import Tournament
 
 
 class TestMatchRoute(APITestCase):
     @classmethod
     def setUpClass(cls):
-        call_command('loaddata', 'fixtures/test_data_users.json', verbosity=0)
-        call_command('loaddata', 'fixtures/test_data_players.json', verbosity=0)
-        call_command('loaddata', 'fixtures/test_data_tournaments.json', verbosity=0)
-        call_command('loaddata', 'fixtures/test_data_rounds.json', verbosity=0)
-        call_command('loaddata', 'fixtures/test_data_matches.json', verbosity=0)
+        call_command('loaddata', 'fixtures/test_data_users.json',
+                     verbosity=0)
+        call_command('loaddata', 'fixtures/test_data_players.json',
+                     verbosity=0)
+        call_command('loaddata', 'fixtures/test_data_tournaments.json',
+                     verbosity=0)
+        call_command('loaddata', 'fixtures/test_data_rounds.json',
+                     verbosity=0)
+        call_command('loaddata', 'fixtures/test_data_matches.json',
+                     verbosity=0)
 
         cls.user = User.objects.get(pk=1)
         cls.profile = Profile.objects.get(pk=1)
@@ -60,36 +64,46 @@ class TestOpenMatchRoute(TestMatchRoute):
         self.client.force_authenticate(user=self.user)
 
     def test_matches_list(self):
-        response = self.client.get(reverse('matches-list', kwargs=self.open_kwargs_list))
+        response = self.client.get(reverse('matches-list',
+                                           kwargs=self.open_kwargs_list))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_matches_retrieve(self):
-        response = self.client.get(reverse('matches-detail', kwargs=self.open_kwargs_detail))
+        response = self.client.get(reverse('matches-detail',
+                                           kwargs=self.open_kwargs_detail))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_matches_post(self):
-        response = self.client.post(reverse('matches-list', kwargs=self.open_kwargs_list),
+        response = self.client.post(reverse('matches-list',
+                                            kwargs=self.open_kwargs_list),
                                     data={})
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+        self.assertEqual(response.status_code,
+                         status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_matches_put_success(self):
-        response = self.client.put(reverse('matches-detail', kwargs=self.open_kwargs_detail),
+        response = self.client.put(reverse('matches-detail',
+                                           kwargs=self.open_kwargs_detail),
                                    data=self.match_put_form_success)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_matches_put_sum_not_1(self):
-        response = self.client.put(reverse('matches-detail', kwargs=self.open_kwargs_detail),
+        response = self.client.put(reverse('matches-detail',
+                                           kwargs=self.open_kwargs_detail),
                                    data=self.match_put_form_sum_not_1)
-        self.assertIn(b'Results of points sum must be equal to 1.', response.content)
+        self.assertIn(b'Points sum must be equal to 1.', response.content)
 
     def test_matches_put_not_float(self):
-        response = self.client.put(reverse('matches-detail', kwargs=self.open_kwargs_detail),
+        response = self.client.put(reverse('matches-detail',
+                                           kwargs=self.open_kwargs_detail),
                                    data=self.match_put_form_not_float)
-        self.assertIn(b'Results must be entered before locking match.', response.content)
+        self.assertIn(b'Results must be entered before locking.',
+                      response.content)
 
     def test_matches_delete(self):
-        response = self.client.delete(reverse('matches-detail', kwargs=self.open_kwargs_detail))
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+        response = self.client.delete(reverse('matches-detail',
+                                              kwargs=self.open_kwargs_detail))
+        self.assertEqual(response.status_code,
+                         status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
 class TestLockedMatchRoute(TestMatchRoute):
@@ -97,7 +111,7 @@ class TestLockedMatchRoute(TestMatchRoute):
         self.client.force_authenticate(user=self.user)
 
     def test_matches_already_played(self):
-        response = self.client.put(reverse('matches-detail', kwargs=self.locked_kwargs),
+        response = self.client.put(reverse('matches-detail',
+                                           kwargs=self.locked_kwargs),
                                    data=self.match_put_form_success)
         self.assertIn(b'A played match cannot be modified.', response.content)
-

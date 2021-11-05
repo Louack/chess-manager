@@ -14,4 +14,3 @@ class PlayerAdmin(admin.ModelAdmin):
         'avg_place',
         'date_created',
     )
-

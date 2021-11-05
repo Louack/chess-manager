@@ -86,4 +86,3 @@ class Player(models.Model):
              update_fields=None):
         self.check_player_number_and_rank()
         super().save()
-

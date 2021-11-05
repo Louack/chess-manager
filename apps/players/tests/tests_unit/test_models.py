@@ -10,8 +10,10 @@ class TestPlayerModel(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        call_command('loaddata', 'fixtures/test_data_users.json', verbosity=0)
-        call_command('loaddata', 'fixtures/test_data_tournaments.json', verbosity=0)
+        call_command('loaddata', 'fixtures/test_data_users.json',
+                     verbosity=0)
+        call_command('loaddata', 'fixtures/test_data_tournaments.json',
+                     verbosity=0)
 
         cls.user = User.objects.get(pk=1)
 

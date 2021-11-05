@@ -1,7 +1,10 @@
 from django.urls import path, include
 from rest_framework.routers import SimpleRouter
 from rest_framework_nested.routers import NestedSimpleRouter
-from .views import TournamentViewset, ParticipantViewset, RoundViewset, MatchViewset
+from .views import (TournamentViewset,
+                    ParticipantViewset,
+                    RoundViewset,
+                    MatchViewset)
 
 router_tournaments = SimpleRouter()
 router_tournaments.register(

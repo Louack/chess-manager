@@ -27,6 +27,7 @@ class PlayerViewset(viewsets.ModelViewSet):
             player=player
         )]
         if participants:
-            raise APIException('This player is participating to at least one tournament.')
+            raise APIException('This player is participating to at '
+                               'least one tournament.')
         else:
             return super().destroy(request, *args, **kwargs)

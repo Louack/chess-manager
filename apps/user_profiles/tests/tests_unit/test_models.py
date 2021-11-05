@@ -1,5 +1,4 @@
 from django.test import TestCase
-from django.core.management import call_command
 from apps.user_profiles.models import Profile
 from django.contrib.auth.models import User
 from apps.players.models import Player

@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.views import (TokenObtainPairView,
+                                            TokenRefreshView)
 
 from .views import Registration
 
@@ -23,9 +24,12 @@ from apps.players.urls import router_players
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/register/', Registration.as_view(), name='registration'),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/register/', Registration.as_view(),
+         name='registration'),
+    path('api/token/', TokenObtainPairView.as_view(),
+         name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(),
+         name='token_refresh'),
     path('api/profile/', include('apps.user_profiles.urls')),
     path('api/players/', include(router_players.urls)),
     path('api/', include('apps.tournaments.urls'))
