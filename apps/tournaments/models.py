@@ -3,7 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from rest_framework.exceptions import APIException
 
-from apps.players.models import Player
+from apps.players.models import Player, get_new_ranks
 from apps.user_profiles.models import Profile
 
 
@@ -96,7 +96,7 @@ class Tournament(models.Model):
             )
             new_round.initialize_matches()
         else:
-            pass
+            self.finalize_tournament()
 
     def handle_first_save(self):
         self.created = True
@@ -157,6 +157,41 @@ class Tournament(models.Model):
                 rank=player.rank
             )
 
+    def get_participants(self):
+        participants = [
+            participant for participant in Participant.objects.filter(
+                tournament=self
+            )
+        ]
+        return participants
+
+    def finalize_tournament(self):
+        sorted_participants = self.sort_participants(finalize=True)
+        players = [participant.player for participant in sorted_participants]
+        for place, player in enumerate(players, 1):
+            player.calcultate_new_average_place(place)
+            player.tournaments_played += 1
+            if place == 1:
+                player.tournaments_won += 1
+            player.save()
+        get_new_ranks()
+
+    def sort_participants(self, finalize=False):
+        participants = self.get_participants()
+        sorted_participants = sorted(
+            participants, key=lambda participant: (
+                -participant.total_points,
+                participant.rank
+            )
+        )
+        sorted_participant_numbers = [
+            participant.number for participant in sorted_participants
+        ]
+        if finalize:
+            return sorted_participants
+        else:
+            return sorted_participant_numbers
+
 
 class Round(models.Model):
     number = models.IntegerField(
@@ -210,37 +245,16 @@ class Round(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
-        participants = [
-            participant for participant in Participant.objects.filter(
-                tournament=self.tournament
-            )
-        ]
+        participants = self.tournament.get_participants()
         matches_number = len(participants) // 2
         if self.finished_matches == matches_number:
             self.tournament.finished_rounds += 1
             self.tournament.save()
         super().save()
 
-    def sort_participants(self):
-        participants = [
-            participant for participant in Participant.objects.filter(
-                tournament=self.tournament
-            )
-        ]
-        sorted_participants = sorted(
-            participants, key=lambda participant: (
-                -participant.total_points,
-                participant.rank
-            )
-        )
-        sorted_participant_numbers = [
-            participant.number for participant in sorted_participants
-        ]
-        return sorted_participant_numbers
-
     def match_participants(self):
         pairs_list = []
-        sorted_participants = self.sort_participants()
+        sorted_participants = self.tournament.sort_participants()
         if self.number == 1:
             pairs_list = self.get_first_round_pairs(
                 pairs_list,

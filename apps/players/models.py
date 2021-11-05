@@ -86,3 +86,26 @@ class Player(models.Model):
              update_fields=None):
         self.check_player_number_and_rank()
         super().save()
+
+    def calcultate_new_average_place(self, place):
+        if not self.avg_place:
+            self.avg_place = place
+        else:
+            places_sum = self.avg_place * self.tournaments_played
+            places_sum += place
+            self.avg_place = places_sum / (self.tournaments_played + 1)
+
+
+def get_new_ranks():
+    players = [player for player in Player.objects.all()]
+    sorted_players = sorted(
+        players, key=lambda player: (
+            - bool(player.avg_place),
+            player.avg_place,
+            - player.tournaments_played,
+            player.date_created
+        ),
+    )
+    for rank, player in enumerate(sorted_players, 1):
+        player.rank = rank
+        player.save()
