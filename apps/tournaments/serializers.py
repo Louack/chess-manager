@@ -24,7 +24,7 @@ class TournamentListSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_open(obj):
-        if obj.locked or obj.finished_rounds == obj.total_rounds:
+        if obj.locked:
             return False
         else:
             return True

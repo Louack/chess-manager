@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.exceptions import APIException
+from rest_framework.permissions import IsAuthenticated
 
 from apps.tournaments.models import (Tournament,
                                      Participant,
@@ -49,7 +50,7 @@ class ChessBaseViewset(viewsets.ModelViewSet):
 
 
 class TournamentViewset(viewsets.ModelViewSet):
-    permission_classes = [TournamentAccess]
+    permission_classes = [IsAuthenticated, TournamentAccess]
     lookup_field = 'number'
     pagination_class = CustomPagination
 
@@ -73,7 +74,7 @@ class TournamentViewset(viewsets.ModelViewSet):
 
 class RoundViewset(ChessBaseViewset):
     http_method_names = ['get', 'head', 'options', 'trace']
-    permission_classes = [RoundAccess]
+    permission_classes = [IsAuthenticated, RoundAccess]
     lookup_field = 'number'
 
     def initial(self, request, *args, **kwargs):
@@ -96,7 +97,7 @@ class RoundViewset(ChessBaseViewset):
 
 class MatchViewset(ChessBaseViewset):
     http_method_names = ['get', 'put', 'patch', 'head', 'options', 'trace']
-    permission_classes = [MatchAccess]
+    permission_classes = [IsAuthenticated, MatchAccess]
     lookup_field = 'number'
 
     def initial(self, request, *args, **kwargs):
@@ -121,7 +122,7 @@ class MatchViewset(ChessBaseViewset):
 
 class ParticipantViewset(ChessBaseViewset):
     http_method_names = ['get', 'head', 'options', 'trace']
-    permission_classes = [ParticipantAccess]
+    permission_classes = [IsAuthenticated, ParticipantAccess]
     lookup_field = 'number'
 
     def initial(self, request, *args, **kwargs):
