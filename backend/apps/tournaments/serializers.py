@@ -16,6 +16,7 @@ class TournamentListSerializer(serializers.ModelSerializer):
             'players_list',
             'total_rounds',
             'finished_rounds',
+            'tournament_date',
             'date_created'
         )
 
@@ -34,6 +35,7 @@ class TournamentDetailSerializer(TournamentListSerializer):
             'players_list',
             'total_rounds',
             'finished_rounds',
+            'tournament_date',
             'date_created',
             'ranking',
             'locked',

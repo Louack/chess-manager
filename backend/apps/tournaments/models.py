@@ -39,19 +39,21 @@ class Tournament(models.Model):
         blank=True,
         default=list,
         size=8,
-
     )
     open = models.BooleanField(
+        editable=False,
         default=True,
         blank=True,
         null=True
     )
     on_going = models.BooleanField(
+        editable=False,
         default=False,
         blank=True,
         null=True
     )
     completed = models.BooleanField(
+        editable=False,
         default=False,
         blank=True,
         null=True
@@ -64,6 +66,10 @@ class Tournament(models.Model):
     created = models.BooleanField(
         editable=False,
         default=False,
+        blank=True,
+        null=True
+    )
+    tournament_date = models.DateField(
         blank=True,
         null=True
     )

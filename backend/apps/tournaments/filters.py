@@ -22,6 +22,7 @@ class TournamentFilter(filters.FilterSet):
             'completed',
             'total_rounds',
             'finished_rounds',
+            'tournament_date',
             'date_created',
             'sort_by'
         ]

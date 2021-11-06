@@ -11,7 +11,8 @@ class TournamentAdmin(admin.ModelAdmin):
         'finished_rounds',
         'open',
         'on_going',
-        'completed'
+        'completed',
+        'tournament_date'
     )
 
 
