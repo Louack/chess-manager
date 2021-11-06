@@ -2,7 +2,9 @@ from rest_framework import viewsets
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.exceptions import APIException
 from rest_framework.permissions import IsAuthenticated
+from django_filters import rest_framework as filters
 
+from apps.tournaments.filters import TournamentFilter
 from apps.tournaments.models import (Tournament,
                                      Participant,
                                      Round,
@@ -53,6 +55,8 @@ class TournamentViewset(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, TournamentAccess]
     lookup_field = 'number'
     pagination_class = CustomPagination
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = TournamentFilter
 
     def get_queryset(self):
         queryset = Tournament.objects.filter(

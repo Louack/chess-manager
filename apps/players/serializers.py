@@ -12,7 +12,8 @@ class PlayerListSerializer(serializers.ModelSerializer):
             'username',
             'last_name',
             'first_name',
-            'rank'
+            'rank',
+            'date_created'
         )
 
 

@@ -1,7 +1,9 @@
 from rest_framework import viewsets
 from rest_framework.exceptions import APIException
 from rest_framework.permissions import IsAuthenticated
+from django_filters import rest_framework as filters
 
+from apps.players.filters import PlayerFilter
 from apps.players.models import Player
 from apps.players.permissions import PlayersAccess
 from apps.players.serializers import (PlayerListSerializer,
@@ -14,6 +16,8 @@ class PlayerViewset(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, PlayersAccess]
     lookup_field = 'number'
     pagination_class = CustomPagination
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = PlayerFilter
 
     def get_queryset(self):
         queryset = Player.objects.filter(

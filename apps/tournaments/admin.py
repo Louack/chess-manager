@@ -9,7 +9,9 @@ class TournamentAdmin(admin.ModelAdmin):
         'number',
         'creator',
         'finished_rounds',
-        'locked'
+        'open',
+        'on_going',
+        'completed'
     )
 
 

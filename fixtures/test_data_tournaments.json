@@ -10,7 +10,11 @@
       "finished_rounds": 0,
       "players_list": "[]",
       "locked": false,
-      "created": true
+      "open": true,
+      "on_going": false,
+      "completed": false,
+      "created": true,
+      "date_created": "2021-10-29T19:19:51.981Z"
     }
   },
   {
@@ -24,7 +28,11 @@
       "finished_rounds": 0,
       "players_list": "[\"1\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\", \"8\"]",
       "locked": true,
-      "created": true
+      "open": false,
+      "on_going": true,
+      "completed": false,
+      "created": true,
+      "date_created": "2021-10-29T19:19:51.981Z"
     }
   }
 ]

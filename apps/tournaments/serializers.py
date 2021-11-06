@@ -5,10 +5,6 @@ from apps.tournaments.models import Tournament, Participant, Round, Match
 
 
 class TournamentListSerializer(serializers.ModelSerializer):
-    open = serializers.SerializerMethodField()
-    on_going = serializers.SerializerMethodField()
-    completed = serializers.SerializerMethodField()
-
     class Meta:
         model = Tournament
         fields = (
@@ -20,28 +16,8 @@ class TournamentListSerializer(serializers.ModelSerializer):
             'players_list',
             'total_rounds',
             'finished_rounds',
+            'date_created'
         )
-
-    @staticmethod
-    def get_open(obj):
-        if obj.locked:
-            return False
-        else:
-            return True
-
-    @staticmethod
-    def get_on_going(obj):
-        if obj.locked and obj.finished_rounds != obj.total_rounds:
-            return True
-        else:
-            return False
-
-    @staticmethod
-    def get_completed(obj):
-        if obj.finished_rounds == obj.total_rounds:
-            return True
-        else:
-            return False
 
 
 class TournamentDetailSerializer(TournamentListSerializer):
@@ -58,8 +34,9 @@ class TournamentDetailSerializer(TournamentListSerializer):
             'players_list',
             'total_rounds',
             'finished_rounds',
+            'date_created',
             'ranking',
-            'locked'
+            'locked',
         )
         extra_kwargs = {
             'locked': {

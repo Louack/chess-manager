@@ -41,6 +41,21 @@ class Tournament(models.Model):
         size=8,
 
     )
+    open = models.BooleanField(
+        default=True,
+        blank=True,
+        null=True
+    )
+    on_going = models.BooleanField(
+        default=False,
+        blank=True,
+        null=True
+    )
+    completed = models.BooleanField(
+        default=False,
+        blank=True,
+        null=True
+    )
     locked = models.BooleanField(
         default=False,
         blank=True,
@@ -51,6 +66,9 @@ class Tournament(models.Model):
         default=False,
         blank=True,
         null=True
+    )
+    date_created = models.DateTimeField(
+        auto_now_add=True
     )
 
     class Meta:
@@ -96,7 +114,10 @@ class Tournament(models.Model):
             )
             new_round.initialize_matches()
         else:
+            self.on_going = False
+            self.completed = True
             self.finalize_tournament()
+            super().save()
 
     def handle_first_save(self):
         self.created = True
@@ -127,6 +148,8 @@ class Tournament(models.Model):
 
     def lock_tournament(self):
         if len(self.players_list) == 8:
+            self.open = False
+            self.on_going = True
             super().save()
             self.add_participants()
             self.create_round_or_end_tournament()
