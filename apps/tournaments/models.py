@@ -3,7 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from rest_framework.exceptions import APIException
 
-from apps.players.models import Player, get_new_ranks
+from apps.players.models import Player
 from apps.user_profiles.models import Profile
 
 
@@ -117,20 +117,15 @@ class Tournament(models.Model):
             self.on_going = False
             self.completed = True
             self.finalize_tournament()
-            super().save()
+        super().save()
 
     def handle_first_save(self):
         self.created = True
         self.check_players_list()
-        self.handle_lock_at_creation()
-        self.add_tournament_number()
-        super().save()
-
-    def handle_lock_at_creation(self):
         if self.locked:
             self.lock_tournament()
-        else:
-            super().save()
+        self.add_tournament_number()
+        super().save()
 
     def handle_lock_at_update(self):
         if self.locked and not self.__original_locked:
@@ -165,7 +160,6 @@ class Tournament(models.Model):
 
     def check_finished_rounds_update(self):
         if self.finished_rounds != self.__original_finished_rounds:
-            super().save()
             self.create_round_or_end_tournament()
         else:
             raise APIException('A locked tournament cannot be modified')
@@ -197,7 +191,7 @@ class Tournament(models.Model):
             if place == 1:
                 player.tournaments_won += 1
             player.save()
-        get_new_ranks()
+        self.define_new_ranks()
 
     def sort_participants(self, numbers=False):
         participants = self.get_participants()
@@ -214,6 +208,21 @@ class Tournament(models.Model):
             return sorted_participant_numbers
         else:
             return sorted_participants
+
+    def define_new_ranks(self):
+        players = [player for player
+                   in Player.objects.filter(creator=self.creator)]
+        sorted_players = sorted(
+            players, key=lambda player: (
+                - bool(player.avg_place),
+                player.avg_place,
+                - player.tournaments_played,
+                player.date_created
+            ),
+        )
+        for rank, player in enumerate(sorted_players, 1):
+            player.rank = rank
+            player.save()
 
 
 class Round(models.Model):

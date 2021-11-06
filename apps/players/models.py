@@ -106,18 +106,3 @@ class Player(models.Model):
         ]
         if self.username in usernames:
             raise APIException('This username is already used.')
-
-
-def get_new_ranks():
-    players = [player for player in Player.objects.all()]
-    sorted_players = sorted(
-        players, key=lambda player: (
-            - bool(player.avg_place),
-            player.avg_place,
-            - player.tournaments_played,
-            player.date_created
-        ),
-    )
-    for rank, player in enumerate(sorted_players, 1):
-        player.rank = rank
-        player.save()
