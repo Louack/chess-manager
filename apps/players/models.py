@@ -95,7 +95,8 @@ class Player(models.Model):
         else:
             places_sum = self.avg_place * self.tournaments_played
             places_sum += place
-            self.avg_place = places_sum / (self.tournaments_played + 1)
+            avg_place = places_sum / (self.tournaments_played + 1)
+            self.avg_place = round(avg_place, 2)
 
     def check_username_field_uniqueness(self):
         usernames = [
