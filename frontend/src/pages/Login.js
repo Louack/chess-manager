@@ -47,7 +47,7 @@ const Login = () => {
             <form onSubmit={handleLogin}>
                 <input onChange={(e) => setUsername(e.target.value)} type='text' placeholder="Nom d'utilisateur" value={username}/>
                 {blankUsername && <p>Veuillez entrer un nom d'utilisateur.</p>}
-                <input onChange={(e) => setPassword(e.target.value)}type='text' placeholder="Mot de passe" value={password}/>
+                <input onChange={(e) => setPassword(e.target.value)}type='password' placeholder="Mot de passe" value={password}/>
                 {blankPassword && <p>Veuillez entrer un mot de passe.</p>}
                 {badCredentials && <p>Ces identifiants sont incorrects.</p>}
                 <input type='submit' value="Se connecter"/>
