@@ -2,11 +2,12 @@ import React from 'react';
 import  { NavLink } from "react-router-dom"
 import '../App.css'
 
-const navclassname = ({ isActive }) => "nav-link" + (isActive ? "-selected" : "")
 
 const Navigation = () => {
+    const navclassname = ({ isActive }) => "nav-link" + (isActive ? "-selected" : "")
+
     return (
-        <div className='navigation' >
+        <nav className='navigation' >
             <NavLink className={navclassname} end to ="/">
                 Dashboard
             </NavLink>
@@ -19,7 +20,7 @@ const Navigation = () => {
             <NavLink className={navclassname} end to ="/players">
                 Mes joueurs
             </NavLink>
-        </div>
+        </nav>
     );
 };
 

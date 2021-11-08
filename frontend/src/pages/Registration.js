@@ -5,7 +5,7 @@ const Registration = () => {
     return (
         <div className='registration'>
             Register here
-            <Link className={'nav-link'} end to ="/login">
+            <Link className={'nav-link'} to ="/login">
                 Back to Login
             </Link>
         </div>
