@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext} from 'react';
 import  { Link } from "react-router-dom";
 import axios from "axios";
+import AuthContext from '../context/AuthContext';
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -8,6 +9,7 @@ const Login = () => {
     const [blankUsername, setBlankUsername] = useState(false)
     const [blankPassword, setBlankPassword] = useState(false)
     const [badCredentials, setBadCredentials] = useState(false)
+    let {getAuthTokens} = useContext(AuthContext)
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -28,8 +30,7 @@ const Login = () => {
             };
             try {
                 let res = await axios.post('/api/token/', loginData);
-                let resData = res.data;
-                console.log(resData)
+                getAuthTokens(res.data)
                 setUsername('');
                 setPassword('');
             } catch(error) {
