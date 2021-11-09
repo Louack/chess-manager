@@ -19,6 +19,7 @@ const Registration = () => {
         setBlankPassword2(false)
         setResponse(false)
         setResponseMessage(false)
+
         if (username === '' || password === '' || password2 === '') {
             if (username === '') {
                 setBlankUsername(true)
@@ -40,7 +41,7 @@ const Registration = () => {
                 let resData = res.data;
                 console.log(resData)
                 setResponse(true)
-                setResponseMessage('Utilisateur créé avec succès !')
+                setResponseMessage(`${username} a été créé avec succès !`)
                 setUsername('');
                 setPassword('');
                 setPassword2('');
@@ -49,7 +50,7 @@ const Registration = () => {
                 console.log(response.data)
                 if (response.status === 400) {
                     setResponse(true)
-                    response.data.username && setResponseMessage("Ce nom d'utilisateur existe déjà");
+                    response.data.username && setResponseMessage("Ce nom d'utilisateur est incorrect.");
                     response.data.Password && setResponseMessage("Les mots de passe ne correspondent pas.");
                     response.data.password && setResponseMessage("Le mot de passe est trop court ou trop commun.");
                 }

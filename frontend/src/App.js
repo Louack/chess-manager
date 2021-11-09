@@ -7,18 +7,20 @@ import Players from './pages/Players';
 import Profile from './pages/Profile';
 import Registration from './pages/Registration';
 import Tournaments from './pages/Tournaments';
+import PrivateRoute from './utils/PrivateRoute';
+import PublicRoute from './utils/PublicRoute';
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Registration />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/tournaments" element={<Tournaments />} />
-        <Route path="/players" element={<Players />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+        <Route path="/register" element={<PublicRoute><Registration /></PublicRoute>} />
+        <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+        <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+        <Route path="/tournaments" element={<PrivateRoute><Tournaments /></PrivateRoute>} />
+        <Route path="/players" element={<PrivateRoute><Players /></PrivateRoute>} />
+        <Route path="*" element={<PrivateRoute><NotFound /></PrivateRoute>} />
       </Routes>
     </BrowserRouter>
   );
