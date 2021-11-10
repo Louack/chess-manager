@@ -8,14 +8,14 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [blankUsername, setBlankUsername] = useState(false)
     const [blankPassword, setBlankPassword] = useState(false)
-    const [badCredentials, setBadCredentials] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
     let {getAuthTokens} = useContext(AuthContext)
 
     const handleLogin = async (e) => {
         e.preventDefault();
         setBlankUsername(false);
         setBlankPassword(false);
-        setBadCredentials(false)
+        setErrorMessage('')
         if (username === '' || password === '') {
             if (username === '') {
                 setBlankUsername(true)
@@ -34,7 +34,9 @@ const Login = () => {
             } catch(error) {
                 let status = error.response.status;
                 if (status === 401) {
-                    setBadCredentials(true)
+                    setErrorMessage('Ces identifiants sont incorrects.')
+                } else if (status === 429) {
+                    setErrorMessage("Trop d'essais.")
                 }
             };
         };
@@ -48,7 +50,7 @@ const Login = () => {
                 {blankUsername && <p>Veuillez entrer un nom d'utilisateur.</p>}
                 <input onChange={(e) => setPassword(e.target.value)}type='password' placeholder="Mot de passe" value={password}/>
                 {blankPassword && <p>Veuillez entrer un mot de passe.</p>}
-                {badCredentials && <p>Ces identifiants sont incorrects.</p>}
+                {errorMessage && <p>{errorMessage}</p>}
                 <input type='submit' value="Se connecter"/>
             </form>
             <Link className={'nav-link'} to ="/register">
