@@ -31,8 +31,6 @@ const Login = () => {
             try {
                 let res = await axios.post('/api/token/', loginData);
                 getAuthTokens(res.data)
-                setUsername('');
-                setPassword('');
             } catch(error) {
                 let status = error.response.status;
                 if (status === 401) {

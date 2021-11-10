@@ -1,8 +1,10 @@
-import { Navigate } from "react-router-dom"
+import { Navigate } from "react-router-dom";
+import { useContext} from 'react';
+import AuthContext from '../context/AuthContext';
 
 const PublicRoute = ({children}) => {
-    const auth = false
-    return !auth ? children : <Navigate to='/'/>;
+    let {tokens} = useContext(AuthContext)
+    return !tokens ? children : <Navigate to='/'/>;
 }
 
 export default PublicRoute

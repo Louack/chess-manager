@@ -6,16 +6,25 @@ export default AuthContext;
 
 
 export const AuthProvider = ({children}) => {
-    const [authTokens, setauthTokens] = useState('')
+    let checkToken = () => {
+        return localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null
+    } 
+    const [authTokens, setAuthTokens] = useState(checkToken)
 
     let getAuthTokens = (resData) => {
-        setauthTokens(resData);
+        setAuthTokens(resData);
         localStorage.setItem('authTokens', JSON.stringify(resData))
+    }
+
+    let logout = () => {
+        setAuthTokens(null);
+        localStorage.removeItem("authTokens")
     }
 
     let context = {
         tokens:authTokens,
-        getAuthTokens:getAuthTokens
+        getAuthTokens:getAuthTokens,
+        logout:logout
     }
 
     return(
