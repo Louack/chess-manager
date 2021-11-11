@@ -1,9 +1,9 @@
 import React from 'react'
 
-const TournamentsListItem = () => {
+const TournamentsListItem = ({tournament}) => {
     return (
         <div>
-            
+            <p>{tournament.name}</p>
         </div>
     )
 }
