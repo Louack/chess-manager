@@ -1,5 +1,4 @@
 from rest_framework import viewsets
-from rest_framework.exceptions import APIException
 from rest_framework.permissions import IsAuthenticated
 from django_filters import rest_framework as filters
 
@@ -10,6 +9,8 @@ from apps.players.serializers import (PlayerListSerializer,
                                       PlayerDetailSerializer)
 from apps.tournaments.models import Participant
 from core.pagination import CustomPagination
+
+from core.exceptions import APIException400
 
 
 class PlayerViewset(viewsets.ModelViewSet):
@@ -42,7 +43,7 @@ class PlayerViewset(viewsets.ModelViewSet):
             player=player
         )]
         if participants:
-            raise APIException('This player is participating to at '
-                               'least one tournament.')
+            raise APIException400("This player is participating to at "
+                                  "least one tournament.")
         else:
             return super().destroy(request, *args, **kwargs)

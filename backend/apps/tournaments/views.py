@@ -1,6 +1,5 @@
 from rest_framework import viewsets
 from django.core.exceptions import ObjectDoesNotExist
-from rest_framework.exceptions import APIException
 from rest_framework.permissions import IsAuthenticated
 from django_filters import rest_framework as filters
 
@@ -22,6 +21,7 @@ from apps.tournaments.serializers import (TournamentListSerializer,
                                           ParticipantListSerializer,
                                           ParticipantDetailSerializer)
 from core.pagination import CustomPagination
+from core.exceptions import APIException404
 
 
 class ChessBaseViewset(viewsets.ModelViewSet):
@@ -36,7 +36,7 @@ class ChessBaseViewset(viewsets.ModelViewSet):
                 number=tournament_number
             )
         except ObjectDoesNotExist:
-            raise APIException('This tournament does not exist')
+            raise APIException404("Tournament does not exist.")
         return tournament
 
     def get_round(self):
@@ -47,7 +47,7 @@ class ChessBaseViewset(viewsets.ModelViewSet):
                 number=round_number
             )
         except ObjectDoesNotExist:
-            raise APIException('This round does not exist')
+            raise APIException404("Round does not exist.")
         return round_obj
 
 

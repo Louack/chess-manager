@@ -20,33 +20,33 @@ class TestTournamentRoute(APITestCase):
         cls.profile = Profile.objects.get(pk=1)
 
         cls.post_form = {
-            "tournament_name": "test_tournament",
+            "name": "test_tournament",
             "players_list": []
         }
 
         cls.put_form_wo_lock = {
-            "tournament_name": "modified_test_tournament",
+            "name": "modified_test_tournament",
             "players_list": [1, 2, 3, 4, 5, 6, 7, 8]
         }
 
         cls.put_form_wo_lock_wrong_player = {
-            "tournament_name": "modified_test_tournament",
+            "name": "modified_test_tournament",
             "players_list": [11]
         }
 
         cls.put_form_wo_lock_same_player = {
-            "tournament_name": "modified_test_tournament",
+            "name": "modified_test_tournament",
             "players_list": [1, 1]
         }
 
         cls.put_form_with_lock_good_list = {
-            "tournament_name": "modified_test_tournament",
+            "name": "modified_test_tournament",
             "players_list": [1, 2, 3, 4, 5, 6, 7, 8],
             "locked": True
         }
 
         cls.put_form_with_lock_bad_list = {
-            "tournament_name": "modified_test_tournament",
+            "name": "modified_test_tournament",
             "players_list": [1, 2, 3, 4, 5, 6, 7],
             "locked": True
         }

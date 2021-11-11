@@ -1,5 +1,5 @@
 from django.db import models
-from rest_framework.exceptions import APIException
+from core.exceptions import APIException400
 
 from apps.user_profiles.models import Profile
 
@@ -105,4 +105,4 @@ class Player(models.Model):
             .exclude(number=self.number)
         ]
         if self.username in usernames:
-            raise APIException('This username is already used.')
+            raise APIException400('This username is already used.')

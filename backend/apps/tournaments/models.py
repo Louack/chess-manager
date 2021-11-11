@@ -1,7 +1,7 @@
 from django.contrib.postgres.fields import ArrayField
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
-from rest_framework.exceptions import APIException
+from core.exceptions import APIException400
 
 from apps.players.models import Player
 from apps.user_profiles.models import Profile
@@ -19,7 +19,7 @@ class Tournament(models.Model):
         blank=True,
         null=True
     )
-    tournament_name = models.CharField(
+    name = models.CharField(
         max_length=70,
         blank=False,
         null=False
@@ -86,7 +86,7 @@ class Tournament(models.Model):
         self.__original_finished_rounds = self.finished_rounds
 
     def __str__(self):
-        return self.tournament_name
+        return self.name
 
     def add_tournament_number(self):
         if not self.number:
@@ -99,7 +99,7 @@ class Tournament(models.Model):
         previous_player_ids = []
         for player_id in self.players_list:
             if player_id in previous_player_ids:
-                raise APIException('The same ID is present several times')
+                raise APIException400('The same ID is present several times')
             previous_player_ids.append(player_id)
             try:
                 Player.objects.get(
@@ -109,7 +109,7 @@ class Tournament(models.Model):
             except ObjectDoesNotExist:
                 players_do_not_exist.append(player_id)
         if players_do_not_exist:
-            raise APIException('The following player IDs do '
+            raise APIException400('The following player IDs do '
                                f'not exist: {players_do_not_exist}')
 
     def create_round_or_end_tournament(self):
@@ -141,7 +141,7 @@ class Tournament(models.Model):
         elif not self.locked and not self.__original_locked:
             super().save()
         else:
-            raise APIException('A locked tournament cannot be modified')
+            raise APIException400('A locked tournament cannot be modified')
 
     def handle_tournament_update(self):
         self.check_players_list()
@@ -155,7 +155,7 @@ class Tournament(models.Model):
             self.add_participants()
             self.create_round_or_end_tournament()
         else:
-            raise APIException('The players list is incomplete')
+            raise APIException400('The players list is incomplete')
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
@@ -168,7 +168,7 @@ class Tournament(models.Model):
         if self.finished_rounds != self.__original_finished_rounds:
             self.create_round_or_end_tournament()
         else:
-            raise APIException('A locked tournament cannot be modified')
+            raise APIException400('A locked tournament cannot be modified')
 
     def add_participants(self):
         for number, player_id in enumerate(self.players_list, 1):
@@ -416,7 +416,7 @@ class Match(models.Model):
         if self.result_participant_1 and self.result_participant_2:
             res_sum = self.result_participant_1 + self.result_participant_2
             if res_sum != 1:
-                raise APIException('Points sum must be equal to 1.')
+                raise APIException400('Points sum must be equal to 1.')
 
     def finalize_match(self):
         if type(self.result_participant_1 and
@@ -425,12 +425,12 @@ class Match(models.Model):
             self.round.finished_matches += 1
             self.round.save()
         else:
-            raise APIException('Results must be entered before locking.')
+            raise APIException400('Results must be entered before locking.')
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
         if self.__original_played:
-            raise APIException('Match has already been played.')
+            raise APIException400('Match has already been played.')
         else:
             self.check_results()
             if self.played:

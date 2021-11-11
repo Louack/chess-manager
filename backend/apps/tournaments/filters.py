@@ -16,7 +16,7 @@ class TournamentFilter(filters.FilterSet):
         model = Tournament
         fields = [
             'number',
-            'tournament_name',
+            'name',
             'open',
             'on_going',
             'completed',

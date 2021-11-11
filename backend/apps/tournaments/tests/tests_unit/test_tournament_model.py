@@ -22,7 +22,7 @@ class TestTournamentModel(TestCase):
         cls.profile = Profile.objects.get(pk=1)
         cls.new_tournament = Tournament.objects.create(
             creator=cls.user.profile,
-            tournament_name='test_tour',
+            name='test_tour',
             players_list=[]
         )
 

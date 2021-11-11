@@ -7,6 +7,7 @@ from apps.tournaments.models import Tournament, Participant, Round, Match
 class TournamentAdmin(admin.ModelAdmin):
     list_display = (
         'number',
+        'name',
         'creator',
         'finished_rounds',
         'open',

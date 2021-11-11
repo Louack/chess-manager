@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from rest_framework.exceptions import APIException
+from core.exceptions import APIException400
 
 from apps.tournaments.models import Tournament, Participant, Round, Match
 
@@ -9,7 +9,7 @@ class TournamentListSerializer(serializers.ModelSerializer):
         model = Tournament
         fields = (
             'number',
-            'tournament_name',
+            'name',
             'open',
             'on_going',
             'completed',
@@ -28,7 +28,7 @@ class TournamentDetailSerializer(TournamentListSerializer):
         model = Tournament
         fields = (
             'number',
-            'tournament_name',
+            'name',
             'open',
             'on_going',
             'completed',
@@ -67,21 +67,21 @@ class TournamentDetailSerializer(TournamentListSerializer):
         if 'players_list' in validated_data.keys():
             tournament = Tournament.objects.create(
                 creator=creator,
-                tournament_name=validated_data['tournament_name'],
+                name=validated_data['name'],
                 players_list=validated_data['players_list'],
                 locked=validated_data['locked']
             )
         else:
             tournament = Tournament.objects.create(
                 creator=creator,
-                tournament_name=validated_data['tournament_name'],
+                name=validated_data['name'],
                 locked=validated_data['locked']
             )
         return tournament
 
     def update(self, instance, validated_data):
         if instance.locked:
-            raise APIException('A locked tournament cannot be modified')
+            raise APIException400("A locked tournament cannot be modified.")
         else:
             return super().update(instance, validated_data)
 
@@ -157,7 +157,7 @@ class MatchDetailSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         if instance.played:
-            raise APIException('A played match cannot be modified.')
+            raise APIException400("A played match cannot be modified.")
         else:
             return super().update(instance, validated_data)
 
