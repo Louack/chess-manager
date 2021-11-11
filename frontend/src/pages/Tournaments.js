@@ -1,28 +1,19 @@
-import axios from "axios";
-import React, { useContext, useEffect, useState} from "react";
+import React, { useEffect, useState} from "react";
 import Navigation from '../components/Navigation';
-import AuthContext from '../context/AuthContext';
+import useAxios from '../utils/useAxios';
 
 const Tournaments = () => {
     const [tournamentsList, setTournamentsList] = useState([])
     const [loading, setLoading] = useState(true)
-    let {authTokens, removeAuthTokens} = useContext(AuthContext)
+
+    let axios = useAxios()
 
     let getTournamentsList = async () => {
-        let headers = {
-            Authorization: "Bearer " + authTokens.access
-        }
-        try {
-            let response = await axios.get('api/tournaments/', {headers})
-            setTournamentsList(response.data.results)
-            if (loading) {
-                setLoading(false)
-            }
-        } catch(error) {
-            if (error.response.status === 401) {
-                removeAuthTokens()
-            }
-        }
+        let response = await axios.get('api/tournaments/')
+        setTournamentsList(response.data.results)
+        if (loading) {
+            setLoading(false)
+        } 
     }
 
     useEffect(() => {

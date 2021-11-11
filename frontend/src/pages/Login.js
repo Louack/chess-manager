@@ -37,6 +37,8 @@ const Login = () => {
                     setErrorMessage('Ces identifiants sont incorrects.')
                 } else if (status === 429) {
                     setErrorMessage("Trop d'essais.")
+                } else if (status === 500) {
+                    setErrorMessage("Erreur serveur.")
                 }
             };
         };
