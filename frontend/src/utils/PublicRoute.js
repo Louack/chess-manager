@@ -3,8 +3,8 @@ import { useContext} from 'react';
 import AuthContext from '../context/AuthContext';
 
 const PublicRoute = ({children}) => {
-    let {authTokens} = useContext(AuthContext)
-    return !authTokens ? children : <Navigate to='/'/>;
+    let {username} = useContext(AuthContext)
+    return !username ? children : <Navigate to='/'/>;
 }
 
 export default PublicRoute
