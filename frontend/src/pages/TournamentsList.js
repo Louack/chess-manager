@@ -2,7 +2,7 @@ import React, { useEffect, useState} from "react";
 import Navigation from '../components/Navigation';
 import useAxios from '../utils/useAxios';
 
-const Tournaments = () => {
+const TournamentsList = () => {
     const [tournamentsList, setTournamentsList] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -11,6 +11,7 @@ const Tournaments = () => {
     let getTournamentsList = async () => {
         let response = await axios.get('api/tournaments/')
         setTournamentsList(response.data.results)
+        console.log(response.data.results)
         if (loading) {
             setLoading(false)
         } 
@@ -35,11 +36,11 @@ const Tournaments = () => {
             <h1>Mes Tournois</h1>
             <ul>
                 {tournamentsList.map(tournament => (
-                    <li key={tournament.number} > {tournament.tournament_name} </li>
+                    <li key={tournament.number} > {tournament.name} </li>
                 ))}
             </ul>
         </div>
     );
 };
 
-export default Tournaments;
+export default TournamentsList;
