@@ -40,8 +40,8 @@ const Login = () => {
                 } else if (status === 500) {
                     setErrorMessage("Erreur serveur.")
                 }
-            };
-        };
+            }
+        }
     };
 
     return (

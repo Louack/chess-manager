@@ -1,14 +1,15 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import TournamentsListItem from "../components/TournamentsListItem";
 import TournamentsListHead from "../components/TournamentsListHead";
+import TournamentCreation from "../components/TournamentCreation";
 import BasePage from "./BasePage";
 import useAxios from '../utils/useAxios';
 
 const TournamentsList = () => {
-    let instructionMessage = <p>Sélectionnez une liste de tournois à afficher</p>
+    let creationDiv = <TournamentCreation />
 
     const [loading, setLoading] = useState(false);
-    const [bottomDiv, setBottomDiv] = useState(instructionMessage);
+    const [bottomDiv, setBottomDiv] = useState(creationDiv);
     const [tabs, setTabs] = useState({
         activeTab: null,
         tabNames: ['Tournois à venir', 'Tournois en cours', 'Tournois terminés']
@@ -18,12 +19,13 @@ const TournamentsList = () => {
         if (loading) setLoading(false)
     }, [loading]);
 
-    let toggleList = (e, index) => {
+    let toggleList = async (e, index) => {
         if (e.target.className === 'tour-type') {
-            getTournamentsList(index);
+            setLoading(true);
+            await getTournamentsList(index);
         } else {
             setTabs({...tabs, activeTab: null});
-            setBottomDiv(instructionMessage);
+            setBottomDiv(creationDiv);
         }
     }
 
@@ -32,7 +34,7 @@ const TournamentsList = () => {
             return 'tour-type-active';
         } else {
             return 'tour-type';
-        };
+        }
     };
 
     let getFilter = (index) => {
@@ -43,25 +45,26 @@ const TournamentsList = () => {
             return 'on_going';
         } else if (tabs.tabNames[index] === 'Tournois terminés') {
             return 'completed';
-        };
+        }
     };
 
     let axios = useAxios();
 
     let getTournamentsList = async (index) => {
-        setLoading(true);
         let filter = getFilter(index);
         let response = await axios.get(`api/tournaments/?${filter}=1`);
-        setBottomDiv(
-            response.data.results.map(tournament => (
-            <TournamentsListItem key={tournament.number} tournament={tournament} />
+        let tourList = response.data.results.map(tournament => (
+            <TournamentsListItem key={tournament.number} tournament={tournament}/>
         ))
-        );
+        setBottomDiv(
+            <div className='tournaments-list'>
+                {tourList}
+            </div>);
     };
 
     let tournamentsListHead = <TournamentsListHead tabs={tabs} setTabClassNames={setTabClassNames} toggleList={toggleList} />;
 
-    let getMainDiv = () => {
+    let getMainElement = () => {
         if (loading) {
             return (
                 <>
@@ -73,18 +76,16 @@ const TournamentsList = () => {
             return (
                 <>
                     {tournamentsListHead}
-                    <div className='tournaments-list'>
-                        {bottomDiv}
-                    </div>
+                    {bottomDiv}
                 </>
             );
-        };
+        }
     };
     
-    let mainDiv = getMainDiv();
+    let mainElement = getMainElement();
 
     return (
-       <BasePage main={mainDiv} />
+       <BasePage main={mainElement} />
     );
 };
 
