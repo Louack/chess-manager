@@ -2,7 +2,7 @@ import React from 'react'
 
 const TournamentsListItem = ({tournament}) => {
     return (
-        <div>
+        <div className='tournament-item'>
             <p>{tournament.name}</p>
         </div>
     )
