@@ -9,6 +9,7 @@ const TournamentsList = () => {
     let creationDiv = <TournamentCreation />
 
     const [loading, setLoading] = useState(false);
+    const [index, setIndex] = useState(false);
     const [bottomDiv, setBottomDiv] = useState(creationDiv);
     const [tabs, setTabs] = useState({
         activeTab: null,
@@ -16,13 +17,13 @@ const TournamentsList = () => {
     });
 
     useEffect(() => {
-        if (loading) setLoading(false)
+        if (loading) getTournamentsList(index)
     }, [loading]);
 
-    let toggleList = async (e, index) => {
+    let toggleList = (e, index) => {
         if (e.target.className === 'tour-type') {
+            setIndex(index)
             setLoading(true);
-            await getTournamentsList(index);
         } else {
             setTabs({...tabs, activeTab: null});
             setBottomDiv(creationDiv);
@@ -59,7 +60,9 @@ const TournamentsList = () => {
         setBottomDiv(
             <div className='tournaments-list'>
                 {tourList}
-            </div>);
+            </div>
+        );
+        setLoading(false)
     };
 
     let tournamentsListHead = <TournamentsListHead tabs={tabs} setTabClassNames={setTabClassNames} toggleList={toggleList} />;
