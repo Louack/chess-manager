@@ -25,5 +25,5 @@ code {
 .tour-type-active {
   margin-left: 10px;
   margin-right: 10px;
-  font-size: 40px;
+  border-bottom: solid;
 }
