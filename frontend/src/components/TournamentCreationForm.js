@@ -12,12 +12,13 @@ const schema = yup.object().shape({
         .required("Nom de tournoi requis."),
     tournament_date: yup
         .date(),
-    players_list: yup.array().max(8, 'La list ne peut excéder 8 joueurs.').of(
-        yup.object().shape({
+    players_list: yup
+        .array()
+        .max(8, 'La list ne peut excéder 8 joueurs.')
+        .of(yup.object().shape({
             label: yup.string().required(),
             value: yup.string().required()
-        })
-    ).required()
+        })).required()
 });
 
 const TournamentCreationForm = () => {
@@ -28,12 +29,10 @@ const TournamentCreationForm = () => {
         },
         resolver: yupResolver(schema)
     });
-
-    const axios = useAxios()
-
     const [playersOptions, setPlayersOptions] = useState([])
     const [nextPage, setNextPage] = useState('')
-    const [selectReady, setSelectReady] = useState(false)
+    const [lockedError, setLockedError] = useState('')
+    const axios = useAxios()
 
 
     async function getPlayersList (url) {
@@ -52,7 +51,6 @@ const TournamentCreationForm = () => {
                  setNextPage(response.data.next)
             } else {
                 setNextPage('')
-                setSelectReady(true)
             }
 
         } catch(error) {
@@ -60,7 +58,21 @@ const TournamentCreationForm = () => {
         }
     }
 
-    const getCleanedData = (data) => {
+    const submitWithoutLocking = async (data) => {
+        let locked = false
+        await postData(data, locked)
+    }
+
+    const submitWithLocking = async (data) => {
+        if (data.players_list.length != 8) {
+            return setLockedError('8 joueurs sont requis pour vérouiller le tournoi.')
+        } else {
+            let locked = true
+            await postData(data, locked)
+        }
+    }
+
+    const getCleanedData = (data, locked) => {
         let cleanedData = {}
         cleanedData.tournament_date = data.tournament_date.toISOString().split('T')[0]
         cleanedData.name = data.name
@@ -68,17 +80,16 @@ const TournamentCreationForm = () => {
         data.players_list.map(player => {
             return cleanedData.players_list.push(player.value)
         })
-        cleanedData.locked = false
+        cleanedData.locked = locked
         return cleanedData
     }
 
-    const handleTourCreation = async (data, locked) => {
-        console.log(locked)
-        let cleanedData = getCleanedData(data)
+    const postData = async (data, locked) => {
+        let cleanedData = getCleanedData(data, locked)
         await axios.post('/api/tournaments/', cleanedData)
     }
 
-    useEffect(() => {
+    useEffect( () => {
         const url = '/api/players/'
         getPlayersList(url)
     }, [])
@@ -89,7 +100,7 @@ const TournamentCreationForm = () => {
 
     return (
 
-        <form onSubmit={handleSubmit(handleTourCreation)}>
+        <form>
             <input
                 type='text'
                 name='name'
@@ -120,9 +131,17 @@ const TournamentCreationForm = () => {
             <span>{errors.players_list?.message}</span>
             <input
                 disabled={isSubmitting}
+                onClick={handleSubmit(submitWithoutLocking)}
                 type='submit'
-                value="Se connecter"
+                value="Créer"
             />
+            <input
+                disabled={isSubmitting}
+                onClick={handleSubmit(submitWithLocking)}
+                type='submit'
+                value="Créer et vérouiller"
+            />
+            {lockedError && <span>{lockedError}</span>}
         </form>
         );
 };
