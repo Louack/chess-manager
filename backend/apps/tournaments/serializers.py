@@ -69,12 +69,14 @@ class TournamentDetailSerializer(TournamentListSerializer):
                 creator=creator,
                 name=validated_data['name'],
                 players_list=validated_data['players_list'],
+                tournament_date=validated_data['tournament_date'],
                 locked=validated_data['locked']
             )
         else:
             tournament = Tournament.objects.create(
                 creator=creator,
                 name=validated_data['name'],
+                tournament_date=validated_data['tournament_date'],
                 locked=validated_data['locked']
             )
         return tournament
