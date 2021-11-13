@@ -13,13 +13,12 @@ const schema = yup.object().shape({
 
 const Login = () => {
     const [errorMessage, setErrorMessage] = useState('')
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
         resolver: yupResolver(schema),
     });
     const { getAuthTokens } = useContext(AuthContext)
 
     const handleLogin = async (data) => {
-        console.log(data);
         try {
             let res = await axios.post('/api/token/', data);
             getAuthTokens(res.data)
@@ -54,6 +53,7 @@ const Login = () => {
                 />
                 <span>{errors.password?.message}</span>
                 <input
+                    disabled={isSubmitting}
                     type='submit'
                     value="Se connecter"
                 />

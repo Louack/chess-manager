@@ -1,75 +1,74 @@
 import React, { useState } from 'react';
-import  { Link } from "react-router-dom"
+import  { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+    username: yup.string()
+        .required("Nom d'utilisateur requis."),
+    password: yup
+        .string()
+        .required("Mot de passe requis.")
+        .min(8, "Le mot de passe doit contenir au moins 8 caractères."),
+    password2: yup
+        .string()
+        .oneOf([yup.ref("password"), null])
+});
 
 const Registration = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [password2, setPassword2] = useState('');
-    const [blankUsername, setBlankUsername] = useState(false)
-    const [blankPassword, setBlankPassword] = useState(false)
-    const [blankPassword2, setBlankPassword2] = useState(false)
-    const [response, setResponse] = useState(false)
-    const [responseMessage, setResponseMessage] = useState('')
+    const { register, handleSubmit, formState: { errors, isSubmitting} } = useForm({
+        resolver: yupResolver(schema),
+    });
 
-    const handleRegister = async (e) => {
-        e.preventDefault();
-        setBlankUsername(false);
-        setBlankPassword(false);
-        setBlankPassword2(false)
-        setResponse(false)
-        setResponseMessage(false)
+    const [errorMessage, setErrorMessage] = useState('')
 
-        if (username === '' || password === '' || password2 === '') {
-            if (username === '') {
-                setBlankUsername(true)
+    const handleRegister = async (data) => {
+        try {
+            await axios.post('/api/register/', data);
+        } catch(error) {
+            let response = error.response;
+            if (response.status === 400) {
+                response.data.username && setErrorMessage("Ce nom d'utilisateur existe déjà.");
             }
-            if (password === '') {
-                setBlankPassword(true)
-            } ;
-            if (password2 === '') {
-                setBlankPassword2(true)
-            } ;
-        } else {
-            let registerData = {
-                username,
-                password,
-                password2
-            };
-            try {
-                let res = await axios.post('/api/register/', registerData);
-                let resData = res.data;
-                console.log(resData)
-                setResponse(true)
-                setResponseMessage(`${username} a été créé avec succès !`)
-                setUsername('');
-                setPassword('');
-                setPassword2('');
-            } catch(error) {
-                let response = error.response;
-                console.log(response.data)
-                if (response.status === 400) {
-                    setResponse(true)
-                    response.data.username && setResponseMessage("Ce nom d'utilisateur est incorrect.");
-                    response.data.Password && setResponseMessage("Les mots de passe ne correspondent pas.");
-                    response.data.password && setResponseMessage("Le mot de passe est trop court ou trop commun.");
-                }
-            };
         }
-    };
+    }
 
     return (
         <div className='registration'>
             <h1>S'enregistrer</h1>
-            <form onSubmit={handleRegister}>
-                <input onChange={(e) => setUsername(e.target.value)} type='text' placeholder="Nom d'utilisateur" value={username}/>
-                {blankUsername && <p>Veuillez entrer un nom d'utilisateur.</p>}
-                <input onChange={(e) => setPassword(e.target.value)}type='password' placeholder="Mot de passe" value={password}/>
-                {blankPassword && <p>Veuillez entrer un mot de passe.</p>}
-                <input onChange={(e) => setPassword2(e.target.value)}type='password' placeholder="Confirmer le mot de passe" value={password2}/>
-                {blankPassword2 && <p>Veuillez confirmer le mot de passe.</p>}
-                {response && <p>{responseMessage}</p>}
-                <input type='submit' value="Se connecter"/>
+            <form onSubmit={handleSubmit(handleRegister)}>
+                <input
+                    type='text'
+                    name='username'
+                    placeholder="Nom d'utilisateur"
+                    {...register('username')}
+                />
+                <span>{errors.username?.message}</span>
+                {errorMessage && <span>{errorMessage}</span>}
+
+                <input
+                    type='password'
+                    name='password'
+                    placeholder="Mot de passe"
+                    {...register('password')}
+                />
+                <span>{errors.password?.message}</span>
+
+                <input
+                    type='password'
+                    name='password2'
+                    placeholder="Confirmer le mot de passe"
+                    {...register('password2')}
+                />
+                {errors.password2 && <span>Les mots de passe ne correspondent pas.</span>}
+
+                <input
+                    disabled={isSubmitting}
+                    type='submit'
+                    value="Se connecter"
+                />
             </form>
             <Link className={'nav-link'} to ="/login">
                 Back to Login
