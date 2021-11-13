@@ -6,7 +6,8 @@ import axios from "axios";
 import * as yup from "yup";
 
 const schema = yup.object().shape({
-    username: yup.string()
+    username: yup
+        .string()
         .required("Nom d'utilisateur requis."),
     password: yup
         .string()
