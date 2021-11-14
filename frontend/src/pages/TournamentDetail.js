@@ -3,6 +3,7 @@ import {useParams} from "react-router-dom";
 import useAxios from '../utils/useAxios';
 import RoundsListItem from "../components/RoundsListItem";
 import PlayersListItem from "../components/PlayersListItem";
+import TournamentUpdate from "../components/TournamentUpdate";
 
 const TournamentDetail = () => {
     const [tournament, setTournament] = useState('')
@@ -92,6 +93,7 @@ const TournamentDetail = () => {
                 <h1>{tournament.name}</h1>
                 {roundsListDiv}
                 {playersListDiv}
+                {tournament.open && <TournamentUpdate tournament={tournament}/>}
             </div>
 
         )
