@@ -53,7 +53,7 @@ class TournamentDetailSerializer(TournamentListSerializer):
             sorted_participants = instance.sort_participants()
             for place, participant in enumerate(sorted_participants, 1):
                 ranking[place] = {
-                    "participant": participant.number,
+                    "participant": participant.player.username,
                     "total points": participant.total_points,
                     "rank": participant.rank
                 }

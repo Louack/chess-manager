@@ -8,8 +8,8 @@ const useAxios = () => {
     const { authTokens, setAuthTokens, removeAuthTokens } = useContext(AuthContext)
 
     const axiosInstance = axios.create({
-        headers:{Authorization: `Bearer ${authTokens?.access}`}
-    });
+        headers:{Authorization: `Bearer ${authTokens?.access}`
+        }});
 
 
     axiosInstance.interceptors.request.use(async req => {

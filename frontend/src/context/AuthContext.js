@@ -23,16 +23,6 @@ export const AuthProvider = ({children}) => {
         localStorage.setItem('authTokens', JSON.stringify(resData))
     }
 
-    let updateAuthTokens = async (req=false) => {
-        try {
-            let response = await axios.post(`/api/token/refresh/`, {refresh: authTokens.refresh});
-            localStorage.setItem('authTokens', JSON.stringify(response.data))
-            setAuthTokens(response.data)
-        } catch(error) {
-            removeAuthTokens()
-        }
-    }
-
     let removeAuthTokens = () => {
         setAuthTokens(null);
         setUsername(null)
@@ -49,9 +39,9 @@ export const AuthProvider = ({children}) => {
 
     useEffect(() => {
         if (authTokens) {
-            let decodedAccess = jwt_decode(authTokens.access)
-            let accessExpired = dayjs.unix(decodedAccess.exp).diff(dayjs()) < 1;
-            if (accessExpired) return updateAuthTokens()
+            let decodedRefresh = jwt_decode(authTokens.refresh)
+            let refreshExpired = dayjs.unix(decodedRefresh.exp).diff(dayjs()) < 1;
+            if (refreshExpired) return removeAuthTokens()
         }
     }, [])
 

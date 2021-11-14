@@ -53,7 +53,7 @@ const TournamentsList = () => {
 
     let getTournamentsList = async (index) => {
         let filter = getFilter(index);
-        let response = await axios.get(`api/tournaments/?${filter}=1`);
+        let response = await axios.get(`/api/tournaments/?${filter}=1`);
         let tourList = response.data.results.map(tournament => (
             <TournamentsListItem key={tournament.number} tournament={tournament}/>
         ))
