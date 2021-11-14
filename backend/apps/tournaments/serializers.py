@@ -89,13 +89,35 @@ class TournamentDetailSerializer(TournamentListSerializer):
 
 
 class RoundListSerializer(serializers.ModelSerializer):
+    versus = serializers.SerializerMethodField()
+
     class Meta:
         model = Round
         fields = (
             'number',
             'finished_matches',
-            'participants_pairs'
+            'versus'
         )
+
+    @staticmethod
+    def get_versus(instance):
+        versus_list = list()
+        for pairs in instance.participants_pairs:
+            participant_1 = Participant.objects.get(
+                number=pairs[0],
+                tournament=instance.tournament
+            )
+            participant_2 = Participant.objects.get(
+                number=pairs[1],
+                tournament=instance.tournament
+            )
+            versus_list.append(
+                [
+                    participant_1.player.username,
+                    participant_2.player.username
+                ]
+            )
+        return  versus_list
 
 
 class RoundDetailSerializer(serializers.ModelSerializer):
@@ -106,7 +128,6 @@ class RoundDetailSerializer(serializers.ModelSerializer):
         fields = (
             'number',
             'finished_matches',
-            'participants_pairs',
             'results'
         )
 

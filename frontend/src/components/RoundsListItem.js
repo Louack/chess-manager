@@ -1,9 +1,14 @@
 import React from 'react'
+import {useNavigate} from "react-router-dom";
 
-const RoundsListItem = () => {
+const RoundsListItem = ({tournamentNumber, round}) => {
+    let navigate = useNavigate();
+    const handleClick = () => {
+        navigate(`/tournaments/${tournamentNumber}/rounds/${round.number}/`)
+    }
     return (
-        <div>
-            
+        <div onClick={handleClick} className='round-item'>
+            <p>Ronde n°{round.number}</p>
         </div>
     )
 }

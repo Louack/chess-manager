@@ -1,18 +1,21 @@
 import React, {useEffect, useState} from 'react'
 import {useParams} from "react-router-dom";
 import useAxios from '../utils/useAxios';
+import RoundsListItem from "../components/RoundsListItem";
+import PlayersListItem from "../components/PlayersListItem";
 
 const TournamentDetail = () => {
     const [tournament, setTournament] = useState('')
     const [playersList, setPlayersList] = useState([])
     const [numbersList, setNumbersList] = useState([])
+    const [roundsList, setRoundsList] = useState([])
+    const [loading, setLoading] = useState(true)
     const { tourID } = useParams()
     const axios = useAxios()
 
     const getTournament = async () => {
         const response = await axios.get(`/api/tournaments/${tourID}`)
         setTournament(response.data)
-        console.log(response.data)
         response.data.open ?
             setNumbersList(response.data.players_list) :
             setNumbersList([1, 2, 3, 4, 5, 6, 7 ,8])
@@ -24,12 +27,20 @@ const TournamentDetail = () => {
         tempPlayersList.push(response.data)
         setPlayersList(tempPlayersList)
         setNumbersList(numbersList.slice(1))
-        console.log(playersList)
+    }
+
+    const getRoundsList = async() => {
+        const response = await axios.get(`/api/tournaments/${tourID}/rounds/`)
+        setRoundsList(response.data)
     }
 
     useEffect(() => {
         getTournament()
     }, [])
+
+    useEffect(() => {
+        if (tournament && !tournament.open) getRoundsList()
+    }, [tournament])
 
     useEffect(() => {
         if (numbersList.length) {
@@ -39,13 +50,52 @@ const TournamentDetail = () => {
                 getPlayersList(`/api/tournaments/${tourID}/participants/${numbersList[0]}/`)
             }
         }
+        if (tournament) {
+            if (playersList.length === tournament.players_list.length)
+            setLoading(false)
+        }
     }, [numbersList])
 
-    return (
-        <div>
-            <p>{tournament.name}</p>
+    let roundsListDiv =
+        <div className={'rounds-list'}>
+            <h2>Liste des Rondes</h2>
+            {roundsList.map((round) => (
+                    <RoundsListItem
+                        key={round.number}
+                        tournamentNumber={tournament.number}
+                        round={round}
+                    />
+                ))}
         </div>
-    )
+
+    let playersListDiv =
+        <div className={'players-list'}>
+            <h2>Liste des Joueurs</h2>
+            {playersList.map((player) => (
+                <PlayersListItem
+                    key={player.number}
+                    tournament={tournament}
+                    player={player}
+                />
+            ))}
+        </div>
+
+    if (loading) {
+        return (
+            <div>
+                <p>Chargement...</p>
+            </div>
+        )
+    } else {
+        return (
+            <div>
+                <h1>{tournament.name}</h1>
+                {roundsListDiv}
+                {playersListDiv}
+            </div>
+
+        )
+    }
 }
 
 export default TournamentDetail
