@@ -21,7 +21,7 @@ const schema = yup.object().shape({
         })).required()
 });
 
-const TournamentCreationForm = () => {
+const TournamentCreationForm = ({ playersOptions }) => {
     const { register, handleSubmit, control, formState: { errors, isSubmitting} } = useForm({
         defaultValues: {
             tournament_date: new Date().toISOString(),
@@ -29,34 +29,8 @@ const TournamentCreationForm = () => {
         },
         resolver: yupResolver(schema)
     });
-    const [playersOptions, setPlayersOptions] = useState([])
-    const [nextPage, setNextPage] = useState('')
     const [lockedError, setLockedError] = useState('')
     const axios = useAxios()
-
-
-    async function getPlayersList (url) {
-        try {
-            const tempList = playersOptions
-            const response = await axios.get(url)
-            response.data.results.map(player => {
-                return tempList.push({
-                    value: player.number,
-                    label: player.username
-                })
-            })
-            setPlayersOptions(tempList)
-
-            if (response.data.next != null) {
-                 setNextPage(response.data.next)
-            } else {
-                setNextPage('')
-            }
-
-        } catch(error) {
-            console.log(error)
-        }
-    }
 
     const submitWithoutLocking = async (data) => {
         let locked = false
@@ -88,15 +62,6 @@ const TournamentCreationForm = () => {
         let cleanedData = getCleanedData(data, locked)
         await axios.post('/api/tournaments/', cleanedData)
     }
-
-    useEffect( () => {
-        const url = '/api/players/'
-        getPlayersList(url)
-    }, [])
-
-    useEffect(() => {
-        if (nextPage) getPlayersList(nextPage)
-    }, [nextPage])
 
     return (
 
