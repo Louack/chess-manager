@@ -1,11 +1,71 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useState} from "react";
 import ModalForm from "./ModalForm";
 import TournamentUpdateForm from "./TournamentUpdateForm";
+import useAxios from "../utils/useAxios";
 
-const TournamentUpdate = ({ tournament }) => {
+const TournamentUpdate = ({ tournament, setUpdated }) => {
     const [modalStatus, setModalStatus] = useState(false)
-    const form = <TournamentUpdateForm tournament = {tournament}/>
+    const [playersOptions, setPlayersOptions] = useState([])
+    const [nextPage, setNextPage] = useState('')
+    const [defaultPlayers, setDefaultPlayers] = useState([])
+    const [readyForRender, setReadyForRender] = useState(false)
+    const axios = useAxios()
+
+    async function getPlayersList (url) {
+        try {
+            const tempList = playersOptions
+            const response = await axios.get(url)
+            response.data.results.map(player => {
+                return tempList.push({
+                    value: player.number,
+                    label: player.username
+                })
+            })
+            setPlayersOptions(tempList)
+
+            if (response.data.next != null) {
+                setNextPage(response.data.next)
+            } else {
+                setNextPage('')
+                if (!defaultPlayers.length) getDefaultPlayers(tempList)
+            }
+
+        } catch(error) {
+            console.log(error)
+        }
+    }
+
+    const getDefaultPlayers = (playersTempList) => {
+        let tempDefaultPlayers = []
+        tournament.players_list.map((defaultPlayer) => {
+            playersTempList.map((optionPlayer) => {
+                if (defaultPlayer === optionPlayer.value) {
+                    return tempDefaultPlayers.push(optionPlayer)
+                }
+            })
+        })
+        setDefaultPlayers(tempDefaultPlayers)
+        setReadyForRender(true)
+    }
+
+    useEffect( () => {
+        const url = '/api/players/'
+        getPlayersList(url)
+    }, [])
+
+    useEffect(() => {
+        if (nextPage) getPlayersList(nextPage)
+    }, [nextPage])
+
+    const form = <
+        TournamentUpdateForm
+        tournament={tournament}
+        setUpdated={setUpdated}
+        defaultPlayers={defaultPlayers}
+        playersOptions={playersOptions}
+    />
+
     return (
         <div className='tour-creation'>
             <button
@@ -16,12 +76,12 @@ const TournamentUpdate = ({ tournament }) => {
             >
                 Modification
             </button>
-            < ModalForm
+            {readyForRender && < ModalForm
                 modalStatus={modalStatus}
                 setModalStatus={setModalStatus}
                 title={`Modification du tournoi n°${tournament.number}`}
                 form={form}
-            />
+            />}
         </div>
     );
 };

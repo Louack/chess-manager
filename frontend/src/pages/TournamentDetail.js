@@ -11,6 +11,7 @@ const TournamentDetail = () => {
     const [numbersList, setNumbersList] = useState([])
     const [roundsList, setRoundsList] = useState([])
     const [loading, setLoading] = useState(true)
+    const [updated, setUpdated] = useState(true)
     const { tourID } = useParams()
     const axios = useAxios()
 
@@ -35,9 +36,22 @@ const TournamentDetail = () => {
         setRoundsList(response.data)
     }
 
+    const handleUpdate = () => {
+        setLoading(true)
+        setPlayersList([])
+        setRoundsList([])
+        setNumbersList([])
+        setTournament('')
+        setUpdated(false)
+    }
+
     useEffect(() => {
-        getTournament()
-    }, [])
+        if (updated) handleUpdate()
+    }, [updated])
+
+    useEffect(() => {
+        if (!tournament) getTournament()
+    }, [tournament])
 
     useEffect(() => {
         if (tournament && !tournament.open) getRoundsList()
@@ -54,6 +68,7 @@ const TournamentDetail = () => {
         if (tournament) {
             if (playersList.length === tournament.players_list.length)
             setLoading(false)
+            setUpdated(false)
         }
     }, [numbersList])
 
@@ -93,7 +108,11 @@ const TournamentDetail = () => {
                 <h1>{tournament.name}</h1>
                 {roundsListDiv}
                 {playersListDiv}
-                {tournament.open && <TournamentUpdate tournament={tournament}/>}
+                {tournament.open &&
+                <TournamentUpdate
+                    tournament={tournament}
+                    setUpdated={setUpdated}
+                />}
             </div>
 
         )

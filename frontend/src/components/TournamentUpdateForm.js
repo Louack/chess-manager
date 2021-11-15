@@ -21,55 +21,17 @@ const schema = yup.object().shape({
         })).required()
 });
 
-const TournamentUpdateForm = ({tournament}) => {
-    const [playersOptions, setPlayersOptions] = useState([])
-    const [nextPage, setNextPage] = useState('')
+const TournamentUpdateForm = ({tournament, setUpdated, playersOptions, defaultPlayers}) => {
     const [lockedError, setLockedError] = useState('')
-    const [defaultPlayers, setDefaultPlayers] = useState([])
     const axios = useAxios()
     const { register, handleSubmit, control, formState: { errors, isSubmitting} } = useForm({
         defaultValues: {
             name: tournament.name,
             tournament_date: tournament.tournament_date,
+            players_list: defaultPlayers
         },
         resolver: yupResolver(schema)
     });
-
-    async function getPlayersList (url) {
-        try {
-            const tempList = playersOptions
-            const response = await axios.get(url)
-            response.data.results.map(player => {
-                return tempList.push({
-                    value: player.number,
-                    label: player.username
-                })
-            })
-            setPlayersOptions(tempList)
-
-            if (response.data.next != null) {
-                setNextPage(response.data.next)
-                getDefaultPlayers(tempList)
-            } else {
-                setNextPage('')
-            }
-
-        } catch(error) {
-            console.log(error)
-        }
-    }
-
-    const getDefaultPlayers = (playersTempList) => {
-        let tempDefaultPlayers = []
-        tournament.players_list.map((defaultPlayer) => {
-            playersTempList.map((optionPlayer) => {
-                if (defaultPlayer === optionPlayer.value) {
-                    return tempDefaultPlayers.push(optionPlayer)
-                }
-            })
-        })
-        setDefaultPlayers(tempDefaultPlayers)
-    }
 
     const submitWithoutLocking = async (data) => {
         let locked = false
@@ -100,16 +62,8 @@ const TournamentUpdateForm = ({tournament}) => {
     const putData = async (data, locked) => {
         let cleanedData = getCleanedData(data, locked)
         await axios.put(`/api/tournaments/${tournament.number}/`, cleanedData)
+        setUpdated(true)
     }
-
-    useEffect( () => {
-        const url = '/api/players/'
-        getPlayersList(url)
-    }, [])
-
-    useEffect(() => {
-        if (nextPage) getPlayersList(nextPage)
-    }, [nextPage])
 
     const select = <Controller
         name="players_list"
