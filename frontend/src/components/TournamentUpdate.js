@@ -39,7 +39,7 @@ const TournamentUpdate = ({ tournament, setUpdated }) => {
     const getDefaultPlayers = (playersTempList) => {
         let tempDefaultPlayers = []
         tournament.players_list.map((defaultPlayer) => {
-            playersTempList.map((optionPlayer) => {
+            return playersTempList.map((optionPlayer) => {
                 if (defaultPlayer === optionPlayer.value) {
                     return tempDefaultPlayers.push(optionPlayer)
                 }

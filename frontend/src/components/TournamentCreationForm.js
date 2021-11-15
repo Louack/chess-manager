@@ -38,7 +38,7 @@ const TournamentCreationForm = ({ playersOptions }) => {
     }
 
     const submitWithLocking = async (data) => {
-        if (data.players_list.length != 8) {
+        if (data.players_list.length !== 8) {
             return setLockedError('8 joueurs sont requis pour vérouiller le tournoi.')
         } else {
             let locked = true

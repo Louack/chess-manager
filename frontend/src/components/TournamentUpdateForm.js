@@ -39,7 +39,7 @@ const TournamentUpdateForm = ({tournament, setUpdated, playersOptions, defaultPl
     }
 
     const submitWithLocking = async (data) => {
-        if (data.players_list.length != 8) {
+        if (data.players_list.length !== 8) {
             return setLockedError('8 joueurs sont requis pour vérouiller le tournoi.')
         } else {
             let locked = true
@@ -65,20 +65,6 @@ const TournamentUpdateForm = ({tournament, setUpdated, playersOptions, defaultPl
         setUpdated(true)
     }
 
-    const select = <Controller
-        name="players_list"
-        control={control}
-        render={({field: {onChange, value}}) => (
-            <Select
-                defaultValue={defaultPlayers}
-                value={value}
-                onChange={onChange}
-                options={playersOptions}
-                isMulti
-            />
-        )}
-    />
-
     return (
         <form>
             <input
@@ -96,8 +82,19 @@ const TournamentUpdateForm = ({tournament, setUpdated, playersOptions, defaultPl
                 {...register('tournament_date')}
             />
             <span>{errors.tournament_date?.message}</span>
-            {defaultPlayers.length && select}
-            {!tournament.players_list.length && select}
+            <Controller
+                name="players_list"
+                control={control}
+                render={({field: {onChange, value}}) => (
+                    <Select
+                        defaultValue={defaultPlayers}
+                        value={value}
+                        onChange={onChange}
+                        options={playersOptions}
+                        isMulti
+                    />
+                )}
+            />
             <span>{errors.players_list?.message}</span>
             <input
                 disabled={isSubmitting}
