@@ -1,13 +1,18 @@
 import React from 'react';
-import Navigation from '../components/Navigation';
+import BasePage from "./BasePage";
 
 const Players = () => {
+    const getMainElement = () => {
+        return null
+    }
+
+    let mainElement = getMainElement()
+
     return (
         <div>
-            <Navigation />
-            <h1>Mes Joueurs</h1>
+            <BasePage main={mainElement} />
         </div>
-    );
+    )
 };
 
 export default Players;

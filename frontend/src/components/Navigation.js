@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import  { NavLink } from "react-router-dom"
 import '../App.css'
+import AuthContext from "../context/AuthContext";
 
 
 const Navigation = () => {
     const navclassname = ({ isActive }) => "nav-link" + (isActive ? "-selected" : "")
+    const { removeAuthTokens } = useContext(AuthContext)
 
     return (
         <nav className='navigation' >
@@ -20,6 +22,7 @@ const Navigation = () => {
             <NavLink className={navclassname} end to ="/players">
                 Mes joueurs
             </NavLink>
+            <button onClick={removeAuthTokens} value='logout'>Déconnexion</button>
         </nav>
     );
 };

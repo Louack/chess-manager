@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import * as yup from "yup";
+import BasePage from "./BasePage";
 
 const schema = yup.object().shape({
     username: yup
@@ -36,8 +37,9 @@ const Registration = () => {
         }
     }
 
-    return (
-        <div className='registration'>
+    let getMainElement = () => {
+        return (
+            <div className='registration'>
             <h1>S'enregistrer</h1>
             <form onSubmit={handleSubmit(handleRegister)}>
                 <input
@@ -75,6 +77,13 @@ const Registration = () => {
                 Back to Login
             </Link>
         </div>
+        )
+    };
+
+    let mainElement = getMainElement();
+
+    return (
+        <BasePage main={mainElement} />
     );
 };
 

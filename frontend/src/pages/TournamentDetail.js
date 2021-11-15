@@ -4,6 +4,7 @@ import useAxios from '../utils/useAxios';
 import RoundsListItem from "../components/RoundsListItem";
 import PlayersListItem from "../components/PlayersListItem";
 import TournamentUpdate from "../components/TournamentUpdate";
+import BasePage from "./BasePage";
 
 const TournamentDetail = () => {
     const [tournament, setTournament] = useState('')
@@ -96,27 +97,33 @@ const TournamentDetail = () => {
             ))}
         </div>
 
-    if (loading) {
-        return (
-            <div>
-                <p>Chargement...</p>
-            </div>
-        )
-    } else {
-        return (
-            <div>
-                <h1>{tournament.name}</h1>
-                {roundsListDiv}
-                {playersListDiv}
-                {tournament.open &&
-                <TournamentUpdate
-                    tournament={tournament}
-                    setUpdated={setUpdated}
-                />}
-            </div>
+    const getMainElement = () => {
+        if (loading) {
+            return (
+                <>
+                    <p>Chargement...</p>
+                </>
+            );
+        } else {
+            return (
+                <>
+                    <h1>{tournament.name}</h1>
+                    {roundsListDiv}
+                    {playersListDiv}
+                    {tournament.open &&
+                    <TournamentUpdate
+                        tournament={tournament}
+                        setUpdated={setUpdated}
+                    />}
+                </>
+            );
+        }
+    };
+    let mainElement = getMainElement()
 
-        )
-    }
+    return (
+        <BasePage main={mainElement} />
+    );
 }
 
 export default TournamentDetail

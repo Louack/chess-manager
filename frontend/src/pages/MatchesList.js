@@ -1,10 +1,16 @@
 import React from 'react'
-import Navigation from '../components/Navigation';
+import BasePage from "./BasePage";
 
 const MatchesList = () => {
+    const getMainElement = () => {
+        return null
+    }
+
+    let mainElement = getMainElement()
+
     return (
         <div>
-            <Navigation />
+            <BasePage main={mainElement} />
         </div>
     )
 }
