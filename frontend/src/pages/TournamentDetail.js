@@ -79,7 +79,6 @@ const TournamentDetail = () => {
             {roundsList.map((round) => (
                     <RoundsListItem
                         key={round.number}
-                        tournamentNumber={tournament.number}
                         round={round}
                     />
                 ))}

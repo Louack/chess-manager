@@ -352,9 +352,9 @@ class Round(models.Model):
 
 class Match(models.Model):
     RESULT_CHOICES = (
-        (0.0, 0.0),
+        (0, 0),
         (0.5, 0.5),
-        (1.0, 1.0)
+        (1, 1)
     )
     number = models.IntegerField(
         editable=False,

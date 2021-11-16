@@ -1,18 +1,15 @@
-import React from 'react'
-import BasePage from "./BasePage";
+import React, {useEffect} from 'react'
+import {useNavigate, useParams} from "react-router-dom";
 
 const MatchesList = () => {
-    const getMainElement = () => {
-        return null
-    }
+    const { tourID, roundID } = useParams()
+    const navigate = useNavigate();
 
-    let mainElement = getMainElement()
+    useEffect(() => {
+        navigate(`/tournaments/${tourID}/rounds/${roundID}/`)
+    }, [])
 
-    return (
-        <div>
-            <BasePage main={mainElement} />
-        </div>
-    )
+    return null
 }
 
 export default MatchesList

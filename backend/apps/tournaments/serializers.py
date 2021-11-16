@@ -121,21 +121,21 @@ class RoundListSerializer(serializers.ModelSerializer):
 
 
 class RoundDetailSerializer(serializers.ModelSerializer):
-    results = serializers.SerializerMethodField()
+    matches = serializers.SerializerMethodField()
 
     class Meta:
         model = Round
         fields = (
             'number',
             'finished_matches',
-            'results'
+            'matches'
         )
 
     @staticmethod
-    def get_results(instance):
-        results = dict()
-        matches = [match for match in instance.match_set.all()]
-        for match in matches:
+    def get_matches(instance):
+        matches = list()
+        matches_list = [match for match in instance.match_set.all()]
+        for match in matches_list:
             participant_1 = Participant.objects.get(
                 number=match.number_participant_1,
                 tournament=instance.tournament
@@ -144,17 +144,20 @@ class RoundDetailSerializer(serializers.ModelSerializer):
                 number=match.number_participant_2,
                 tournament=instance.tournament
             )
-            results[match.number] = {
-                "participant 1": {
-                    "username": participant_1.player.username,
-                    "point": match.result_participant_1
-                },
-                "participant 2": {
-                    "username": participant_2.player.username,
-                    "point": match.result_participant_2
+            matches.append(
+                {
+                    "number": match.number,
+                    "participant_1": {
+                        "username": participant_1.player.username,
+                        "point": match.result_participant_1
+                    },
+                    "participant_2": {
+                        "username": participant_2.player.username,
+                        "point": match.result_participant_2
+                    }
                 }
-            }
-        return results
+            )
+        return matches
 
 
 class MatchListSerializer(serializers.ModelSerializer):
@@ -169,7 +172,7 @@ class MatchListSerializer(serializers.ModelSerializer):
 class MatchDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Match
-        fields = fields = (
+        fields = (
             'number',
             'played',
             'number_participant_1',
