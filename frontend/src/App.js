@@ -17,6 +17,7 @@ import PrivateRoute from './utils/PrivateRoute';
 import PublicRoute from './utils/PublicRoute';
 import PlayerDetail from "./pages/PlayerDetail";
 import ParticipantDetail from "./pages/ParticipantDetail";
+import ParticipantsList from "./pages/ParticipantsList";
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/players/:playerID" element={<PrivateRoute><PlayerDetail /></PrivateRoute>} />
           <Route path="/tournaments" element={<PrivateRoute><TournamentsList /></PrivateRoute>} />
           <Route path="/tournaments/:tourID" element={<PrivateRoute><TournamentDetail /></PrivateRoute>} />
+          <Route path="/tournaments/:tourID/participants/" element={<PrivateRoute><ParticipantsList /></PrivateRoute>} />
           <Route path="/tournaments/:tourID/participants/:partID" element={<PrivateRoute><ParticipantDetail /></PrivateRoute>} />
           <Route path="/tournaments/:tourID/rounds" element={<PrivateRoute><RoundsList /></PrivateRoute>} />
           <Route path="/tournaments/:tourID/rounds/:roundID" element={<PrivateRoute><RoundDetail /></PrivateRoute>} />

@@ -51,25 +51,27 @@ const MatchDetail = () => {
     }
 
     const setWinner = async(e) => {
-        if (e.target.className !== 'is-winner') {
-            if (e.target.id === 'player-one') {
-                const data = {
-                    played: false,
-                    result_participant_1: 1.0,
-                    result_participant_2: 0.0
-                }
-                try {
+        if (!match.played) {
+            if (e.target.className !== 'is-winner') {
+                if (e.target.id === 'player-one') {
+                    const data = {
+                        played: false,
+                        result_participant_1: 1.0,
+                        result_participant_2: 0.0
+                    }
+                    try {
+                        const response = await axios.put(url, data)
+                    } catch (error) {
+                        console.log(error.response.data)
+                    }
+                } else {
+                    const data = {
+                        played: false,
+                        result_participant_1: 0,
+                        result_participant_2: 1
+                    }
                     const response = await axios.put(url, data)
-                } catch(error) {
-                    console.log(error.response.data)
                 }
-            } else {
-                const data = {
-                    played: false,
-                    result_participant_1: 0,
-                    result_participant_2: 1
-                }
-                const response = await axios.put(url, data)
             }
         }
     }
