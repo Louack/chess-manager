@@ -134,7 +134,10 @@ class RoundDetailSerializer(serializers.ModelSerializer):
     @staticmethod
     def get_matches(instance):
         matches = list()
-        matches_list = [match for match in instance.match_set.all()]
+        matches_list = [
+            match for match in
+            instance.match_set.all().order_by('number')
+        ]
         for match in matches_list:
             participant_1 = Participant.objects.get(
                 number=match.number_participant_1,

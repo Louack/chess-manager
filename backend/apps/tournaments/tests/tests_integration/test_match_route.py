@@ -35,7 +35,7 @@ class TestMatchRoute(APITestCase):
         }
         cls.match_put_form_sum_not_1 = {
             "played": True,
-            "result_participant_1": 1.0,
+            "result_participant_1": 1,
             "result_participant_2": 0.5
         }
 

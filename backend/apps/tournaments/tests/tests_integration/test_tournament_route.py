@@ -21,7 +21,8 @@ class TestTournamentRoute(APITestCase):
 
         cls.post_form = {
             "name": "test_tournament",
-            "players_list": []
+            "players_list": [],
+            "tournament_date": "2021-11-06"
         }
 
         cls.put_form_wo_lock = {
@@ -42,6 +43,7 @@ class TestTournamentRoute(APITestCase):
         cls.put_form_with_lock_good_list = {
             "name": "modified_test_tournament",
             "players_list": [1, 2, 3, 4, 5, 6, 7, 8],
+            "tournament_date": "2021-11-06",
             "locked": True
         }
 

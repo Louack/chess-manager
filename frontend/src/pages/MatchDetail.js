@@ -35,17 +35,18 @@ const MatchDetail = () => {
     }
 
     const setDraw = async(e) => {
-
-        if (e.target.className !== 'draw-match') {
-            const data = {
-                played: false,
-                result_participant_1: 0.5,
-                result_participant_2: 0.5
-            }
-            try {
-                const response = await axios.put(url, data)
-            } catch(error) {
-                console.log(error.response.data)
+        if (!match.played) {
+            if (e.target.className !== 'draw-match') {
+                const data = {
+                    played: false,
+                    result_participant_1: 0.5,
+                    result_participant_2: 0.5
+                }
+                try {
+                    const response = await axios.put(url, data)
+                } catch (error) {
+                    console.log(error.response.data)
+                }
             }
         }
     }

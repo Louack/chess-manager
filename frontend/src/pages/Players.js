@@ -2,11 +2,23 @@ import React, {useEffect, useState} from 'react';
 import BasePage from "./BasePage";
 import useAxios from "../utils/useAxios";
 import PlayersListItem from "../components/PlayersListItem";
+import PlayerCreation from "../components/PlayerCreation";
 
 const Players = () => {
     const axios = useAxios()
     const [loading, setLoading] = useState(true);
+    const [created, setCreated] = useState(true)
     const [playersList, setPlayersList] = useState([])
+
+    const handleCreated = () => {
+        setLoading(true)
+        setPlayersList([])
+        setCreated(false)
+    }
+
+    useEffect(() => {
+        if (created) handleCreated()
+    }, [created])
 
     useEffect(() => {
         if (!playersList.length) {
@@ -21,6 +33,7 @@ const Players = () => {
 
     const playersListDiv =
         <div className={'players-list'}>
+            <PlayerCreation setCreated={setCreated}/>
             <h2>Liste des Joueurs</h2>
             {playersList.map((player) => (
                 <PlayersListItem
