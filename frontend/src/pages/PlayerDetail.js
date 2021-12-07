@@ -3,6 +3,7 @@ import BasePage from "./BasePage";
 import {useParams} from "react-router-dom";
 import useAxios from "../utils/useAxios";
 import PlayerUpdate from "../components/PlayerUpdate";
+import PlayerDelete from "../components/PlayerDelete";
 
 const PlayerDetail = () => {
     const { playerID } = useParams()
@@ -50,6 +51,9 @@ const PlayerDetail = () => {
                         player={player}
                         setUpdated={setUpdated}
                     />
+                    {!player.tournaments_list.length && <PlayerDelete
+                        player={player}
+                    />}
                 </>
             )
         }

@@ -5,6 +5,7 @@ import RoundsListItem from "../components/RoundsListItem";
 import PlayersListItem from "../components/PlayersListItem";
 import TournamentUpdate from "../components/TournamentUpdate";
 import BasePage from "./BasePage";
+import TournamentDelete from "../components/TournamentDelete";
 
 const TournamentDetail = () => {
     const [tournament, setTournament] = useState('')
@@ -114,6 +115,9 @@ const TournamentDetail = () => {
                         tournament={tournament}
                         setUpdated={setUpdated}
                     />}
+                    <TournamentDelete
+                        tournament={tournament}
+                    />
                 </>
             );
         }
