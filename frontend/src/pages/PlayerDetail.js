@@ -2,12 +2,20 @@ import React, {useEffect, useState} from 'react';
 import BasePage from "./BasePage";
 import {useParams} from "react-router-dom";
 import useAxios from "../utils/useAxios";
+import PlayerUpdate from "../components/PlayerUpdate";
 
 const PlayerDetail = () => {
     const { playerID } = useParams()
     const axios = useAxios()
     const [player, setPlayer] = useState('')
     const [loading, setLoading] = useState(true)
+    const [updated, setUpdated] = useState(false)
+
+    const handleUpdate = () => {
+        setLoading(true)
+        setPlayer('')
+        setUpdated(false)
+    }
 
     useEffect(() => {
         if (!player) {
@@ -17,6 +25,10 @@ const PlayerDetail = () => {
             setLoading(false)
         }
     }, [player, playerID, axios])
+
+    useEffect(() => {
+        if (updated) handleUpdate()
+    }, [updated])
 
     const playerDiv =
         <div>
@@ -32,7 +44,13 @@ const PlayerDetail = () => {
             )
         } else {
             return (
-                playerDiv
+                <>
+                    {playerDiv}
+                    <PlayerUpdate
+                        player={player}
+                        setUpdated={setUpdated}
+                    />
+                </>
             )
         }
     }
