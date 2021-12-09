@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import BasePage from "./BasePage";
 import {useNavigate, useParams} from "react-router-dom";
 import useAxios from '../utils/useAxios';
@@ -9,8 +9,10 @@ const MatchDetail = () => {
     const [match, setMatch] = useState('')
     const [playerOne, setPlayerOne] = useState('')
     const [playerTwo, setPlayerTwo] = useState('')
-    const [validDisabled, setValidDisabled] = useState()
-    const [isSubmitting, setIsSubmitting] = useState()
+    const [validDisabled, setValidDisabled] = useState(false)
+    const playerOneCard = useRef(null)
+    const playerTwoCard = useRef(null)
+    const drawCard = useRef(null)
     const axios = useAxios()
     const navigate = useNavigate();
     const url = `/api/tournaments/${tourID}/rounds/${roundID}/matches/${matchID}/`
@@ -25,7 +27,7 @@ const MatchDetail = () => {
 
     const getMatch = async () => {
         const response = await axios.get(url)
-        setMatch(response.data)
+        return response.data
     }
 
     const getPlayer = async (playerNumber) =>  {
@@ -36,7 +38,7 @@ const MatchDetail = () => {
 
     const setDraw = async(e) => {
         if (!match.played) {
-            if (e.target.className !== 'draw-match') {
+            if (e.target.className === 'draw-btn-open') {
                 const data = {
                     played: false,
                     result_participant_1: 0.5,
@@ -48,12 +50,13 @@ const MatchDetail = () => {
                     console.log(error.response.data)
                 }
             }
+            reload()
         }
     }
 
     const setWinner = async(e) => {
         if (!match.played) {
-            if (e.target.className !== 'is-winner') {
+            if (e.target.className !== 'winner') {
                 if (e.target.id === 'player-one') {
                     const data = {
                         played: false,
@@ -73,19 +76,38 @@ const MatchDetail = () => {
                     }
                     const response = await axios.put(url, data)
                 }
+                reload()
             }
         }
     }
 
     const patchValidation = () => {
-        setIsSubmitting(true)
+        axios.patch(url, {played: true})
+        reload()
     }
 
-    const setClassName = (e) => {
-        if (e.target.id === 'player-one') {
-            if (match.result_participant_1 === 1) {
-
-            }
+    const setClassNames = () => {
+        if (match.result_participant_1 === 1) {
+            playerOneCard.current.className = 'winner'
+            playerTwoCard.current.className = 'loser'
+            drawCard.current.className = 'draw-btn-open'
+        } else if (match.result_participant_1 === 0.5) {
+            playerOneCard.current.className = 'draw'
+            playerTwoCard.current.className = 'draw'
+            drawCard.current.className = 'draw-btn-closed'
+        } else if (match.result_participant_1 === 0) {
+            playerOneCard.current.className = 'loser'
+            playerTwoCard.current.className = 'winner'
+            drawCard.current.className = 'draw-btn-open'
+        } else {
+            playerOneCard.current.className = 'to-be-played'
+            playerTwoCard.current.className = 'to-be-played'
+            drawCard.current.className = 'draw-btn-open'
+        }
+        if (match.played) {
+            playerOneCard.current.className = playerOneCard.current.className + '-locked'
+            playerTwoCard.current.className = playerTwoCard.current.className + '-locked'
+            drawCard.current.className = 'draw-btn-locked'
         }
     }
 
@@ -101,25 +123,37 @@ const MatchDetail = () => {
         }
     }
 
-    useEffect(() => {
-        if (!match) {
-            getMatch()
-        }
+    const reload = () => {
+        setMatch('')
+        setPlayerOne('')
+        setPlayerTwo('')
+        setLoading(true)
+    }
 
-        if (isSubmitting) axios.patch(url, {played: true})
-    }, [match, playerOne, playerTwo, isSubmitting])
+    useEffect(() => {
+        if (loading) {
+            getMatch()
+                .then((match) => {
+                    setMatch(match)
+            })
+        } else {
+            setClassNames()
+        }
+    }, [loading])
 
     useEffect(() => {
         if (match && !playerOne) {
             const playerOneNumber = match.number_participant_1
-            getPlayer(playerOneNumber).then((player) => setPlayerOne(player))
+            getPlayer(playerOneNumber)
+                .then((player) => setPlayerOne(player))
         }
     }, [match, playerOne])
 
     useEffect(() => {
         if (match && !playerTwo) {
             const playerTwoNumber = match.number_participant_2
-            getPlayer(playerTwoNumber).then((player) => setPlayerTwo(player))
+            getPlayer(playerTwoNumber)
+                .then((player) => setPlayerTwo(player))
         }
     }, [match, playerTwo])
 
@@ -143,20 +177,19 @@ const MatchDetail = () => {
                     <h1 onClick={backToTournament}>Tournoi n°{tourID}</h1>
                     <h2 onClick={backToRound}>Round n°{roundID}</h2>
                     <div>
-                        <div className={'match-not-played'} id={'player-one'} onClick={setWinner}>
+                        <div ref={playerOneCard} id={'player-one'} onClick={setWinner}>
                             {playerOne.username}
                             {match.result_participant_1}
                         </div>
-                        <div className={'match-not-played'} id={'draw'} onClick={setDraw}>
+                        <div ref={drawCard} id={'draw'} onClick={setDraw}>
                             versus
                         </div>
-                        <div className={'match-not-played'} id={'player-two'} onClick={setWinner}>
+                        <div ref={playerTwoCard} id={'player-two'} onClick={setWinner}>
                             {playerTwo.username}
                             {match.result_participant_2}
                         </div>
-                        {!match.played && <
+                        {!validDisabled && <
                             button
-                            disabled={validDisabled || isSubmitting}
                             onClick={patchValidation}
                         >Valider
                         </button>}

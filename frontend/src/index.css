@@ -53,3 +53,27 @@ code {
   display: flex;
   flex-direction: column;
 }
+
+.winner {
+  background-color: green;
+}
+
+.winner-locked {
+  background-color: green;
+}
+
+.loser {
+  background-color: red;
+}
+
+.loser-locked {
+  background-color: red;
+}
+
+.draw {
+  background-color: grey;
+}
+
+.draw-locked {
+  background-color: grey;
+}
