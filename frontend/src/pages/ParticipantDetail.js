@@ -9,6 +9,7 @@ const ParticipantDetail = () => {
     const axios = useAxios()
     const [participant, setParticipant] = useState('')
     const [loading, setLoading] = useState(true)
+    const [notFound, setNotFound] = useState(false)
 
     const backToTournament = () => {
         navigate(`/tournaments/${tourID}/`)
@@ -18,6 +19,12 @@ const ParticipantDetail = () => {
         if (!participant) {
             axios.get(`/api/tournaments/${tourID}/participants/${partID}/`)
                 .then((response) => setParticipant(response.data))
+                .catch((error) => {
+                    if (error.response.status === 404) {
+                        setLoading(false)
+                        setNotFound(true)
+                    }
+                })
         } else {
             setLoading(false)
         }
@@ -36,12 +43,21 @@ const ParticipantDetail = () => {
                 </div>
             )
         } else {
-            return (
-                <div>
-                    <h1 onClick={backToTournament}>Tournoi n°{tourID}</h1>
-                    {participantDiv}
-                </div>
-            )
+            if (!notFound) {
+                return (
+                    <div>
+                        <h1 onClick={backToTournament}>Tournoi n°{tourID}</h1>
+                        {participantDiv}
+                    </div>
+                )
+            } else {
+                return (
+                    <div>
+                        <h1 onClick={backToTournament}>Tournoi n°{tourID}</h1>
+                        <p>Cette page n'existe pas.</p>
+                    </div>
+                )
+            }
         }
     }
 

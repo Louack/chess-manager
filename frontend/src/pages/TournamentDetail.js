@@ -13,16 +13,24 @@ const TournamentDetail = () => {
     const [numbersList, setNumbersList] = useState([])
     const [roundsList, setRoundsList] = useState([])
     const [loading, setLoading] = useState(true)
+    const [notFound, setNotFound] = useState(false)
     const [updated, setUpdated] = useState(true)
     const { tourID } = useParams()
     const axios = useAxios()
 
     const getTournament = async () => {
-        const response = await axios.get(`/api/tournaments/${tourID}`)
-        setTournament(response.data)
-        response.data.open ?
-            setNumbersList(response.data.players_list) :
-            setNumbersList([1, 2, 3, 4, 5, 6, 7 ,8])
+        try {
+            const response = await axios.get(`/api/tournaments/${tourID}`)
+            setTournament(response.data)
+            response.data.open ?
+                setNumbersList(response.data.players_list) :
+                setNumbersList([1, 2, 3, 4, 5, 6, 7, 8])
+        } catch (error) {
+            if (error.response.status === 404) {
+                setLoading(false)
+                setNotFound(true)
+            }
+        }
     }
 
     const getPlayersList = async (url) => {
@@ -105,21 +113,29 @@ const TournamentDetail = () => {
                 </>
             );
         } else {
-            return (
-                <>
-                    <h1>{tournament.name}</h1>
-                    {roundsListDiv}
-                    {playersListDiv}
-                    {tournament.open &&
-                    <TournamentUpdate
-                        tournament={tournament}
-                        setUpdated={setUpdated}
-                    />}
-                    <TournamentDelete
-                        tournament={tournament}
-                    />
-                </>
-            );
+            if (!notFound) {
+                return (
+                    <>
+                        <h1>{tournament.name}</h1>
+                        {roundsListDiv}
+                        {playersListDiv}
+                        {tournament.open &&
+                        <TournamentUpdate
+                            tournament={tournament}
+                            setUpdated={setUpdated}
+                        />}
+                        <TournamentDelete
+                            tournament={tournament}
+                        />
+                    </>
+                );
+            } else {
+                return (
+                    <>
+                        <p>Cette page n'existe pas.</p>
+                    </>
+                );
+            }
         }
     };
     let mainElement = getMainElement()

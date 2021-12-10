@@ -9,6 +9,7 @@ const RoundDetail = () => {
     const [round, setRound] = useState('')
     const [roundDiv, setRoundDiv] = useState('')
     const [loading, setLoading] = useState(true)
+    const [notFound, setNotFound] = useState(false)
     const axios = useAxios()
     const navigate = useNavigate();
 
@@ -17,8 +18,15 @@ const RoundDetail = () => {
     }
 
     const getRound = async () => {
-        const response = await axios.get(`/api/tournaments/${tourID}/rounds/${roundID}/`)
-        setRound(response.data)
+        try {
+            const response = await axios.get(`/api/tournaments/${tourID}/rounds/${roundID}/`)
+            setRound(response.data)
+        } catch(error) {
+            if (error.response.status === 404) {
+                setLoading(false)
+                setNotFound(true)
+            }
+        }
     }
 
     const getRoundDiv = () => {
@@ -46,13 +54,23 @@ const RoundDetail = () => {
         if (loading) {
             return <p>Chargement</p>
         } else {
-            return (
-                <div>
-                    <h1 onClick={backToTournament}>Tournoi n°{tourID}</h1>
-                    <h2>Ronde n°{round.number}</h2>
-                    {roundDiv}
-                </div>
-            )
+            if (!notFound) {
+                return (
+                    <div>
+                        <h1 onClick={backToTournament}>Tournoi n°{tourID}</h1>
+                        <h2>Ronde n°{round.number}</h2>
+                        {roundDiv}
+                    </div>
+                )
+            } else {
+                return (
+                    <div>
+                        <h1 onClick={backToTournament}>Tournoi n°{tourID}</h1>
+                        <h2>Ronde n°{roundID}</h2>
+                        <p>Cette page n'existe pas</p>
+                    </div>
+                )
+            }
         }
     }
 

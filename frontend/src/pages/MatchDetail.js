@@ -6,6 +6,7 @@ import useAxios from '../utils/useAxios';
 const MatchDetail = () => {
     const { tourID, roundID, matchID } = useParams()
     const [loading, setLoading] = useState(true)
+    const [notFound, setNotFound] = useState(false)
     const [match, setMatch] = useState('')
     const [playerOne, setPlayerOne] = useState('')
     const [playerTwo, setPlayerTwo] = useState('')
@@ -26,8 +27,15 @@ const MatchDetail = () => {
     }
 
     const getMatch = async () => {
-        const response = await axios.get(url)
-        return response.data
+        try {
+            const response = await axios.get(url)
+            return response.data
+        } catch(error) {
+            if (error.response.status === 404) {
+                setLoading(false)
+                setNotFound(true)
+            }
+        }
     }
 
     const getPlayer = async (playerNumber) =>  {
@@ -137,7 +145,7 @@ const MatchDetail = () => {
                     setMatch(match)
             })
         } else {
-            setClassNames()
+            if (!notFound) setClassNames()
         }
     }, [loading])
 
@@ -168,34 +176,46 @@ const MatchDetail = () => {
         if (loading) {
             return (
                 <div>
+                    <h1 onClick={backToTournament}>Tournoi n°{tourID}</h1>
+                    <h2 onClick={backToRound}>Round n°{roundID}</h2>
                     <p>Chargement...</p>
                 </div>
             )
         } else {
-            return (
-                <div>
-                    <h1 onClick={backToTournament}>Tournoi n°{tourID}</h1>
-                    <h2 onClick={backToRound}>Round n°{roundID}</h2>
+            if (!notFound) {
+                return (
                     <div>
-                        <div ref={playerOneCard} id={'player-one'} onClick={setWinner}>
-                            {playerOne.username}
-                            {match.result_participant_1}
+                        <h1 onClick={backToTournament}>Tournoi n°{tourID}</h1>
+                        <h2 onClick={backToRound}>Round n°{roundID}</h2>
+                        <div>
+                            <div ref={playerOneCard} id={'player-one'} onClick={setWinner}>
+                                {playerOne.username}
+                                {match.result_participant_1}
+                            </div>
+                            <div ref={drawCard} id={'draw'} onClick={setDraw}>
+                                versus
+                            </div>
+                            <div ref={playerTwoCard} id={'player-two'} onClick={setWinner}>
+                                {playerTwo.username}
+                                {match.result_participant_2}
+                            </div>
+                            {!validDisabled && <
+                                button
+                                onClick={patchValidation}
+                            >Valider
+                            </button>}
                         </div>
-                        <div ref={drawCard} id={'draw'} onClick={setDraw}>
-                            versus
-                        </div>
-                        <div ref={playerTwoCard} id={'player-two'} onClick={setWinner}>
-                            {playerTwo.username}
-                            {match.result_participant_2}
-                        </div>
-                        {!validDisabled && <
-                            button
-                            onClick={patchValidation}
-                        >Valider
-                        </button>}
                     </div>
-                </div>
-            )
+                )
+            } else {
+                return (
+                    <div>
+                        <h1 onClick={backToTournament}>Tournoi n°{tourID}</h1>
+                        <h2 onClick={backToRound}>Round n°{roundID}</h2>
+                        <p>Cette page n'existe pas.</p>
+                    </div>
+                )
+            }
         }
     }
 

@@ -10,6 +10,7 @@ const PlayerDetail = () => {
     const axios = useAxios()
     const [player, setPlayer] = useState('')
     const [loading, setLoading] = useState(true)
+    const [notFound, setNotFound] = useState(false)
     const [updated, setUpdated] = useState(false)
 
     const handleUpdate = () => {
@@ -22,6 +23,12 @@ const PlayerDetail = () => {
         if (!player) {
             axios.get(`/api/players/${playerID}/`)
                 .then((response) => setPlayer(response.data))
+                .catch((error) => {
+                    if (error.response.status === 404) {
+                        setLoading(false)
+                        setNotFound(true)
+                    }
+                })
         } else {
             setLoading(false)
         }
@@ -44,18 +51,26 @@ const PlayerDetail = () => {
                 </div>
             )
         } else {
-            return (
-                <>
-                    {playerDiv}
-                    <PlayerUpdate
-                        player={player}
-                        setUpdated={setUpdated}
-                    />
-                    {!player.tournaments_list.length && <PlayerDelete
-                        player={player}
-                    />}
-                </>
-            )
+            if (!notFound) {
+                return (
+                    <>
+                        {playerDiv}
+                        <PlayerUpdate
+                            player={player}
+                            setUpdated={setUpdated}
+                        />
+                        {!player.tournaments_list?.length && <PlayerDelete
+                            player={player}
+                        />}
+                    </>
+                )
+            } else {
+                return (
+                    <div>
+                        Cette page n'existe pas.
+                    </div>
+                )
+            }
         }
     }
 
