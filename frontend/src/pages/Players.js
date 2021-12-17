@@ -34,7 +34,6 @@ const Players = () => {
     const playersListDiv =
         <div className={'players-list'}>
             <PlayerCreation setCreated={setCreated}/>
-            <h2>Liste des Joueurs</h2>
             {playersList.map((player) => (
                 <PlayersListItem
                     key={player.number}
@@ -43,24 +42,16 @@ const Players = () => {
             ))}
         </div>
 
-    const getMainElement = () => {
-        if (loading) {
-            return (
-                <div>
-                    <p>Chargement...</p>
-                </div>
-            )
-        } else {
-            return (
-                <div>
-                    <h1>Liste des joueurs</h1>
-                    {playersListDiv}
-                </div>
-            )
+    let mainElement = 
+    <div>
+        <h1>Liste des joueurs</h1>
+        {
+            loading ? 
+                <p>Chargement...</p> 
+                :
+                playersListDiv
         }
-    }
-
-    let mainElement = getMainElement()
+        </div>
 
     return (
         <div>
