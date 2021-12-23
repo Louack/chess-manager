@@ -100,13 +100,13 @@ const TournamentUpdateForm = ({tournament, setUpdated, playersOptions, defaultPl
                 disabled={isSubmitting}
                 onClick={handleSubmit(submitWithoutLocking)}
                 type='submit'
-                value="Créer"
+                value="Modifier"
             />
             <input
                 disabled={isSubmitting}
                 onClick={handleSubmit(submitWithLocking)}
                 type='submit'
-                value="Créer et vérouiller"
+                value="Modifier et vérouiller"
             />
             {lockedError && <span>{lockedError}</span>}
         </form>

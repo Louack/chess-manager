@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useAxios from '../utils/useAxios';
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 
 const schema = yup.object().shape({
@@ -21,12 +22,14 @@ const PlayerCreationForm = ( {setCreated} ) => {
         resolver: yupResolver(schema)
     });
     const axios = useAxios()
+    const navigate = useNavigate();
     const [uniqueError, setUniqueError] = useState(false)
 
     const postData = async (data) => {
         console.log(data)
         try {
-            await axios.post('/api/players/', data)
+            let response = await axios.post('/api/players/', data)
+            navigate(`/players/${response.data.number}/`)
             setUniqueError(false)
             setCreated(true)
         } catch (error) {

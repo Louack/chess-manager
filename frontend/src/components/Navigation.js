@@ -10,9 +10,6 @@ const Navigation = () => {
 
     return (
         <nav className='navigation' >
-            <NavLink className={navclassname} end to ="/">
-                Dashboard
-            </NavLink>
             <NavLink className={navclassname} end to ="/profile">
                 Mon profil
             </NavLink>

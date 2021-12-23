@@ -3,6 +3,7 @@ import Select from "react-select";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useAxios from '../utils/useAxios';
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 
 
@@ -31,6 +32,7 @@ const TournamentCreationForm = ({ playersOptions }) => {
     });
     const [lockedError, setLockedError] = useState('')
     const axios = useAxios()
+    const navigate = useNavigate();
 
     const submitWithoutLocking = async (data) => {
         let locked = false
@@ -60,7 +62,8 @@ const TournamentCreationForm = ({ playersOptions }) => {
 
     const postData = async (data, locked) => {
         let cleanedData = getCleanedData(data, locked)
-        await axios.post('/api/tournaments/', cleanedData)
+        let response = await axios.post('/api/tournaments/', cleanedData)
+        navigate(`/tournaments/${response.data.number}/`)
     }
 
     return (

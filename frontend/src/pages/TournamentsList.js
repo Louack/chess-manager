@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import TournamentsListItem from "../components/TournamentsListItem";
 import TournamentsListHead from "../components/TournamentsListHead";
 import TournamentCreation from "../components/TournamentCreation";
+import Pagination from '../components/Pagination';
 import BasePage from "./BasePage";
 import useAxios from '../utils/useAxios';
 
@@ -9,20 +10,21 @@ const TournamentsList = () => {
     let creationDiv = <TournamentCreation />
 
     const [loading, setLoading] = useState(false);
-    const [index, setIndex] = useState(false);
     const [bottomDiv, setBottomDiv] = useState(creationDiv);
     const [tabs, setTabs] = useState({
         activeTab: null,
         tabNames: ['Tournois à venir', 'Tournois en cours', 'Tournois terminés']
     });
+    const [apiURL, setApiURL] = useState('')
 
     useEffect(() => {
-        if (loading) getTournamentsList(index)
+        if (loading) getTournamentsList(apiURL)
     }, [loading]);
 
     let toggleList = (e, index) => {
         if (e.target.className === 'tour-type') {
-            setIndex(index)
+            let filter = getFilter(index);
+            setApiURL(`/api/tournaments/?${filter}=1`)
             setLoading(true);
         } else {
             setTabs({...tabs, activeTab: null});
@@ -51,15 +53,22 @@ const TournamentsList = () => {
 
     let axios = useAxios();
 
-    let getTournamentsList = async (index) => {
-        let filter = getFilter(index);
-        let response = await axios.get(`/api/tournaments/?${filter}=1`);
+    let getTournamentsList = async (apiURL) => {
+        let response = await axios.get(apiURL);
         let tourList = response.data.results.map(tournament => (
             <TournamentsListItem key={tournament.number} tournament={tournament}/>
         ))
         setBottomDiv(
             <div className='tournaments-list'>
                 {tourList}
+                <Pagination 
+                    apiURL={apiURL}
+                    setApiURL={setApiURL}
+                    apiPrevious={response.data.previous}
+                    apiNext={response.data.next}
+                    objectsCount={response.data.count}
+                    setLoading={setLoading}
+                />
             </div>
         );
         setLoading(false)

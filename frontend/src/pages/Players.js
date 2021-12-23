@@ -3,12 +3,17 @@ import BasePage from "./BasePage";
 import useAxios from "../utils/useAxios";
 import PlayersListItem from "../components/PlayersListItem";
 import PlayerCreation from "../components/PlayerCreation";
+import Pagination from '../components/Pagination';
 
 const Players = () => {
     const axios = useAxios()
     const [loading, setLoading] = useState(true);
     const [created, setCreated] = useState(true)
     const [playersList, setPlayersList] = useState([])
+    const [apiURL, setApiURL] = useState('/api/players/')
+    const [apiNext, setApiNext] = useState('')
+    const [apiPrevious, setApiPrevious] = useState('')
+    const [playersCount, setPlayersCount] = useState(null)
 
     const handleCreated = () => {
         setLoading(true)
@@ -21,15 +26,17 @@ const Players = () => {
     }, [created])
 
     useEffect(() => {
-        if (!playersList.length) {
-            axios.get('/api/players/')
+        if (loading) {
+            axios.get(apiURL)
                 .then((response) => {
                     setPlayersList(response.data.results)
+                    setApiNext(response.data.next)
+                    setApiPrevious(response.data.previous)
+                    setPlayersCount(response.data.count)
+                    setLoading(false)
                 })
-        } else {
-            setLoading(false)
         }
-    }, [playersList, axios]);
+    }, [loading]);
 
     const playersListDiv =
         <div className={'players-list'}>
@@ -40,6 +47,14 @@ const Players = () => {
                     player={player}
                 />
             ))}
+            <Pagination 
+            apiURL={apiURL}
+            setApiURL={setApiURL}
+            apiPrevious={apiPrevious}
+            apiNext={apiNext}
+            objectsCount={playersCount}
+            setLoading={setLoading}
+            />
         </div>
 
     let mainElement = 
