@@ -38,7 +38,6 @@ const PlayerCreationForm = ( {setCreated} ) => {
     }
 
     return (
-        <div>
             <form>
                 <input
                     type='text'
@@ -69,7 +68,6 @@ const PlayerCreationForm = ( {setCreated} ) => {
                     value="Créer"
                 />
             </form>
-        </div>
     );
 };
 

@@ -2,11 +2,9 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from './context/AuthContext';
 import Home from './pages/Home';
-import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import Players from './pages/Players';
 import Profile from './pages/Profile';
-import Registration from './pages/Registration';
 import TournamentsList from './pages/TournamentsList';
 import TournamentDetail from './pages/TournamentDetail';
 import RoundsList from './pages/RoundsList'
@@ -24,9 +22,7 @@ const App = () => {
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-          <Route path="/register" element={<PublicRoute><Registration /></PublicRoute>} />
-          <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
+          <Route path="/" element={<PublicRoute><Home /></PublicRoute>} />
           <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
           <Route path="/players" element={<PrivateRoute><Players /></PrivateRoute>} />
           <Route path="/players/:playerID" element={<PrivateRoute><PlayerDetail /></PrivateRoute>} />

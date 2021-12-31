@@ -2,7 +2,7 @@ import React from 'react';
 
 const ModalForm = ({modalStatus, setModalStatus, title, form}) => {
     return (
-        <div>
+        <>
             {modalStatus && <div className={'modal-background'}>
                 <div className={'modal-container'}>
                     <button className={'modal-opening'} onClick={() => {setModalStatus(false)}}>
@@ -16,7 +16,7 @@ const ModalForm = ({modalStatus, setModalStatus, title, form}) => {
                     </div>
                 </div>
             </div>}
-        </div>
+        </>
     );
 };
 
