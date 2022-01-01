@@ -3,13 +3,15 @@ import React from 'react';
 const ModalForm = ({modalStatus, setModalStatus, title, form}) => {
     return (
         <>
-            {modalStatus && <div className={'modal-background'}>
+            {modalStatus && <div 
+                className={'modal-background'} 
+                onClick={(e) => {if (e.target.className === 'modal-background') setModalStatus(false)}}>
                 <div className={'modal-container'}>
-                    <button className={'modal-opening'} onClick={() => {setModalStatus(false)}}>
+                    <button className={'modal-closing'} onClick={() => {setModalStatus(false)}}>
                         X
                     </button>
                     <div className={'modal-title'}>
-                        <h2>{title}</h2>
+                        <h3>{title}</h3>
                     </div>
                     <div className={'modal-body'}>
                         {form}

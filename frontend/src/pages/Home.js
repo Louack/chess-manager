@@ -11,36 +11,39 @@ const Home = () => {
 
     return (
         <main>
-            <h1>Chess Manager</h1>
-            <div className='login-register'>
-                <button
-                    className={'btn-type-1'}
-                    onClick={() => {
-                        setLoginModalStatus(true)
-                    }}
-                >
-                    Connexion
-                </button>
-                < ModalForm
-                modalStatus={loginModalStatus}
-                setModalStatus={setLoginModalStatus}
-                title={"Connexion"}
-                form={loginForm}
-                />
-                <button
-                    className={'btn-type-2'}
-                    onClick={() => {
-                        setRegisterModalStatus(true)
-                    }}
-                >
-                    Inscription
-                </button>
-                < ModalForm
-                modalStatus={registerModalStatus}
-                setModalStatus={setRegisterModalStatus}
-                title={"Inscription"}
-                form={registerForm}
-                />
+            <div className='home'>
+                <img src="./img/home-chess.jpg" alt="home-chess" />
+                <h1>Chess Manager</h1>
+                <div className='login-register'>
+                    <button
+                        className={'login-btn'}
+                        onClick={() => {
+                            setLoginModalStatus(true)
+                        }}
+                    >
+                        Connexion
+                    </button>
+                    < ModalForm
+                    modalStatus={loginModalStatus}
+                    setModalStatus={setLoginModalStatus}
+                    title={"Connexion"}
+                    form={loginForm}
+                    />
+                    <button
+                        className={'register-btn'}
+                        onClick={() => {
+                            setRegisterModalStatus(true)
+                        }}
+                    >
+                        Inscription
+                    </button>
+                    < ModalForm
+                    modalStatus={registerModalStatus}
+                    setModalStatus={setRegisterModalStatus}
+                    title={"Inscription"}
+                    form={registerForm}
+                    />
+                </div>
             </div>
         </main>
     )

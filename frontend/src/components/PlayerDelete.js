@@ -24,9 +24,10 @@ const PlayerDelete = ( {player} ) => {
                 Supprimer
             </button>
             < ModalConfirmation
+                actionType={"delete"}
                 modalConfirmStatus={modalConfirmStatus}
                 setModalConfirmStatus={setModalConfirmStatus}
-                title={`Suppression du joueur n°${player.number}`}
+                title={`Suppression du joueur #${player.number}`}
                 question={'Voulez-vous vraiment supprimer ce joueur ?'}
                 actionToPerform={deletePlayer}
             />

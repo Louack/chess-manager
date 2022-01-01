@@ -24,9 +24,10 @@ const TournamentDelete = ({tournament} ) => {
                 Supprimer
             </button>
             < ModalConfirmation
+                actionType={"delete"}
                 modalConfirmStatus={modalConfirmStatus}
                 setModalConfirmStatus={setModalConfirmStatus}
-                title={`Suppression du tournoi n°${tournament.number}`}
+                title={`Suppression du tournoi #${tournament.number}`}
                 question={'Voulez-vous vraiment supprimer ce tournoi ?'}
                 actionToPerform={deleteTournament}
             />

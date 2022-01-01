@@ -1,0 +1,40 @@
+.home {
+  min-height: 75vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    max-width: 380px;
+  }
+
+  h1 {
+    margin-top: 25px;
+    margin-bottom: 50px;
+    font-size: 2.5rem;
+  }
+
+  .login-register {
+    display: flex;
+    justify-content: center;
+  }
+  button {
+    margin-left: 5px;
+    margin-right: 5px;
+    &:hover {
+      background-color: lightblue;
+      color: $dark-grey;
+    }
+  }
+}
+
+.login-btn {
+  background-color: $dark-grey;
+  color: $white;
+}
+
+.register-btn {
+  background-color: $white;
+  color: $dark-grey;
+}

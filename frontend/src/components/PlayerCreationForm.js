@@ -39,34 +39,45 @@ const PlayerCreationForm = ( {setCreated} ) => {
 
     return (
             <form>
-                <input
-                    type='text'
-                    name='username'
-                    placeholder="Pseudo du joueur"
-                    {...register('username')}
-                />
-                <span>{errors.username?.message}</span>
-                {uniqueError && <span>Ce pseudo est déjà utilisé par un de vos joueurs</span>}
-                <input
-                    type='text'
-                    name='last_name'
-                    placeholder="Nom du joueur"
-                    {...register('last_name')}
-                />
-                <span>{errors.last_name?.message}</span>
-                <input
-                    type='text'
-                    name='first_name'
-                    placeholder="Prénom du joueur"
-                    {...register('first_name')}
-                />
-                <span>{errors.first_name?.message}</span>
-                <input
-                    disabled={isSubmitting}
-                    onClick={handleSubmit(postData)}
-                    type='submit'
-                    value="Créer"
-                />
+                <div className='input-set'>
+                    <span className='input-name'>Pseudo :</span>
+                    <input
+                        type='text'
+                        name='username'
+                        {...register('username')}
+                    />
+                    <span className='input-error'>{errors.username?.message}</span>
+                </div>
+                
+                <div className='input-set'>
+                    <span className='input-name'>Nom :</span>
+                    <input
+                        type='text'
+                        name='last_name'
+                        {...register('last_name')}
+                    />
+                    <span className='input-error'>{errors.last_name?.message}</span>
+                </div>
+
+                <div className='input-set'>
+                    <span className='input-name'>Prénom :</span>
+                    <input
+                        type='text'
+                        name='first_name'
+                        {...register('first_name')}
+                    />
+                    <span className='input-error'>{errors.first_name?.message}</span>
+                </div>
+
+                <div className='submit-set'>
+                    <input
+                        disabled={isSubmitting}
+                        onClick={handleSubmit(postData)}
+                        type='submit'
+                        value="Créer"
+                    />
+                    {uniqueError && <span className='input-error'>Ce pseudo est déjà utilisé par un de vos joueurs</span>}
+                </div>
             </form>
     );
 };

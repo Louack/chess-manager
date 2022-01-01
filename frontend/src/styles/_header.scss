@@ -1,6 +1,7 @@
 header {
   display: flex;
   align-items: center;
+  padding-bottom: 20px;
 
   a {
     text-decoration: none;
@@ -13,5 +14,19 @@ header {
 
   a:hover {
     text-decoration: underline;
+  }
+
+  .header-logo-title {
+    display: flex;
+    align-items: center;
+
+    img {
+      max-height: 100px;
+    }
+
+    & > * {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
   }
 }

@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-const ModalConfirmation = ({modalConfirmStatus, setModalConfirmStatus, title, question, actionToPerform}) => {
+const ModalConfirmation = ({actionType, modalConfirmStatus, setModalConfirmStatus, title, question, actionToPerform}) => {
+    const [btnName, setBtnName] = useState('')
+    const [btnClass, setBtnClass] = useState('')
+
+    useEffect(() => {
+        if (actionType === 'delete') {
+            setBtnName('Supprimer')
+            setBtnClass('delete-btn')
+        }
+    }, [])
     return (
         <div>
             {modalConfirmStatus && <div className={'modal-background'}>
                 <div className={'modal-container'}>
-                    <button className={'modal-opening'} onClick={() => {setModalConfirmStatus(false)}}>
+                    <button className={'modal-closing'} onClick={() => {setModalConfirmStatus(false)}}>
                         X
                     </button>
                     <div className={'modal-title'}>
@@ -14,8 +23,10 @@ const ModalConfirmation = ({modalConfirmStatus, setModalConfirmStatus, title, qu
                     <div className={'modal-body'}>
                         {question}
                     </div>
-                    <button onClick={actionToPerform}>
-                        Confirmer
+                    <button 
+                        className={btnClass}
+                        onClick={actionToPerform}>
+                        {btnName}
                     </button>
                 </div>
             </div>}

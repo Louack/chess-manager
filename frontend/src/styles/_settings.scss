@@ -1,5 +1,6 @@
 $white: white;
 $dark-grey: rgb(52, 65, 65);
+$error: rgb(190, 28, 28);
 
 * {
   box-sizing: border-box;
@@ -18,8 +19,8 @@ body {
 }
 
 main {
-  min-height: 710px;
-  min-width: 900px;
+  min-height: 95vh;
+  min-width: 95vw;
 }
 
 code {
@@ -40,32 +41,6 @@ code {
   margin-left: 10px;
   margin-right: 10px;
   border-bottom: solid;
-}
-
-.modal-background {
-  position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(130, 130, 130, 0.7);
-}
-
-.modal-container {
-  overflow: auto;
-  background-color: steelblue;
-  padding: 20px;
-  width: fit-content;
-  height: fit-content;
-  max-width: 80vw;
-  max-height: 80vw;
-  border: solid;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
 }
 
 .winner {
@@ -90,4 +65,25 @@ code {
 
 .draw-locked {
   background-color: grey;
+}
+
+button {
+  font-size: 1.15rem;
+  border: solid;
+  border-width: 1px;
+  border-radius: 5px;
+  padding: 0.6em 1.2em;
+  transition: all 0.25s;
+  background-color: lightblue;
+  &:hover {
+    background-color: rgb(0, 133, 177);
+    cursor: pointer;
+  }
+}
+
+input[type="submit"] {
+  transition: all 0.25s;
+  &:hover {
+    cursor: pointer;
+  }
 }

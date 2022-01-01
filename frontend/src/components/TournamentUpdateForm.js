@@ -67,48 +67,61 @@ const TournamentUpdateForm = ({tournament, setUpdated, playersOptions, defaultPl
 
     return (
         <form>
-            <input
-                type='text'
-                name='name'
-                placeholder="Nom du tournoi"
-                {...register('name')}
-            />
-            <span>{errors.name?.message}</span>
+            <div className='input-set'>
+                <span className='input-name'>Nom :</span>
+                <input
+                    type='text'
+                    name='name'
+                    {...register('name')}
+                />
+                <span className='input-error'>{errors.name?.message}</span>
+            </div>
+            
+            <div className='input-set'>
+                <span className='input-name'>Date :</span>
+                <input
+                    type='date'
+                    name='tournament_date'
+                    {...register('tournament_date')}
+                />
+                <span className='input-error'>{errors.tournament_date?.message}</span>
+            </div>
 
-            <input
-                type='date'
-                name='tournament_date'
-                placeholder="Date du tournoi"
-                {...register('tournament_date')}
-            />
-            <span>{errors.tournament_date?.message}</span>
-            <Controller
-                name="players_list"
-                control={control}
-                render={({field: {onChange, value}}) => (
-                    <Select
-                        defaultValue={defaultPlayers}
-                        value={value}
-                        onChange={onChange}
-                        options={playersOptions}
-                        isMulti
+            <div className='input-set'>
+                <span className='input-name'>Joueurs :</span>
+                <Controller
+                    name="players_list"
+                    control={control}
+                    render={({field: {onChange, value}}) => (
+                        <Select
+                            defaultValue={defaultPlayers}
+                            value={value}
+                            onChange={onChange}
+                            options={playersOptions}
+                            isMulti
+                        />
+                    )}
+                />
+                <span className='input-error'>{errors.players_list?.message}</span>
+            </div>
+
+            <div className='submit-set'>
+                <div className='multi-submit'>
+                    <input
+                        disabled={isSubmitting}
+                        onClick={handleSubmit(submitWithoutLocking)}
+                        type='submit'
+                        value="Modifier"
                     />
-                )}
-            />
-            <span>{errors.players_list?.message}</span>
-            <input
-                disabled={isSubmitting}
-                onClick={handleSubmit(submitWithoutLocking)}
-                type='submit'
-                value="Modifier"
-            />
-            <input
-                disabled={isSubmitting}
-                onClick={handleSubmit(submitWithLocking)}
-                type='submit'
-                value="Modifier et vérouiller"
-            />
-            {lockedError && <span>{lockedError}</span>}
+                    <input
+                        disabled={isSubmitting}
+                        onClick={handleSubmit(submitWithLocking)}
+                        type='submit'
+                        value="Modifier et vérouiller"
+                    />
+                </div>
+                {lockedError && <span className='input-error'>{lockedError}</span>}
+            </div>
         </form>
     )
 };

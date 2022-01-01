@@ -35,26 +35,34 @@ const Login = () => {
 
     return (
         <form onSubmit={handleSubmit(handleLogin)}>
-            <input
-                type='text'
-                name='username'
-                placeholder="Nom d'utilisateur"
-                {...register('username')}
-            />
-            <span>{errors.username?.message}</span>
-            <input
-                type='password'
-                name='password'
-                placeholder="Mot de passe"
-                {...register('password')}
-            />
-            <span>{errors.password?.message}</span>
-            <input
-                disabled={isSubmitting}
-                type='submit'
-                value="Se connecter"
-            />
-            {errorMessage && <span>{errorMessage}</span>}
+            <div className='input-set'>
+                <span className='input-name'>Nom d'utilisateur :</span>
+                <input
+                    type='text'
+                    name='username'
+                    {...register('username')}
+                />
+                <span className='input-error'>{errors.username?.message}</span>
+            </div>
+
+            <div className='input-set'>
+                <span className='input-name'>Mot de passe :</span>
+                <input
+                    type='password'
+                    name='password'
+                    {...register('password')}
+                />
+                <span className='input-error'>{errors.password?.message}</span>
+            </div>
+
+            <div className='submit-set'>
+                <input
+                    disabled={isSubmitting}
+                    type='submit'
+                    value="Se connecter"
+                />
+                {errorMessage && <span className='input-error'>{errorMessage}</span>}
+            </div>
         </form>
     );
 };
