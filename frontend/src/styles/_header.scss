@@ -1,11 +1,16 @@
 header {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
   display: flex;
   align-items: center;
   padding-bottom: 20px;
-  border-bottom: solid;
   justify-content: space-between;
-  border-width: 2px;
   flex-wrap: nowrap;
+  background-color: $white;
+  z-index: 2;
+  box-shadow: 1px 1px 4px $dark-grey;
 
   h1 {
     font-size: 3rem;
@@ -23,6 +28,7 @@ header {
   }
 
   nav {
+    position: relative;
     display: flex;
     flex-wrap: nowrap;
     white-space: nowrap;
@@ -35,7 +41,8 @@ header {
     }
 
     .user-menu-img {
-      max-height: 25px;
+      max-height: 33px;
+      transition: all 0.2s;
     }
 
     .nav-item {
@@ -44,6 +51,12 @@ header {
       margin-left: 30px;
       display: flex;
       align-items: center;
+      &:hover {
+        cursor: pointer;
+        span {
+          filter: brightness(200%);
+        }
+      }
     }
   }
 
@@ -64,10 +77,30 @@ header {
 
   .nav-user-menu {
     position: absolute;
-    top: 100px;
-    right: 45px;
+    top: 70px;
+    right: 5px;
     display: flex;
     flex-direction: column;
-    height: 100px;
+    background-color: $white;
+    border-radius: 7px;
+    box-shadow: 1px 1px 4px $dark-grey;
+
+    div {
+      margin: 10px 10px 10px 10px;
+      display: flex;
+      align-items: center;
+
+      img {
+        max-height: 25px;
+        margin-right: 15px;
+      }
+
+      &:hover {
+        cursor: pointer;
+        span {
+          filter: brightness(200%);
+        }
+      }
+    }
   }
 }

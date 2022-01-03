@@ -16,12 +16,11 @@
   padding: 2rem 1.5rem;
   width: fit-content;
   height: fit-content;
-  border: solid;
-  border-width: 1px;
   text-align: left;
   display: flex;
   flex-direction: column;
   border-radius: 7.5px;
+  box-shadow: 1px 1px 4px $dark-grey;
 
   button:hover {
     background-color: $white;

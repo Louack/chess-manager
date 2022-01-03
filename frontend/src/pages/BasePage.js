@@ -8,9 +8,6 @@ const BasePage = ({main}) => {
             <main>
                 {main}
             </main>
-            <footer>
-                <p>Made by Loïc Briset</p>
-            </footer>
         </>
     )
 }

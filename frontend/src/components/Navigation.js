@@ -7,7 +7,7 @@ import AuthContext from "../context/AuthContext";
 const Navigation = () => {
     const { username, removeAuthTokens } = useContext(AuthContext)
     const [openUserMenu, setOpenUserMenu] = useState(false)
-    const menuRef = useRef()
+    const navRef = useRef()
     const navigate = useNavigate();
 
     const displayUserMenu = () => {
@@ -16,8 +16,7 @@ const Navigation = () => {
 
     useEffect(() => {
         const checkOutsideClick = (e) => {
-            if (openUserMenu && menuRef.current && !menuRef.current.contains(e.target)) {
-                console.log(e.target)
+            if (openUserMenu && navRef.current && !navRef.current.contains(e.target)) {
                 setOpenUserMenu(false)
             }
           }
@@ -31,7 +30,7 @@ const Navigation = () => {
 
     return (
         <>
-            <nav ref={menuRef}>
+            <nav ref={navRef}>
                 <div className="nav-item" onClick={() => navigate("/tournaments")}>
                     <img src="/img/cup-icon.png" alt="cup-icon" />
                     <span>
@@ -45,19 +44,25 @@ const Navigation = () => {
                     </span>
                 </div>
                 <div className="nav-item" onClick={displayUserMenu}>
-                    <img className="user-menu-img" src="/img/arrow-icon.png" alt="arrow-icon" />
+                    <img className="user-menu-img" src="/img/arrow-icon.png" alt="arrow-icon" style={openUserMenu ? {transform: 'rotate(90deg)'} : null}/>
                     <span>
                         <b>{username}</b>
                     </span>
                 </div>
                 {openUserMenu && 
                 <div className='nav-user-menu'>
-                    <span onClick={() => navigate("/profile")}>
-                        Mon profil
-                    </span>
-                    <span onClick={removeAuthTokens}>
-                        Déconnexion
-                    </span>
+                    <div className='user-menu-item' onClick={() => navigate("/profile")}>
+                        <img src="/img/profile-icon.png" alt="profile-icon" />
+                        <span>
+                            Mon profil
+                        </span>
+                    </div>
+                    <div className='user-menu-item'  onClick={removeAuthTokens}>
+                        <img src="/img/unplug-icon.png" alt="unplug-icon" />
+                        <span>
+                            Déconnexion
+                        </span>
+                    </div>
                 </div>}
             </nav>
         </>
