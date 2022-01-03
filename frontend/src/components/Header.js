@@ -6,8 +6,7 @@ const Header = () => {
     const { username } = useContext(AuthContext)
 
     return (
-            <header style={username && 
-                {justifyContent: "space-between", borderBottom: "solid"}} >
+            <header>
                 <div className='header-logo-title'>
                     <img src="/img/header-chess.jpg" alt="header-chess" />
                     <h1>Chess Manager</h1>
