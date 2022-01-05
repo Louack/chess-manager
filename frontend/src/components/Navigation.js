@@ -1,12 +1,10 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
-import '../App.css'
 import AuthContext from "../context/AuthContext";
 
 
-const Navigation = ( {navClass} ) => {
+const Navigation = ( {navClass, openUserMenu, setOpenUserMenu} ) => {
     const { removeAuthTokens } = useContext(AuthContext)
-    const [openUserMenu, setOpenUserMenu] = useState(false)
     const navRef = useRef()
     const navigate = useNavigate();
 
@@ -28,7 +26,7 @@ const Navigation = ( {navClass} ) => {
             document.removeEventListener("mousedown", checkOutsideClick)
           }
           
-    }, [openUserMenu])
+    }, [openUserMenu, setOpenUserMenu])
 
     return (
         <>

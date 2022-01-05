@@ -10,6 +10,7 @@ const Profile = () => {
     useEffect(() => {
         if (loading) {
             axios.get(`/api/profile/`).then((response) => {
+                console.log(response.data[0])
                 setProfile(response.data[0])
                 setLoading(false)
             })

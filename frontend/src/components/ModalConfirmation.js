@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const ModalConfirmation = ({actionType, modalConfirmStatus, setModalConfirmStatus, title, question, actionToPerform}) => {
     const [btnName, setBtnName] = useState('')
     const [btnClass, setBtnClass] = useState('')
+    const containerRef = useRef()
 
     useEffect(() => {
         if (actionType === 'delete') {
@@ -10,10 +11,27 @@ const ModalConfirmation = ({actionType, modalConfirmStatus, setModalConfirmStatu
             setBtnClass('delete-btn')
         }
     }, [])
+
+    useEffect(() => {
+        const checkOutsideClick = (e) => {
+            if (modalConfirmStatus && containerRef.current && !containerRef.current.contains(e.target)) {
+                console.log('hey')
+                setModalConfirmStatus(false)
+            }
+          }
+          document.addEventListener("mousedown", checkOutsideClick)
+
+          return () => {
+            document.removeEventListener("mousedown", checkOutsideClick)
+          }
+        
+    }, [modalConfirmStatus, setModalConfirmStatus])
+
+
     return (
         <div>
             {modalConfirmStatus && <div className={'modal-background'}>
-                <div className={'modal-container'}>
+                <div className={'modal-container'} ref={containerRef}>
                     <button className={'modal-closing'} onClick={() => {setModalConfirmStatus(false)}}>
                         X
                     </button>

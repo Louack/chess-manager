@@ -1,8 +1,28 @@
 footer {
   display: flex;
+  min-height: 5vh;
   align-items: center;
   justify-content: center;
   border-top: solid;
-  margin-top: 2.5%;
-  margin-bottom: 2.5%;
+  border-right: solid;
+  border-left: solid;
+  border-width: 1px;
+}
+
+.large-footer {
+  margin: 0px 20vw;
+}
+
+.medium-footer {
+  margin: 0px 10vw;
+}
+
+.small-footer {
+  margin: 0px 5vw;
+}
+
+.compact-footer {
+  border-right: none;
+  border-left: none;
+  margin: 0px 0px;
 }

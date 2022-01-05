@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react'
 import Navigation from '../components/Navigation';
 
 const Header = () => {
+    const [openUserMenu, setOpenUserMenu] = useState(false)
+
     const [navClass, setNavClass] = useState(() => {
         if (window.innerWidth > 1400) {
             return "large-nav"
@@ -24,13 +26,16 @@ const Header = () => {
             if (window.innerWidth > 1400) {
                 setNavClass("large-nav")
                 setTitleClass("large-title")
+                setOpenUserMenu(false)
             } else if (window.innerWidth > 940){
                 setNavClass("medium-nav")
                 setTitleClass("large-title")
+                setOpenUserMenu(false)
             }
             else if (window.innerWidth > 580){
                 setNavClass("medium-nav")
                 setTitleClass("compact-title")
+                setOpenUserMenu(false)
             } else {
                 setNavClass("compact-nav")
                 setTitleClass("compact-title")
@@ -51,7 +56,11 @@ const Header = () => {
                     <img src="/img/header-chess.jpg" alt="header-chess" />
                     <h1>Chess Manager</h1>
                 </div>
-                <Navigation navClass={navClass}/>
+                <Navigation 
+                    navClass={navClass} 
+                    openUserMenu={openUserMenu} 
+                    setOpenUserMenu={setOpenUserMenu}
+                />
             </header>
         )
 }

@@ -58,7 +58,7 @@ const Players = () => {
         </div>
 
     let mainElement = 
-    <div>
+    <>
         <h1>Liste des joueurs</h1>
         {
             loading ? 
@@ -66,12 +66,10 @@ const Players = () => {
                 :
                 playersListDiv
         }
-        </div>
+    </>
 
     return (
-        <div>
-            <BasePage main={mainElement} />
-        </div>
+        <BasePage main={mainElement} />
     )
 };
 
