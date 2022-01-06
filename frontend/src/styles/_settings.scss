@@ -84,3 +84,25 @@ input[type="submit"] {
     cursor: pointer;
   }
 }
+
+.spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 33vh;
+
+  img {
+    height: 75px;
+    width: 75px;
+    animation: rotation 1.5s infinite linear;
+
+    @keyframes rotation {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(359deg);
+      }
+    }
+  }
+}

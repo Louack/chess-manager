@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import BasePage from "./BasePage";
 import useAxios from '../utils/useAxios';
+import Spinner from '../components/Spinner';
 
 const Profile = () => {
     const [profile, setProfile] = useState('')
@@ -10,7 +11,6 @@ const Profile = () => {
     useEffect(() => {
         if (loading) {
             axios.get(`/api/profile/`).then((response) => {
-                console.log(response.data[0])
                 setProfile(response.data[0])
                 setLoading(false)
             })
@@ -18,13 +18,13 @@ const Profile = () => {
     }, [loading])
 
     let mainElement = 
-        <div className='profile'>
-            <h2>Mon Profil</h2>
+        <>
             {
                 loading ? 
-                    <p>Chargement...</p> 
+                    <Spinner />
                     :
-                    <>
+                    <div className='profile'>
+                        <h2>Mon Profil</h2>
                         <div className='profile-section'>
                             <h3>Informations générales</h3>
                             <div className='profile-info'>
@@ -43,9 +43,9 @@ const Profile = () => {
                                 <span>{profile?.players_created}</span>
                             </div>
                         </div>
-                    </>
+                    </div>
             }
-        </div>
+        </>
 
     return (
         <>
