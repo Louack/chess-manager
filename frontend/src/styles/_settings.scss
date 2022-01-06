@@ -1,5 +1,6 @@
 $white: white;
 $dark-grey: rgb(52, 65, 65);
+$lightblue: lightblue;
 $error: rgb(190, 28, 28);
 
 * {
@@ -17,39 +18,6 @@ body {
   background-color: $white;
   color: $dark-grey;
   margin: 0;
-  min-width: 100vh;
-  min-height: 100vh;
-}
-
-main {
-  z-index: 1;
-  padding-top: 130px;
-  min-height: 95vh;
-  display: flex;
-  flex-direction: column;
-  border-right: solid;
-  border-left: solid;
-  border-width: 1px;
-  padding-right: 10px;
-  padding-left: 10px;
-}
-
-.large-main {
-  margin: 0px 20vw;
-}
-
-.medium-main {
-  margin: 0px 10vw;
-}
-
-.small-main {
-  margin: 0px 5vw;
-}
-
-.compact-main {
-  border-right: none;
-  border-left: none;
-  margin: 0px 0px;
 }
 
 code {

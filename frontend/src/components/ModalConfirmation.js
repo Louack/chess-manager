@@ -32,9 +32,7 @@ const ModalConfirmation = ({actionType, modalConfirmStatus, setModalConfirmStatu
         <div>
             {modalConfirmStatus && <div className={'modal-background'}>
                 <div className={'modal-container'} ref={containerRef}>
-                    <button className={'modal-closing'} onClick={() => {setModalConfirmStatus(false)}}>
-                        X
-                    </button>
+                    <img src="./img/closing-cross.png" alt="closing-cross" onClick={() => {setModalConfirmStatus(false)}}/>
                     <div className={'modal-title'}>
                         <h2>{title}</h2>
                     </div>

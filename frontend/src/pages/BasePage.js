@@ -61,7 +61,7 @@ const BasePage = ({main}) => {
                 {main}
             </main>
             <footer className={footerClass}>
-                Made by Loic Briset
+                <span>Made by Loïc Briset</span>
             </footer>
         </>
     )

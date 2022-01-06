@@ -1,5 +1,25 @@
-.profile-info {
-  h3 {
-    color: black;
+.profile {
+  margin: 10px 25px;
+  padding: 0.12em 0.6em;
+  border: solid;
+  border-color: $lightblue;
+  border-width: 1px;
+  min-width: 400px;
+
+  .profile-section {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 10px 25px;
+  }
+
+  .profile-info {
+    margin: 10px 20px;
+    display: grid;
+    grid-template-columns: 40% 60%;
+
+    span {
+      justify-self: center;
+      align-self: center;
+    }
   }
 }

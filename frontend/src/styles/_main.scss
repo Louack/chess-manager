@@ -1,0 +1,50 @@
+main {
+  z-index: 1;
+  padding-top: 130px;
+  min-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  border-right: solid;
+  border-left: solid;
+  border-width: 1px;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.large-main {
+  margin: 0px 20vw;
+}
+
+.medium-main {
+  margin: 0px 10vw;
+}
+
+.small-main {
+  margin: 0px 5vw;
+}
+
+.compact-main {
+  border-right: none;
+  border-left: none;
+  margin: 0px 0px;
+}
+
+h2 {
+  font-size: 1.8rem;
+  padding: 0.3em 0.6em;
+  border-bottom: solid;
+  border-width: 1px;
+}
+
+h3 {
+  font-size: 1.3rem;
+  padding: 0.4em 0.6em;
+  padding-top: 0;
+  border-bottom: solid;
+  border-width: 1px;
+  border-color: $lightblue;
+}
+
+h4 {
+  font-size: 1.1rem;
+}

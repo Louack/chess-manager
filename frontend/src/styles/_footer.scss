@@ -1,12 +1,20 @@
 footer {
   display: flex;
-  min-height: 5vh;
+  flex-direction: column;
+  min-height: 8vh;
   align-items: center;
-  justify-content: center;
   border-top: solid;
   border-right: solid;
   border-left: solid;
   border-width: 1px;
+
+  span {
+    margin: 8px;
+  }
+
+  img {
+    max-height: 25px;
+  }
 }
 
 .large-footer {

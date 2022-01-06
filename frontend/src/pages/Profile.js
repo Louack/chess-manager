@@ -18,28 +18,34 @@ const Profile = () => {
     }, [loading])
 
     let mainElement = 
-        <>
-            <h2>Profil</h2>
+        <div className='profile'>
+            <h2>Mon Profil</h2>
             {
                 loading ? 
                     <p>Chargement...</p> 
                     :
                     <>
-                        <div className='profile-info'>
-                            <h3>Nom d'utilisateur :</h3> 
-                            <span>{profile?.username}</span>
+                        <div className='profile-section'>
+                            <h3>Informations générales</h3>
+                            <div className='profile-info'>
+                                <h4>Nom d'utilisateur</h4> 
+                                <span>{profile?.username}</span>
+                            </div>
                         </div>
-                        <div className='profile-info'>
-                            <h3>Tournois créés :</h3> 
-                            <span>{profile?.tournaments_created}</span>
-                        </div>
-                        <div className='profile-info'>
-                            <h3>Joueurs créés :</h3> 
-                            <span>{profile?.players_created}</span>
+                        <div className='profile-section'>
+                            <h3>Statistiques</h3>
+                            <div className='profile-info'>
+                                <h4>Nombre de tournois créés</h4> 
+                                <span>{profile?.tournaments_created}</span>
+                            </div>
+                            <div className='profile-info'>
+                                <h4>Nombre de joueurs créés</h4> 
+                                <span>{profile?.players_created}</span>
+                            </div>
                         </div>
                     </>
             }
-        </>
+        </div>
 
     return (
         <>

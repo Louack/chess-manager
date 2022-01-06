@@ -23,6 +23,16 @@
   border-radius: 7.5px;
   box-shadow: 1px 1px 4px $dark-grey;
 
+  img {
+    align-self: flex-end;
+    max-height: 1rem;
+    margin-bottom: 1rem;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
   button:hover {
     background-color: $white;
   }
@@ -118,14 +128,4 @@
       }
     }
   }
-}
-
-.modal-closing {
-  padding: 0.3em 0.6em;
-  font-size: 0.8rem;
-  align-self: flex-end;
-  width: fit-content;
-  height: fit-content;
-  border: none;
-  background-color: $white;
 }
