@@ -5,12 +5,17 @@ import TournamentCreation from "../components/TournamentCreation";
 import Pagination from '../components/Pagination';
 import BasePage from "./BasePage";
 import useAxios from '../utils/useAxios';
+import Spinner from "../components/Spinner";
 
 const TournamentsList = () => {
-    let creationDiv = <TournamentCreation />
+    let noListDisplayed = (
+        <span className="tour-list-instruction"> 
+            Sélectionnez une liste de tournois à afficher ou créez un nouveau tournoi.
+        </span>
+    )
 
     const [loading, setLoading] = useState(false);
-    const [bottomDiv, setBottomDiv] = useState(creationDiv);
+    const [bottomDiv, setBottomDiv] = useState(noListDisplayed);
     const [tabs, setTabs] = useState({
         activeTab: null,
         tabNames: ['Tournois à venir', 'Tournois en cours', 'Tournois terminés']
@@ -28,7 +33,7 @@ const TournamentsList = () => {
             setLoading(true);
         } else {
             setTabs({...tabs, activeTab: null});
-            setBottomDiv(creationDiv);
+            setBottomDiv(noListDisplayed);
         }
     }
 
@@ -55,12 +60,25 @@ const TournamentsList = () => {
 
     let getTournamentsList = async (apiURL) => {
         let response = await axios.get(apiURL);
+        console.log(response.data.results.length)
         let tourList = response.data.results.map(tournament => (
             <TournamentsListItem key={tournament.number} tournament={tournament}/>
         ))
         setBottomDiv(
             <div className='tournaments-list'>
-                {tourList}
+                { response.data.results.length ? 
+                    <ul>
+                        <li>
+                            <span>ID</span>
+                            <span>Name</span>
+                            <span>Date</span>
+                        </li>
+                        {tourList}
+                    </ul> 
+                    :
+                    <span className="tour-list-instruction">
+                        Il n'y a aucun tournoi à afficher.
+                    </span>}
                 <Pagination 
                     apiURL={apiURL}
                     setApiURL={setApiURL}
@@ -79,17 +97,15 @@ const TournamentsList = () => {
     let getMainElement = () => {
         if (loading) {
             return (
-                <>
-                    {tournamentsListHead}
-                    <p>Chargement...</p>
-                </>
+                    <Spinner />
             );
         } else {
             return (
-                <>
+                <div className="main-container">
                     {tournamentsListHead}
                     {bottomDiv}
-                </>
+                    <TournamentCreation />
+                </div>
             );
         }
     };

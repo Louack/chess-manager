@@ -6,6 +6,7 @@ import PlayersListItem from "../components/PlayersListItem";
 import TournamentUpdate from "../components/TournamentUpdate";
 import BasePage from "./BasePage";
 import TournamentDelete from "../components/TournamentDelete";
+import Spinner from '../components/Spinner';
 
 const TournamentDetail = () => {
     const [tournament, setTournament] = useState('')
@@ -109,13 +110,13 @@ const TournamentDetail = () => {
         if (loading) {
             return (
                 <>
-                    <p>Chargement...</p>
+                    <Spinner />
                 </>
             );
         } else {
             if (!notFound) {
                 return (
-                    <>
+                    <div className="main-container">
                         <h1>{tournament.name}</h1>
                         {roundsListDiv}
                         {playersListDiv}
@@ -127,7 +128,7 @@ const TournamentDetail = () => {
                         <TournamentDelete
                             tournament={tournament}
                         />
-                    </>
+                    </div>
                 );
             } else {
                 return (

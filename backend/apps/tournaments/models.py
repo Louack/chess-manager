@@ -172,7 +172,10 @@ class Tournament(models.Model):
 
     def add_participants(self):
         for number, player_id in enumerate(self.players_list, 1):
-            player = Player.objects.get(number=player_id)
+            player = Player.objects.get(
+                number=player_id,
+                creator=self.creator
+            )
             Participant.objects.create(
                 number=number,
                 tournament=self,

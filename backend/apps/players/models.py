@@ -77,16 +77,16 @@ class Player(models.Model):
         return self.username
 
     def check_player_number_and_rank(self):
-        if not self.number and not self.rank:
-            self.creator.players_created += 1
-            self.creator.save()
-            self.number = self.creator.players_created
-            self.rank = self.creator.players_created
+        self.creator.players_created += 1
+        self.creator.save()
+        self.number = self.creator.players_created
+        self.rank = self.creator.players_created
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
-        self.check_player_number_and_rank()
-        self.check_username_field_uniqueness()
+        if not self.number and not self.rank:
+            self.check_username_field_uniqueness()
+            self.check_player_number_and_rank()
         super().save()
 
     def calcultate_new_average_place(self, place):
@@ -102,7 +102,6 @@ class Player(models.Model):
         usernames = [
             player.username for player
             in Player.objects.filter(creator=self.creator)
-            .exclude(number=self.number)
         ]
         if self.username in usernames:
             raise APIException400('This username is already used.')

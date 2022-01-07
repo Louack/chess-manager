@@ -24,7 +24,7 @@ const ModalForm = ({modalStatus, setModalStatus, title, form}) => {
                 className={'modal-background'} 
                 onClick={(e) => {if (e.target.className === 'modal-background') setModalStatus(false)}}>
                 <div className={'modal-container'} ref={containerRef}>
-                    <img src="./img/closing-cross.png" alt="closing-cross" onClick={() => {setModalStatus(false)}}/>
+                    <img src="/img/closing-cross.png" alt="closing-cross" onClick={() => {setModalStatus(false)}}/>
                     <div className={'modal-title'}>
                         <h3>{title}</h3>
                     </div>

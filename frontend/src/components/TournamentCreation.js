@@ -49,14 +49,13 @@ const TournamentCreation = () => {
 
     return (
         <div className='tour-creation'>
-            <p>Sélectionnez une liste de tournois à afficher ou créez un nouveau tournoi.</p>
             <button
                 className={'modal-opening'}
                 onClick={() => {
                     setModalStatus(true)
                 }}
             >
-                Création
+                Créer un tournoi
             </button>
             {readyForRender && < ModalForm
                 modalStatus={modalStatus}

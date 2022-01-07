@@ -17,34 +17,33 @@ const Profile = () => {
         }
     }, [loading])
 
+    let profileDiv = (
+                        <div className='main-container'>
+                            <h2>Mon Profil</h2>
+                            <div className='profile-section'>
+                                <h3>Informations générales</h3>
+                                <div className='profile-info'>
+                                    <h4>Nom d'utilisateur</h4> 
+                                    <span>{profile?.username}</span>
+                                </div>
+                            </div>
+                            <div className='profile-section'>
+                                <h3>Statistiques</h3>
+                                <div className='profile-info'>
+                                    <h4>Nombre de tournois créés</h4> 
+                                    <span>{profile?.tournaments_created}</span>
+                                </div>
+                                <div className='profile-info'>
+                                    <h4>Nombre de joueurs créés</h4> 
+                                    <span>{profile?.players_created}</span>
+                                </div>
+                            </div>
+                        </div>
+                    )
+
     let mainElement = 
         <>
-            {
-                loading ? 
-                    <Spinner />
-                    :
-                    <div className='profile'>
-                        <h2>Mon Profil</h2>
-                        <div className='profile-section'>
-                            <h3>Informations générales</h3>
-                            <div className='profile-info'>
-                                <h4>Nom d'utilisateur</h4> 
-                                <span>{profile?.username}</span>
-                            </div>
-                        </div>
-                        <div className='profile-section'>
-                            <h3>Statistiques</h3>
-                            <div className='profile-info'>
-                                <h4>Nombre de tournois créés</h4> 
-                                <span>{profile?.tournaments_created}</span>
-                            </div>
-                            <div className='profile-info'>
-                                <h4>Nombre de joueurs créés</h4> 
-                                <span>{profile?.players_created}</span>
-                            </div>
-                        </div>
-                    </div>
-            }
+            { loading ? <Spinner /> : profileDiv }
         </>
 
     return (

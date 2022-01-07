@@ -15,7 +15,7 @@ const Pagination = ({ apiURL, setApiURL, apiNext, apiPrevious, objectsCount, set
     }
 
     useEffect(() => {
-        setTotalPages(Math.ceil(objectsCount / 25))
+        setTotalPages(Math.ceil(objectsCount / 10))
 
         if (apiURL.includes('page') === true) {
             const splittedURL = apiURL.split('')
@@ -30,22 +30,26 @@ const Pagination = ({ apiURL, setApiURL, apiNext, apiPrevious, objectsCount, set
             setCurrentPage('1')
         }
     }, []);
-
-    return (
+    
+    if (totalPages > 1) {
+        return (
         <div className='pagination'>
             {apiPrevious && 
-            <button onClick={handlePrevious}>
+            <button onClick={handlePrevious} className='btn-previous'>
                 Précédent
             </button>
             }
             <span>Page {currentPage} sur {totalPages}</span>
             {apiNext && 
-            <button onClick={handleNext}>
+            <button onClick={handleNext} className='btn-next'>
                 Suivant
             </button>
             }
         </div>
-    )
+        )
+    } else {
+        return null
+    }
 }
 
 export default Pagination

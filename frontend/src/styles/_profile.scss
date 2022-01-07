@@ -1,25 +1,24 @@
-.profile {
-  margin: 20px 25px;
-  padding: 0.4rem 0.6rem;
-  border: solid;
-  border-color: $lightblue;
-  border-width: 1px;
-  min-width: 400px;
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  margin: 5px 20px 15px;
 
-  .profile-section {
-    display: flex;
-    flex-direction: column;
-    margin: 5px 20px 15px;
+  div:last-child {
+    border-bottom: none;
   }
+}
 
-  .profile-info {
-    margin: 10px 20px;
-    display: grid;
-    grid-template-columns: 40% 60%;
+.profile-info {
+  margin: 0px 20px;
+  padding: 10px 5px;
+  display: grid;
+  grid-template-columns: 40% 60%;
+  border-bottom: solid;
+  border-width: 1px;
+  border-color: lightblue;
 
-    span {
-      justify-self: center;
-      align-self: center;
-    }
+  span {
+    justify-self: center;
+    align-self: center;
   }
 }

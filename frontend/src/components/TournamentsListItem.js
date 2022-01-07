@@ -7,10 +7,30 @@ const TournamentsListItem = ({tournament}) => {
     const handleClick = () => {
         navigate(`/tournaments/${tournament.number}/`)
     }
+
+    const getFormattedDate = (date) => {
+        let day = date.slice(8, 10)
+        let month = date.slice(5, 7)
+        let year = date.slice(0, 4)
+        return (day + "/" + month + "/" + year)
+    } 
     return (
-        <div onClick={handleClick} className='tournament-item'>
-            <p>{tournament.name}</p>
-        </div>
+        <li onClick={handleClick} className='tournament-item'>
+            <span>
+                {tournament.number}
+            </span>
+            <span>
+                {tournament.name}
+            </span>
+            <span>
+                {
+                    tournament.tournament_date ? 
+                        getFormattedDate(tournament.tournament_date) 
+                        : 
+                        "Non définie" 
+                }
+            </span>
+        </li>
     )
 }
 
