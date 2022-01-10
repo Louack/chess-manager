@@ -7,7 +7,7 @@ const PlayerCreation = ( {setCreated} ) => {
     const form = <PlayerCreationForm setCreated={setCreated}/>
 
     return (
-        <div className='player-creation'>
+        <div className='creation-btn'>
             <button
                 className={'modal-opening'}
                 onClick={() => {

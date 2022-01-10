@@ -48,7 +48,7 @@ const TournamentCreation = () => {
     }, [nextPage])
 
     return (
-        <div className='tour-creation'>
+        <div className='creation-btn'>
             <button
                 className={'modal-opening'}
                 onClick={() => {

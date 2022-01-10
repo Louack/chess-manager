@@ -65,13 +65,13 @@ const TournamentsList = () => {
             <TournamentsListItem key={tournament.number} tournament={tournament}/>
         ))
         setBottomDiv(
-            <div className='tournaments-list'>
+            <div className='objects-list'>
                 { response.data.results.length ? 
-                    <ul>
+                    <ul className="generic-list">
                         <li>
-                            <span>ID</span>
-                            <span>Name</span>
-                            <span>Date</span>
+                            <span>#</span>
+                            <span>Nom</span>
+                            <span>Date prévue</span>
                         </li>
                         {tourList}
                     </ul> 

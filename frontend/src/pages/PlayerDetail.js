@@ -4,6 +4,7 @@ import {useParams} from "react-router-dom";
 import useAxios from "../utils/useAxios";
 import PlayerUpdate from "../components/PlayerUpdate";
 import PlayerDelete from "../components/PlayerDelete";
+import Spinner from '../components/Spinner';
 
 const PlayerDetail = () => {
     const { playerID } = useParams()
@@ -39,21 +40,53 @@ const PlayerDetail = () => {
     }, [updated])
 
     const playerDiv =
-        <div>
-            {player.username}
-        </div>
+        <>
+            <h2>Joueur #{player.number}</h2>
+            <div className='detail-first-level'>
+                <h3>Informations générales</h3>
+                <div className='detail-second-level'>
+                    <h4>Nom d'utilisateur</h4> 
+                    <span>{player.username}</span>
+                </div>
+                <div className='detail-second-level'>
+                    <h4>Nom</h4> 
+                    <span>{player.last_name}</span>
+                </div>
+                <div className='detail-second-level'>
+                    <h4>Prénom</h4> 
+                    <span>{player.first_name}</span>
+                </div>
+                <div className='detail-second-level'>
+                    <h4>Rang</h4> 
+                    <span>{player.rank}</span>
+                </div>
+            </div>
+            <div className='detail-first-level'>
+                <h3>Statistiques</h3>
+                <div className='detail-second-level'>
+                    <h4>Place moyenne</h4> 
+                    <span>{player.avg_place}</span>
+                </div>
+                <div className='detail-second-level'>
+                    <h4>Nombre de tournois joués</h4> 
+                    <span>{player.tournaments_played}</span>
+                </div>
+                <div className='detail-second-level'>
+                    <h4>Nombre de tournois gagnés</h4> 
+                    <span>{player.tournaments_won}</span>
+                </div>
+            </div>
+        </>
 
     const getMainElement = () => {
         if (loading) {
             return (
-                <div>
-                    Chargement...
-                </div>
+                <Spinner />
             )
         } else {
             if (!notFound) {
                 return (
-                    <>
+                    <div className='main-container'>
                         {playerDiv}
                         <PlayerUpdate
                             player={player}
@@ -62,11 +95,11 @@ const PlayerDetail = () => {
                         {!player.tournaments_list?.length && <PlayerDelete
                             player={player}
                         />}
-                    </>
+                    </div>
                 )
             } else {
                 return (
-                    <div>
+                    <div className='main-container'>
                         Cette page n'existe pas.
                     </div>
                 )
@@ -77,9 +110,7 @@ const PlayerDetail = () => {
     let mainElement = getMainElement()
 
     return (
-        <div>
-            <BasePage main={mainElement} />
-        </div>
+        <BasePage main={mainElement} />
     )
 };
 

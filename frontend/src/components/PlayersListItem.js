@@ -1,5 +1,6 @@
 import React from 'react'
 import {useNavigate} from "react-router-dom";
+import getFormattedDate from '../utils/genericFunctions';
 
 const PlayersListItem = ({tournament, player}) => {
     let navigate = useNavigate();
@@ -11,9 +12,22 @@ const PlayersListItem = ({tournament, player}) => {
             navigate(`/players/${player.number}/`)
     }
     return (
-        <div onClick={handleClick} className='player-item'>
-            <p>{player.username}</p>
-        </div>
+        <li onClick={handleClick} className='player-item'>
+            <span>
+                {tournament && "#"}{player.number}
+            </span>
+            <span>
+                {player.username}
+            </span>
+            {!tournament && <span>
+                {
+                    player.date_created ? 
+                        getFormattedDate(player.date_created)
+                        :
+                        "Non définie"
+                }
+            </span>}
+        </li>
     )
 }
 

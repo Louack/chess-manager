@@ -13,7 +13,7 @@ const PlayerUpdate = ( {player, setUpdated} ) => {
         />
 
     return (
-        <div className='player-update'>
+        <div className='creation-btn'>
             <button
                 className={'modal-opening'}
                 onClick={() => {

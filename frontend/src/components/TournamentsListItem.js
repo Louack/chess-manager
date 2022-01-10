@@ -1,5 +1,6 @@
 import React from 'react'
 import {useNavigate} from "react-router-dom";
+import getFormattedDate from '../utils/genericFunctions';
 
 
 const TournamentsListItem = ({tournament}) => {
@@ -8,12 +9,6 @@ const TournamentsListItem = ({tournament}) => {
         navigate(`/tournaments/${tournament.number}/`)
     }
 
-    const getFormattedDate = (date) => {
-        let day = date.slice(8, 10)
-        let month = date.slice(5, 7)
-        let year = date.slice(0, 4)
-        return (day + "/" + month + "/" + year)
-    } 
     return (
         <li onClick={handleClick} className='tournament-item'>
             <span>

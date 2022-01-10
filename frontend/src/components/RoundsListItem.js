@@ -8,9 +8,9 @@ const RoundsListItem = ({ round }) => {
         navigate(`/tournaments/${tourID}/rounds/${round.number}/`)
     }
     return (
-        <div onClick={handleClick} className='round-item'>
-            <p>Ronde n°{round.number}</p>
-        </div>
+        <li onClick={handleClick} className='round-item'>
+            <span>Ronde #{round.number}</span>
+        </li>
     )
 }
 

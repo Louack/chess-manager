@@ -20,20 +20,20 @@ const Profile = () => {
     let profileDiv = (
                         <div className='main-container'>
                             <h2>Mon Profil</h2>
-                            <div className='profile-section'>
+                            <div className='detail-first-level'>
                                 <h3>Informations générales</h3>
-                                <div className='profile-info'>
+                                <div className='detail-second-level'>
                                     <h4>Nom d'utilisateur</h4> 
                                     <span>{profile?.username}</span>
                                 </div>
                             </div>
-                            <div className='profile-section'>
+                            <div className='detail-first-level'>
                                 <h3>Statistiques</h3>
-                                <div className='profile-info'>
+                                <div className='detail-second-level'>
                                     <h4>Nombre de tournois créés</h4> 
                                     <span>{profile?.tournaments_created}</span>
                                 </div>
-                                <div className='profile-info'>
+                                <div className='detail-second-level'>
                                     <h4>Nombre de joueurs créés</h4> 
                                     <span>{profile?.players_created}</span>
                                 </div>

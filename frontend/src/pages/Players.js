@@ -4,6 +4,7 @@ import useAxios from "../utils/useAxios";
 import PlayersListItem from "../components/PlayersListItem";
 import PlayerCreation from "../components/PlayerCreation";
 import Pagination from '../components/Pagination';
+import Spinner from "../components/Spinner";
 
 const Players = () => {
     const axios = useAxios()
@@ -29,6 +30,7 @@ const Players = () => {
         if (loading) {
             axios.get(apiURL)
                 .then((response) => {
+                    console.log(response.data.results[0])
                     setPlayersList(response.data.results)
                     setApiNext(response.data.next)
                     setApiPrevious(response.data.previous)
@@ -39,34 +41,41 @@ const Players = () => {
     }, [loading]);
 
     const playersListDiv =
-        <div className={'players-list'}>
-            <PlayerCreation setCreated={setCreated}/>
-            {playersList.map((player) => (
-                <PlayersListItem
-                    key={player.number}
-                    player={player}
+        <>
+            <div className={'objects-list'}>
+                <ul className={'generic-list'}>
+                    <li>
+                        <span>#</span>
+                        <span>Pseudo</span>
+                        <span>Date de création</span>
+                    </li>
+                    {playersList.map((player) => (
+                        <PlayersListItem
+                            key={player.number}
+                            player={player}
+                        />
+                    ))}
+                </ul>
+                <Pagination 
+                apiURL={apiURL}
+                setApiURL={setApiURL}
+                apiPrevious={apiPrevious}
+                apiNext={apiNext}
+                objectsCount={playersCount}
+                setLoading={setLoading}
                 />
-            ))}
-            <Pagination 
-            apiURL={apiURL}
-            setApiURL={setApiURL}
-            apiPrevious={apiPrevious}
-            apiNext={apiNext}
-            objectsCount={playersCount}
-            setLoading={setLoading}
-            />
-        </div>
+            </div>
+            <PlayerCreation setCreated={setCreated}/>
+        </>
 
     let mainElement = 
-    <>
-        <h1>Liste des joueurs</h1>
-        {
-            loading ? 
-                <p>Chargement...</p> 
-                :
-                playersListDiv
-        }
-    </>
+    loading ?
+    <Spinner />
+    :
+    <div className='main-container'>
+        <h2>Mes Joueurs</h2>
+        {playersListDiv}
+    </div>
 
     return (
         <BasePage main={mainElement} />
