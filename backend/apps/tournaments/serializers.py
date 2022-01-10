@@ -49,14 +49,17 @@ class TournamentDetailSerializer(TournamentListSerializer):
     @staticmethod
     def get_ranking(instance):
         if instance.locked:
-            ranking = dict()
+            ranking = list()
             sorted_participants = instance.sort_participants()
             for place, participant in enumerate(sorted_participants, 1):
-                ranking[place] = {
-                    "participant": participant.player.username,
-                    "total points": participant.total_points,
-                    "rank": participant.rank
-                }
+                ranking.append(
+                    {
+                        "place": place,
+                        "participant": participant.player.username,
+                        "total points": participant.total_points,
+                        "rank": participant.rank
+                    }
+                )
             return ranking
         else:
             return "This tournament is not started."
