@@ -12,8 +12,8 @@ const PlayersListItem = ({tournament, player}) => {
             navigate(`/players/${player.number}/`)
     }
     return (
-        <li onClick={handleClick} className='player-item'>
-            <span>
+        <li onClick={handleClick} className='two-elements-item'>
+            <span className='id-item'>
                 {tournament && "#"}{player.number}
             </span>
             <span>

@@ -8,7 +8,7 @@ const RoundsListItem = ({ round }) => {
         navigate(`/tournaments/${tourID}/rounds/${round.number}/`)
     }
     return (
-        <li onClick={handleClick} className='round-item'>
+        <li onClick={handleClick} className='one-element-item'>
             <span>Ronde #{round.number}</span>
         </li>
     )

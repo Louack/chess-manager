@@ -88,7 +88,7 @@ const TournamentDetail = () => {
     <>
         <div className={'rounds-list'}>
             <h3>Liste des Rondes</h3>
-            <ul className={'tour-detail-list'}>
+            <ul className={'horizontal-wrap-list'}>
                 {roundsList.map((round) => (
                         <RoundsListItem
                             key={round.number}
@@ -103,7 +103,7 @@ const TournamentDetail = () => {
         <div className={'objects-list'}>
             {tournament.open ? <h3>Liste des Joueurs</h3> : <h3>Liste des Participants</h3>}
             {playersList.length ? 
-                <ul className={'tour-detail-list'}>
+                <ul className={'horizontal-wrap-list'}>
                     {playersList.map((player) => (
                         <PlayersListItem
                             key={player.number}

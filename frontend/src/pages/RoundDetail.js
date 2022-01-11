@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import BasePage from "./BasePage";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams, Link} from "react-router-dom";
 import useAxios from '../utils/useAxios';
 import MatchesListItem from "../components/MatchesListItem";
+import Spinner from '../components/Spinner';
 
 const RoundDetail = () => {
     const { tourID, roundID } = useParams()
@@ -30,13 +31,31 @@ const RoundDetail = () => {
     }
 
     const getRoundDiv = () => {
-        const renderedRoundDiv = round.matches.map((match) => {
-                return <
-                    MatchesListItem
-                    key={match.number}
-                    match={match}
-                />
-            })
+        const renderedRoundDiv = 
+        <>
+        <div className='detail-first-level'>
+            <h3>Informations générales</h3>
+                <div className='detail-second-level'>
+                    <h4>ID tournoi</h4> 
+                    <span><Link to={`/tournaments/${tourID}/`}>#{tourID}</Link></span>
+                </div>
+                <div className='detail-second-level'>
+                    <h4>Statut</h4> 
+                    <span>{round.played ? "Terminé" : "En cours"}</span>
+                </div>
+            </div>
+            <h3>Liste des matchs</h3>
+            <ul className={'horizontal-wrap-list'}>
+                {round.matches.map((match) => {
+                    return (
+                        <MatchesListItem
+                            key={match.number}
+                            match={match}
+                        />
+                    )
+                })}
+            </ul>
+            </>
         setRoundDiv(renderedRoundDiv)
         setLoading(false)
     }
@@ -52,21 +71,19 @@ const RoundDetail = () => {
 
     const getMainElement = () => {
         if (loading) {
-            return <p>Chargement</p>
+            return <Spinner />
         } else {
             if (!notFound) {
                 return (
-                    <div>
-                        <h1 onClick={backToTournament}>Tournoi n°{tourID}</h1>
-                        <h2>Ronde n°{round.number}</h2>
+                    <div className='main-container'>
+                        <h2>Ronde #{round.number}</h2>
                         {roundDiv}
                     </div>
                 )
             } else {
                 return (
-                    <div>
-                        <h1 onClick={backToTournament}>Tournoi n°{tourID}</h1>
-                        <h2>Ronde n°{roundID}</h2>
+                    <div className='main-container'>
+                        <h2>Ronde #{round.number}</h2>
                         <p>Cette page n'existe pas</p>
                     </div>
                 )
@@ -77,9 +94,7 @@ const RoundDetail = () => {
     let mainElement = getMainElement()
 
     return (
-        <div>
-            <BasePage main={mainElement} />
-        </div>
+        <BasePage main={mainElement} />
     )
 }
 

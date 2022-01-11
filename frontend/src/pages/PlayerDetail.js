@@ -88,13 +88,15 @@ const PlayerDetail = () => {
                 return (
                     <div className='main-container'>
                         {playerDiv}
-                        <PlayerUpdate
-                            player={player}
-                            setUpdated={setUpdated}
-                        />
-                        {!player.tournaments_list?.length && <PlayerDelete
-                            player={player}
-                        />}
+                        <div className='multi-btn-box'>
+                            <PlayerUpdate
+                                player={player}
+                                setUpdated={setUpdated}
+                            />
+                            {!player.tournaments_list?.length && <PlayerDelete
+                                player={player}
+                            />}
+                        </div>
                     </div>
                 )
             } else {

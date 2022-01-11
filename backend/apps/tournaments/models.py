@@ -225,10 +225,12 @@ class Tournament(models.Model):
             players, key=lambda player: (
                 - bool(player.avg_place),
                 player.avg_place,
-                - player.tournaments_played,
+                - player.tournaments_won,
+                player.tournaments_played,
                 player.date_created
             ),
         )
+        print(sorted_players)
         for rank, player in enumerate(sorted_players, 1):
             player.rank = rank
             player.save()

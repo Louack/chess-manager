@@ -41,7 +41,7 @@ h3 {
   font-size: 1.3rem;
   padding: 0.5rem 0.6rem;
   padding-top: 0;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   border-bottom: solid;
   border-width: 2px;
   border-color: $lightblue;
@@ -100,20 +100,31 @@ h4 {
     }
   }
 
-  .tour-detail-list {
+  .horizontal-wrap-list {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
 
     li {
-      grid-template-columns: 10% 90%;
+      grid-template-columns: 25% 75%;
       max-width: 240px;
-      min-height: 33px;
-      max-height: 66px;
+      min-height: 40px;
+      max-height: 80px;
     }
-    .round-item {
+    .one-element-item {
       display: flex;
       justify-content: center;
+    }
+    .two-elements-item {
+      .id-item {
+        display: flex;
+        height: 90%;
+        border-right: solid;
+        border-width: 1px;
+        border-color: lightblue;
+        align-items: center;
+        justify-content: center;
+      }
     }
   }
 
@@ -184,7 +195,7 @@ h4 {
   .detail-first-level {
     display: flex;
     flex-direction: column;
-    margin: 5px 20px 15px;
+    margin: 5px 20px 30px;
 
     div:last-child {
       border-bottom: none;

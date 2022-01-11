@@ -14,7 +14,7 @@ const PlayerDelete = ( {player} ) => {
     }
 
     return (
-        <div className='player-delete'>
+        <div className='tour-creation'>
             <button
                 className={'modal-opening'}
                 onClick={() => {
