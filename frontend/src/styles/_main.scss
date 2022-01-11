@@ -88,6 +88,7 @@ h4 {
       padding: 5px 5px 5px;
       margin: 5px 5px 5px;
       box-shadow: 0px 1px 4px $dark-grey;
+
       &:hover {
         cursor: pointer;
         background-color: lightblue;
@@ -111,19 +112,29 @@ h4 {
       min-height: 40px;
       max-height: 80px;
     }
+
     .one-element-item {
       display: flex;
       justify-content: center;
     }
+
     .two-elements-item {
       .id-item {
+        font-weight: 500;
         display: flex;
         height: 90%;
-        border-right: solid;
-        border-width: 1px;
-        border-color: lightblue;
         align-items: center;
         justify-content: center;
+      }
+
+      div {
+        span:first-child {
+          font-weight: 500;
+        }
+
+        span:last-child {
+          font-weight: 500;
+        }
       }
     }
   }

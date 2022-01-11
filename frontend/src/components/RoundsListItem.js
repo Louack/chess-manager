@@ -8,7 +8,7 @@ const RoundsListItem = ({ round }) => {
         navigate(`/tournaments/${tourID}/rounds/${round.number}/`)
     }
     return (
-        <li onClick={handleClick} className='one-element-item'>
+        <li onClick={handleClick} className='one-element-item' style={round.finished_matches === 4 ? {backgroundColor: "rgb(121, 165, 121)"} : {backgroundColor: "rgb(253, 98, 98)"}}>
             <span>Ronde #{round.number}</span>
         </li>
     )

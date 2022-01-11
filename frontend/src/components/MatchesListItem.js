@@ -8,7 +8,9 @@ const MatchesListItem = ( {match} ) => {
         navigate(`/tournaments/${tourID}/rounds/${roundID}/matches/${match.number}/`)
     }
     return (
-        <li onClick={handleClick} className='two-elements-item'>
+        <li onClick={handleClick} className='two-elements-item' style={match.played ? {backgroundColor: "rgb(121, 165, 121)"} : {backgroundColor: "rgb(253, 98, 98)"}
+        }
+        > 
             <span className='id-item'>#{match.number}</span>
             <div style={{display: "flex", flexDirection: "column"}}>
                 <span>{match.participant_1.username}</span> 

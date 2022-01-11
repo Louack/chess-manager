@@ -338,8 +338,10 @@ class Round(models.Model):
                     n = 1
         except IndexError:
             pairs_list.append(
-                participants[0],
-                participants[1]
+                (
+                    participants[0],
+                    participants[1]
+                )
             )
         return pairs_list
 

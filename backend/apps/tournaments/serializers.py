@@ -153,6 +153,7 @@ class RoundDetailSerializer(serializers.ModelSerializer):
             matches.append(
                 {
                     "number": match.number,
+                    "played": match.played,
                     "participant_1": {
                         "username": participant_1.player.username,
                         "point": match.result_participant_1

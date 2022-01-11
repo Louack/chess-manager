@@ -33,15 +33,15 @@ const RoundDetail = () => {
     const getRoundDiv = () => {
         const renderedRoundDiv = 
         <>
-        <div className='detail-first-level'>
-            <h3>Informations générales</h3>
+            <div className='detail-first-level'>
+                <h3>Informations générales</h3>
                 <div className='detail-second-level'>
                     <h4>ID tournoi</h4> 
                     <span><Link to={`/tournaments/${tourID}/`}>#{tourID}</Link></span>
                 </div>
                 <div className='detail-second-level'>
                     <h4>Statut</h4> 
-                    <span>{round.played ? "Terminé" : "En cours"}</span>
+                    <span>{round.played ? "Terminée" : "En cours"}</span>
                 </div>
             </div>
             <h3>Liste des matchs</h3>
@@ -55,7 +55,7 @@ const RoundDetail = () => {
                     )
                 })}
             </ul>
-            </>
+        </>
         setRoundDiv(renderedRoundDiv)
         setLoading(false)
     }
