@@ -230,7 +230,6 @@ class Tournament(models.Model):
                 player.date_created
             ),
         )
-        print(sorted_players)
         for rank, player in enumerate(sorted_players, 1):
             player.rank = rank
             player.save()
