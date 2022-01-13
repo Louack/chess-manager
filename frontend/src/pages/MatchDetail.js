@@ -1,9 +1,10 @@
 import React, {useEffect, useRef, useState} from 'react'
 import BasePage from "./BasePage";
-import {useNavigate, useParams, Link} from "react-router-dom";
+import {useParams, Link} from "react-router-dom";
 import useAxios from '../utils/useAxios';
 import Spinner from '../components/Spinner';
 import MatchPlayerCard from '../components/MatchPlayerCard';
+import NotFound from './NotFound';
 
 const MatchDetail = () => {
     const { tourID, roundID, matchID } = useParams()
@@ -17,16 +18,7 @@ const MatchDetail = () => {
     const playerTwoCard = useRef(null)
     const drawCard = useRef(null)
     const axios = useAxios()
-    const navigate = useNavigate();
     const url = `/api/tournaments/${tourID}/rounds/${roundID}/matches/${matchID}/`
-
-    const backToTournament = () => {
-        navigate(`/tournaments/${tourID}/`)
-    }
-
-    const backToRound = () => {
-        navigate(`/tournaments/${tourID}/rounds/${roundID}/`)
-    }
 
     const getMatch = async () => {
         try {
@@ -182,8 +174,14 @@ const MatchDetail = () => {
                                 <span><Link to={`/tournaments/${tourID}/`}>#{tourID}</Link></span>
                             </div>
                             <div className='detail-second-level'>
-                                <h4>Lien Ronde</h4> 
+                                <h4>Lien ronde</h4> 
                                 <span><Link to={`/tournaments/${tourID}/rounds/${roundID}/`}>#{roundID}</Link></span>
+                            </div>
+                            <div className='detail-second-level'>
+                                <h4>Liens participants</h4> 
+                                <span>
+                                    <Link to={`/tournaments/${tourID}/participants/${playerOne.number}/`}>#{playerOne.number}</Link> et <Link to={`/tournaments/${tourID}/participants/${playerTwo.number}/`}>#{playerTwo.number}</Link>
+                                </span>
                             </div>
                             <div className='detail-second-level'>
                                 <h4>Statut</h4> 
@@ -220,11 +218,7 @@ const MatchDetail = () => {
                 )
             } else {
                 return (
-                    <div className='main-container'>
-                        <h1 onClick={backToTournament}>Tournoi #{tourID}</h1>
-                        <h2 onClick={backToRound}>Round #{roundID}</h2>
-                        <p>Cette page n'existe pas.</p>
-                    </div>
+                    <NotFound />
                 )
             }
         }
@@ -233,9 +227,7 @@ const MatchDetail = () => {
     let mainElement = getMainElement()
 
     return (
-        <div>
-            <BasePage main={mainElement} />
-        </div>
+        <BasePage main={mainElement} />
     )
 }
 

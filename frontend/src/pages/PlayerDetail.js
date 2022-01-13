@@ -5,6 +5,7 @@ import useAxios from "../utils/useAxios";
 import PlayerUpdate from "../components/PlayerUpdate";
 import PlayerDelete from "../components/PlayerDelete";
 import Spinner from '../components/Spinner';
+import NotFound from './NotFound';
 
 const PlayerDetail = () => {
     const { playerID } = useParams()
@@ -43,6 +44,7 @@ const PlayerDetail = () => {
         <>
             <h2>Joueur #{player.number}</h2>
             <div className='detail-first-level'>
+                <img src="/img/portrait-placeholder.png" alt="portrait-placeholder" />
                 <h3>Informations générales</h3>
                 <div className='detail-second-level'>
                     <h4>Nom d'utilisateur</h4> 
@@ -101,9 +103,7 @@ const PlayerDetail = () => {
                 )
             } else {
                 return (
-                    <div className='main-container'>
-                        Cette page n'existe pas.
-                    </div>
+                    <NotFound />
                 )
             }
         }

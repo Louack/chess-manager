@@ -8,6 +8,7 @@ import BasePage from "./BasePage";
 import TournamentDelete from "../components/TournamentDelete";
 import Spinner from '../components/Spinner';
 import getFormattedDate from '../utils/genericFunctions';
+import NotFound from './NotFound';
 
 const TournamentDetail = () => {
     const [tournament, setTournament] = useState('')
@@ -187,8 +188,8 @@ const TournamentDetail = () => {
                                     <span>Total de points</span>
                                     <span>Rang</span>
                                 </li>   
-                                {tournament.ranking.map((dict) => (
-                                    <li className='ranking-item'>
+                                {tournament.ranking?.map((dict) => (
+                                    <li key={dict["place"]} className='ranking-item'>
                                         <span>{dict["place"]}</span>
                                         <span>{dict["participant"]}</span>
                                         <span>{dict["total points"]}</span>
@@ -211,9 +212,7 @@ const TournamentDetail = () => {
                 );
             } else {
                 return (
-                    <>
-                        <p>Cette page n'existe pas.</p>
-                    </>
+                    <NotFound />
                 );
             }
         }

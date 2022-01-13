@@ -12,7 +12,7 @@ const Home = () => {
     return (
         <main>
             <div className='home'>
-                <img src="./img/home-chess.jpg" alt="home-chess" />
+                <img src="/img/home-chess.jpg" alt="home-chess" />
                 <h1>Chess Manager</h1>
                 <div className='login-register'>
                     <button

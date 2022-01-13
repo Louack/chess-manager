@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from './context/AuthContext';
 import Home from './pages/Home';
-import NotFound from './pages/NotFound';
 import Players from './pages/Players';
 import Profile from './pages/Profile';
 import TournamentsList from './pages/TournamentsList';
@@ -16,6 +15,7 @@ import PublicRoute from './utils/PublicRoute';
 import PlayerDetail from "./pages/PlayerDetail";
 import ParticipantDetail from "./pages/ParticipantDetail";
 import ParticipantsList from "./pages/ParticipantsList";
+import BasePage from './pages/BasePage';
 
 const App = () => {
   return (
@@ -34,7 +34,7 @@ const App = () => {
           <Route path="/tournaments/:tourID/rounds/:roundID" element={<PrivateRoute><RoundDetail /></PrivateRoute>} />
           <Route path="/tournaments/:tourID/rounds/:roundID/matches" element={<PrivateRoute><MatchesList /></PrivateRoute>} />
           <Route path="/tournaments/:tourID/rounds/:roundID/matches/:matchID" element={<PrivateRoute><MatchDetail /></PrivateRoute>} />
-          <Route path="*" element={<PrivateRoute><NotFound /></PrivateRoute>} />
+          <Route path="*" element={<PrivateRoute><BasePage /></PrivateRoute>} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

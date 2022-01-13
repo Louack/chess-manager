@@ -1,20 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import BasePage from "./BasePage";
-import {useNavigate, useParams, Link} from "react-router-dom";
+import {useParams, Link} from "react-router-dom";
 import useAxios from "../utils/useAxios";
 import Spinner from '../components/Spinner';
+import NotFound from './NotFound';
 
 const ParticipantDetail = () => {
     const { tourID, partID } = useParams()
-    const navigate = useNavigate();
     const axios = useAxios()
     const [participant, setParticipant] = useState('')
     const [loading, setLoading] = useState(true)
     const [notFound, setNotFound] = useState(false)
-
-    const backToTournament = () => {
-        navigate(`/tournaments/${tourID}/`)
-    }
 
     useEffect(() => {
         if (!participant) {
@@ -34,6 +30,7 @@ const ParticipantDetail = () => {
     const participantDiv =
     <>
         <div className='detail-first-level'>
+        <img src="/img/portrait-placeholder.png" alt="portrait-placeholder" />
             <h3>Informations générales</h3>
             <div className='detail-second-level'>
                 <h4>Nom d'utilisateur</h4> 
@@ -47,11 +44,15 @@ const ParticipantDetail = () => {
                 <h4>Prénom</h4> 
                 <span>{participant.first_name}</span>
             </div>
+            <div className='detail-second-level'>
+                <h4>Lien joueur</h4> 
+                <span><Link to={`/players/${participant.player_number}/`}>#{participant.player_number}</Link></span>
+            </div>
         </div>
         <div className='detail-first-level'>
             <h3>Informations tournoi</h3>
             <div className='detail-second-level'>
-                <h4>ID tournoi</h4> 
+                <h4>Lien tournoi</h4> 
                 <span><Link to={`/tournaments/${tourID}/`}>#{tourID}</Link></span>
             </div>
             <div className='detail-second-level'>
@@ -74,16 +75,13 @@ const ParticipantDetail = () => {
             if (!notFound) {
                 return (
                     <div className='main-container'>
-                        <h2 onClick={backToTournament}>Participant #{participant.number}</h2>
+                        <h2>Tournoi #{tourID} / Participant #{participant.number}</h2>
                         {participantDiv}
                     </div>
                 )
             } else {
                 return (
-                    <div className='main-container'> 
-                        <h2 onClick={backToTournament}>Tournoi #{tourID}</h2>
-                        <p>Cette page n'existe pas.</p>
-                    </div>
+                    <NotFound />
                 )
             }
         }

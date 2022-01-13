@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import BasePage from "./BasePage";
-import {useNavigate, useParams, Link} from "react-router-dom";
+import {useParams, Link} from "react-router-dom";
 import useAxios from '../utils/useAxios';
 import MatchesListItem from "../components/MatchesListItem";
 import Spinner from '../components/Spinner';
+import NotFound from './NotFound';
 
 const RoundDetail = () => {
     const { tourID, roundID } = useParams()
@@ -12,11 +13,6 @@ const RoundDetail = () => {
     const [loading, setLoading] = useState(true)
     const [notFound, setNotFound] = useState(false)
     const axios = useAxios()
-    const navigate = useNavigate();
-
-    const backToTournament = () => {
-        navigate(`/tournaments/${tourID}/`)
-    }
 
     const getRound = async () => {
         try {
@@ -36,25 +32,27 @@ const RoundDetail = () => {
             <div className='detail-first-level'>
                 <h3>Informations générales</h3>
                 <div className='detail-second-level'>
-                    <h4>ID tournoi</h4> 
+                    <h4>Lien tournoi</h4> 
                     <span><Link to={`/tournaments/${tourID}/`}>#{tourID}</Link></span>
                 </div>
                 <div className='detail-second-level'>
                     <h4>Statut</h4> 
-                    <span>{round.played ? "Terminée" : "En cours"}</span>
+                    <span>{round.finished_matches === round.matches.length ? "Terminée" : "En cours"}</span>
                 </div>
             </div>
-            <h3>Liste des matchs</h3>
-            <ul className={'horizontal-wrap-list'}>
-                {round.matches.map((match) => {
-                    return (
-                        <MatchesListItem
-                            key={match.number}
-                            match={match}
-                        />
-                    )
-                })}
-            </ul>
+            <div className='detail-first-level'>
+                <h3>Liste des matchs</h3>
+                <ul className={'horizontal-wrap-list'}>
+                    {round.matches.map((match) => {
+                        return (
+                            <MatchesListItem
+                                key={match.number}
+                                match={match}
+                            />
+                        )
+                    })}
+                </ul>
+            </div>
         </>
         setRoundDiv(renderedRoundDiv)
         setLoading(false)
@@ -76,15 +74,14 @@ const RoundDetail = () => {
             if (!notFound) {
                 return (
                     <div className='main-container'>
-                        <h2>Ronde #{round.number}</h2>
+                        <h2>Tournoi #{tourID} / Ronde #{round.number}</h2>
                         {roundDiv}
                     </div>
                 )
             } else {
                 return (
                     <div className='main-container'>
-                        <h2>Ronde #{round.number}</h2>
-                        <p>Cette page n'existe pas</p>
+                        <NotFound />
                     </div>
                 )
             }

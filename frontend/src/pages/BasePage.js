@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import Header from '../components/Header';
+import NotFound from './NotFound';
 
 const BasePage = ({main}) => {
     const [mainClass, setMainClass] = useState(() => {
@@ -58,7 +59,7 @@ const BasePage = ({main}) => {
         <>
             <Header />
             <main className={mainClass}>
-                {main}
+                {main ? main : <NotFound />}
             </main>
             <footer className={footerClass}>
                 <span>Made by Loïc Briset</span>
