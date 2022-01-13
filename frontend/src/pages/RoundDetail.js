@@ -33,7 +33,7 @@ const RoundDetail = () => {
                 <h3>Informations générales</h3>
                 <div className='detail-second-level'>
                     <h4>Lien tournoi</h4> 
-                    <span><Link to={`/tournaments/${tourID}/`}>#{tourID}</Link></span>
+                    <span><Link to={`/tournaments/${tourID}/`}>Tournoi #{tourID}</Link></span>
                 </div>
                 <div className='detail-second-level'>
                     <h4>Statut</h4> 

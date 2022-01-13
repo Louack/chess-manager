@@ -46,14 +46,14 @@ const ParticipantDetail = () => {
             </div>
             <div className='detail-second-level'>
                 <h4>Lien joueur</h4> 
-                <span><Link to={`/players/${participant.player_number}/`}>#{participant.player_number}</Link></span>
+                <span><Link to={`/players/${participant.player_number}/`}>Joueur #{participant.player_number}</Link></span>
             </div>
         </div>
         <div className='detail-first-level'>
             <h3>Informations tournoi</h3>
             <div className='detail-second-level'>
                 <h4>Lien tournoi</h4> 
-                <span><Link to={`/tournaments/${tourID}/`}>#{tourID}</Link></span>
+                <span><Link to={`/tournaments/${tourID}/`}>Tournoi #{tourID}</Link></span>
             </div>
             <div className='detail-second-level'>
                 <h4>Rang (le jour du tournoi)</h4> 

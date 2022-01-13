@@ -1,22 +1,19 @@
 import React from 'react'
-import {useNavigate, useParams} from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const MatchesListItem = ( {match} ) => {
     const { tourID, roundID } = useParams()
-    let navigate = useNavigate();
-    const handleClick = () => {
-        navigate(`/tournaments/${tourID}/rounds/${roundID}/matches/${match.number}/`)
-    }
+
     return (
-        <li onClick={handleClick} className='two-elements-item' style={match.played ? {backgroundColor: "rgb(121, 165, 121)"} : {backgroundColor: "rgb(253, 98, 98)"}
-        }
-        > 
-            <span className='id-item'>#{match.number}</span>
-            <div style={{display: "flex", flexDirection: "column"}}>
-                <span>{match.participant_1.username}</span> 
-                <span>versus</span> 
-                <span>{match.participant_2.username}</span>
-            </div>
+        <li className='two-elements-item'> 
+            <Link to={`/tournaments/${tourID}/rounds/${roundID}/matches/${match.number}/`} style={match.played ? {backgroundColor: "rgb(121, 165, 121)"} : {backgroundColor: "rgb(253, 98, 98)"}}>
+                <span className='id-item'>#{match.number}</span>
+                <div style={{display: "flex", flexDirection: "column"}}>
+                    <span>{match.participant_1.username}</span> 
+                    <span>versus</span> 
+                    <span>{match.participant_2.username}</span>
+                </div>
+            </Link>
         </li>
     )
 }

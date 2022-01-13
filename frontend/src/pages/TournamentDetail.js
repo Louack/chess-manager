@@ -181,7 +181,7 @@ const TournamentDetail = () => {
                                     :
                                     "temporaire"}
                             </h3>
-                            <ul className={'generic-list'}>
+                            <ul className={'ranking-list'}>
                                 <li className='ranking-item'>
                                     <span>Place</span>
                                     <span>Participant</span>

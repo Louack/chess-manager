@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useRef } from 'react';
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 
 
 const Navigation = ( {navClass, openUserMenu, setOpenUserMenu} ) => {
     const { removeAuthTokens } = useContext(AuthContext)
     const navRef = useRef()
-    const navigate = useNavigate();
 
     const displayUserMenu = () => {
         setOpenUserMenu(!openUserMenu)
@@ -38,24 +37,30 @@ const Navigation = ( {navClass, openUserMenu, setOpenUserMenu} ) => {
                     <img src="/img/arrow-icon.png" alt="arrow-icon" style={openUserMenu ? {transform: 'rotate(-90deg)'} : null}/>
                 </div>
                 <div className="nav-menu" style={openUserMenu ? {display: 'flex'} : null}>
-                    <div className="menu-item" onClick={() => navigate("/tournaments")}>
-                        <img src="/img/cup-icon.png" alt="cup-icon" />
-                        <span className="nav-text">
-                            <b>Mes tournois</b>
-                        </span>
-                    </div>
-                    <div className="menu-item" onClick={() => navigate("/players")}>
-                        <img src="/img/people-icon.png" alt="people-icon" />
-                        <span className="nav-text">
-                            <b>Mes joueurs</b>
-                        </span>
-                    </div>
-                    <div className="menu-item" onClick={() => navigate("/profile")}>
-                        <img src="/img/profile-icon.png" alt="profile-icon" />
-                        <span className="nav-text">
-                            <b>Mon profil</b>
-                        </span>
-                    </div>
+                    <Link to="/tournaments">
+                        <div className="menu-item" >
+                            <img src="/img/cup-icon.png" alt="cup-icon" />
+                            <span className="nav-text">
+                                <b>Mes tournois</b>
+                            </span>
+                        </div>
+                    </Link>
+                    <Link to="/players">
+                        <div className="menu-item">
+                            <img src="/img/people-icon.png" alt="people-icon" />
+                            <span className="nav-text">
+                                <b>Mes joueurs</b>
+                            </span>
+                        </div>
+                    </Link>
+                    <Link to="/profile">
+                        <div className="menu-item">
+                            <img src="/img/profile-icon.png" alt="profile-icon" />
+                            <span className="nav-text">
+                                <b>Mon profil</b>
+                            </span>
+                        </div>
+                    </Link>
                     <div className="menu-item"  onClick={removeAuthTokens}>
                         <img src="/img/unplug-icon.png" alt="unplug-icon" />
                         <span className="nav-text">

@@ -171,16 +171,16 @@ const MatchDetail = () => {
                             <h3>Informations générales</h3>
                             <div className='detail-second-level'>
                                 <h4>Lien tournoi</h4> 
-                                <span><Link to={`/tournaments/${tourID}/`}>#{tourID}</Link></span>
+                                <span><Link to={`/tournaments/${tourID}/`}>Tournoi #{tourID}</Link></span>
                             </div>
                             <div className='detail-second-level'>
                                 <h4>Lien ronde</h4> 
-                                <span><Link to={`/tournaments/${tourID}/rounds/${roundID}/`}>#{roundID}</Link></span>
+                                <span><Link to={`/tournaments/${tourID}/rounds/${roundID}/`}>Ronde #{roundID}</Link></span>
                             </div>
                             <div className='detail-second-level'>
                                 <h4>Liens participants</h4> 
                                 <span>
-                                    <Link to={`/tournaments/${tourID}/participants/${playerOne.number}/`}>#{playerOne.number}</Link> et <Link to={`/tournaments/${tourID}/participants/${playerTwo.number}/`}>#{playerTwo.number}</Link>
+                                    <Link to={`/tournaments/${tourID}/participants/${playerOne.number}/`}>Participant #{playerOne.number}</Link> / <Link to={`/tournaments/${tourID}/participants/${playerTwo.number}/`}>Participant #{playerTwo.number}</Link>
                                 </span>
                             </div>
                             <div className='detail-second-level'>
