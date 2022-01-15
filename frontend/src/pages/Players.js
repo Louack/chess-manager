@@ -42,29 +42,31 @@ const Players = () => {
 
     const playersListDiv =
         <>
-            <div className={'objects-list'}>
-                <ul className={'generic-list'}>
-                    <li>
-                        <span>#</span>
-                        <span>Pseudo</span>
-                        <span>Date de création</span>
-                    </li>
-                    {playersList.map((player) => (
-                        <PlayersListItem
-                            key={player.number}
-                            player={player}
-                        />
-                    ))}
-                </ul>
-                <Pagination 
-                apiURL={apiURL}
-                setApiURL={setApiURL}
-                apiPrevious={apiPrevious}
-                apiNext={apiNext}
-                objectsCount={playersCount}
-                setLoading={setLoading}
-                />
-            </div>
+            {playersList.length ? 
+                <div className={'objects-list'}>
+                    <ul className={'generic-list'}>
+                        <li>
+                            <span>#</span>
+                            <span>Pseudo</span>
+                            <span>Date de création</span>
+                        </li>
+                        {playersList.map((player) => (
+                            <PlayersListItem
+                                key={player.number}
+                                player={player}
+                            />
+                        ))}
+                    </ul>
+                    <Pagination 
+                    apiURL={apiURL}
+                    setApiURL={setApiURL}
+                    apiPrevious={apiPrevious}
+                    apiNext={apiNext}
+                    objectsCount={playersCount}
+                    setLoading={setLoading}
+                    />
+                </div> :
+                <span style={{alignSelf: "center"}}>Il n'y a aucun joueur à afficher.</span>}
             <PlayerCreation setCreated={setCreated}/>
         </>
 
