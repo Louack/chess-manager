@@ -70,6 +70,7 @@ const Registration = () => {
             </div>
             <div className='submit-set'>
                 <input
+                    className='white-btn'
                     disabled={isSubmitting}
                     type='submit'
                     value="S'inscrire"

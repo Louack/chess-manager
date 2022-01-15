@@ -40,6 +40,14 @@ button {
   }
 }
 
+.white-btn {
+  align-self: center;
+
+  &:hover {
+    background-color: $color3;
+  }
+}
+
 .green-btn {
   align-self: center;
   background-color: $color4;

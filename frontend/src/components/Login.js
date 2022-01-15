@@ -57,6 +57,7 @@ const Login = () => {
 
             <div className='submit-set'>
                 <input
+                    className='white-btn'
                     disabled={isSubmitting}
                     type='submit'
                     value="Se connecter"
