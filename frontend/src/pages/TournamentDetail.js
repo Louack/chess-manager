@@ -114,7 +114,7 @@ const TournamentDetail = () => {
                     ))}
                 </ul>
                 :
-                <span className='detail-second-level' style={{borderBottom: "none"}}>Vous n'avez pas encore inscrit de joueurs.</span>}
+                <span className='detail-second-level' style={{borderBottom: "none", display: "flex"}}>Vous n'avez pas encore inscrit de joueurs.</span>}
         </div>
 
     const getMainElement = () => {

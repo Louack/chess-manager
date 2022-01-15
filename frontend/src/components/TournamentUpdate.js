@@ -69,12 +69,12 @@ const TournamentUpdate = ({ tournament, setUpdated }) => {
     return (
         <div className='tour-creation'>
             <button
-                className={'modal-opening'}
+                className={'modal-opening green-btn'}
                 onClick={() => {
                     setModalStatus(true)
                 }}
             >
-                Modification
+                Modifier
             </button>
             {readyForRender && < ModalForm
                 modalStatus={modalStatus}

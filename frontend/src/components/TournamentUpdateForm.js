@@ -108,12 +108,14 @@ const TournamentUpdateForm = ({tournament, setUpdated, playersOptions, defaultPl
             <div className='submit-set'>
                 <div className='multi-submit'>
                     <input
+                        className='green-btn'
                         disabled={isSubmitting}
                         onClick={handleSubmit(submitWithoutLocking)}
                         type='submit'
                         value="Modifier"
                     />
                     <input
+                        className='green-btn'
                         disabled={isSubmitting}
                         onClick={handleSubmit(submitWithLocking)}
                         type='submit'

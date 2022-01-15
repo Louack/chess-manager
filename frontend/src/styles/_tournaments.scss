@@ -7,7 +7,7 @@
     margin: 0px;
     padding: 5px 25px 5px;
     text-align: center;
-    box-shadow: 0px 1px 4px $dark-grey;
+    box-shadow: 0px 1px 4px $color2;
     border-width: 1px;
   }
 }
@@ -23,11 +23,11 @@
   margin-left: 10px;
   margin-right: 10px;
   border-width: 1px;
-  background-color: $white;
+  background-color: $color1;
 
   &:hover {
     cursor: pointer;
-    background-color: $lightblue;
+    background-color: $color3;
     transition: all 0.25s;
   }
 }
@@ -35,8 +35,8 @@
 .tour-type-active {
   margin-left: 10px;
   margin-right: 10px;
-  background-color: $dark-grey;
-  color: $white;
+  background-color: $color2;
+  color: $color1;
   border-width: 1px;
 
   &:hover {
@@ -80,27 +80,27 @@
 }
 
 .winner {
-  background-color: rgb(121, 165, 121);
+  background-color: $color4;
   padding: 0 15px;
   margin: 0 15px;
   border-radius: 20px;
-  box-shadow: 0px 1px 4px $dark-grey;
+  box-shadow: 0px 1px 4px $color2;
 }
 
 .winner-locked {
-  background-color: rgb(121, 165, 121);
+  background-color: $color4;
   padding: 0 15px;
   margin: 0 15px;
   border-radius: 20px;
-  box-shadow: 0px 1px 4px $dark-grey;
+  box-shadow: 0px 1px 4px $color2;
 }
 
 .loser {
-  background-color: rgb(253, 98, 98);
+  background-color: $color5;
   padding: 0 15px;
   margin: 0 15px;
   border-radius: 20px;
-  box-shadow: 0px 1px 4px $dark-grey;
+  box-shadow: 0px 1px 4px $color2;
   animation: glowingAnimation 4s ease infinite;
 
   &:hover {
@@ -109,19 +109,19 @@
 }
 
 .loser-locked {
-  background-color: rgb(253, 98, 98);
+  background-color: $color5;
   padding: 0 15px;
   margin: 0 15px;
   border-radius: 20px;
-  box-shadow: 0px 1px 4px $dark-grey;
+  box-shadow: 0px 1px 4px $color2;
 }
 
 .draw {
-  background-color: grey;
+  background-color: $color6;
   padding: 0 15px;
   margin: 0 15px;
   border-radius: 20px;
-  box-shadow: 0px 1px 4px $dark-grey;
+  box-shadow: 0px 1px 4px $color2;
   animation: glowingAnimation 4s ease infinite;
 
   &:hover {
@@ -130,18 +130,18 @@
 }
 
 .draw-locked {
-  background-color: grey;
+  background-color: $color6;
   padding: 0 15px;
   margin: 0 15px;
   border-radius: 20px;
-  box-shadow: 0px 1px 4px $dark-grey;
+  box-shadow: 0px 1px 4px $color2;
 }
 
 .to-be-played {
   padding: 0 15px;
   margin: 0 15px;
   border-radius: 20px;
-  box-shadow: 0px 1px 4px $dark-grey;
+  box-shadow: 0px 1px 4px $color2;
   animation: glowingAnimation 4s ease infinite;
 
   &:hover {
@@ -153,7 +153,7 @@
   margin: 10px 10px;
   padding: 10px 10px;
   border-radius: 4px;
-  box-shadow: 0px 1px 4px $dark-grey;
+  box-shadow: 0px 1px 4px $color2;
   animation: glowingAnimation 4s ease infinite;
 
   &:hover {
@@ -165,14 +165,14 @@
   margin: 10px 10px;
   padding: 10px 10px;
   border-radius: 4px;
-  box-shadow: 0px 1px 4px $dark-grey;
+  box-shadow: 0px 1px 4px $color2;
 }
 
 .draw-btn-locked {
   margin: 10px 10px;
   padding: 10px 10px;
   border-radius: 4px;
-  box-shadow: 0px 1px 4px $dark-grey;
+  box-shadow: 0px 1px 4px $color2;
 }
 
 .result-point {

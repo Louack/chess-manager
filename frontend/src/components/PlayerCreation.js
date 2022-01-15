@@ -9,12 +9,12 @@ const PlayerCreation = ( {setCreated} ) => {
     return (
         <div className='creation-btn'>
             <button
-                className={'modal-opening'}
+                className={'modal-opening green-btn'}
                 onClick={() => {
                     setModalStatus(true)
                 }}
             >
-                Création d'un joueur
+                Créer un joueur
             </button>
             < ModalForm
                 modalStatus={modalStatus}

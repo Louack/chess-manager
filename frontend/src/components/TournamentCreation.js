@@ -50,7 +50,7 @@ const TournamentCreation = () => {
     return (
         <div className='creation-btn'>
             <button
-                className={'modal-opening'}
+                className={'modal-opening green-btn'}
                 onClick={() => {
                     setModalStatus(true)
                 }}

@@ -29,7 +29,6 @@ const PlayerUpdateForm = ( {player, setUpdated, setModalStatus} ) => {
     const [uniqueError, setUniqueError] = useState(false)
 
     const putData = async (data) => {
-        console.log(data)
         try {
             await axios.put(`/api/players/${player.number}/`, data)
             setUniqueError(false)
@@ -76,6 +75,7 @@ const PlayerUpdateForm = ( {player, setUpdated, setModalStatus} ) => {
 
                 <div className='submit-set'>
                     <input
+                        className='green-btn'
                         disabled={isSubmitting}
                         onClick={handleSubmit(putData)}
                         type='submit'

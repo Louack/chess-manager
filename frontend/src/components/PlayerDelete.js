@@ -16,7 +16,7 @@ const PlayerDelete = ( {player} ) => {
     return (
         <div className='tour-creation'>
             <button
-                className={'modal-opening'}
+                className={'modal-opening red-btn'}
                 onClick={() => {
                     setModalConfirmStatus(true)
                 }}

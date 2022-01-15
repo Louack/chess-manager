@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import NotFound from './NotFound';
 
@@ -62,7 +63,17 @@ const BasePage = ({main}) => {
                 {main ? main : <NotFound />}
             </main>
             <footer className={footerClass}>
-                <span>Made by Loïc Briset</span>
+                <div className='footer-container'>
+                    <span>Made by Loïc Briset</span>
+                    <div className='footer-links'>
+                        <a href = "https://github.com/Louack" target="_blank" rel='noreferrer'>
+                            <img src='/img/github-icon.png' alt='github-icon' />
+                        </a>
+                        <a href = "https://www.linkedin.com/in/loïc-briset-366a0a220" target="_blank" rel='noreferrer'>
+                            <img src='/img/linkedin-icon.png' alt='linkedin-icon-icon' />
+                        </a>
+                    </div>
+                </div>
             </footer>
         </>
     )

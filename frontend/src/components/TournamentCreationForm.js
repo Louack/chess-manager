@@ -109,12 +109,14 @@ const TournamentCreationForm = ({ playersOptions }) => {
             <div className='submit-set'>
                 <div className='multi-submit'>
                     <input
+                        className='green-btn'
                         disabled={isSubmitting}
                         onClick={handleSubmit(submitWithoutLocking)}
                         type='submit'
                         value="Créer"
                     />
                     <input
+                        className='green-btn'
                         disabled={isSubmitting}
                         onClick={handleSubmit(submitWithLocking)}
                         type='submit'

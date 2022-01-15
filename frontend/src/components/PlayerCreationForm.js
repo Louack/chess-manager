@@ -71,6 +71,7 @@ const PlayerCreationForm = ( {setCreated} ) => {
 
                 <div className='submit-set'>
                     <input
+                        className='green-btn'
                         disabled={isSubmitting}
                         onClick={handleSubmit(postData)}
                         type='submit'

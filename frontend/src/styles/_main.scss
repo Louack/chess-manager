@@ -44,7 +44,7 @@ h3 {
   margin-bottom: 10px;
   border-bottom: solid;
   border-width: 2px;
-  border-color: $lightblue;
+  border-color: $color3;
 }
 
 h4 {
@@ -68,7 +68,7 @@ a {
   margin: 20px 25px;
   padding: 0.4rem 0.6rem;
   border: solid;
-  border-color: $lightblue;
+  border-color: $color3;
   border-width: 1px;
   animation: fadeInAnimation ease 0.25s;
   animation-fill-mode: initial;
@@ -102,11 +102,11 @@ a {
         align-items: center;
         padding: 5px 5px 5px;
         margin: 5px 5px 5px;
-        box-shadow: 0px 1px 4px $dark-grey;
+        box-shadow: 0px 1px 4px $color2;
 
         &:hover {
           cursor: pointer;
-          background-color: lightblue;
+          background-color: $color3;
           transition: all 0.25s;
         }
       }
@@ -180,7 +180,7 @@ a {
 
       &:hover {
         cursor: text;
-        background-color: $white;
+        background-color: $color1;
       }
     }
   }
@@ -197,7 +197,7 @@ a {
       box-shadow: none;
       &:hover {
         cursor: text;
-        background-color: $white;
+        background-color: $color1;
       }
     }
 
@@ -225,11 +225,11 @@ a {
       font-size: 1rem;
       padding: 0.2rem 0.4rem;
       border-radius: 4px;
-      background-color: $white;
-      box-shadow: 0px 1px 4px $dark-grey;
+      background-color: $color1;
+      box-shadow: 0px 1px 4px $color2;
       border: none;
       &:hover {
-        background-color: lightblue;
+        background-color: $color3;
       }
     }
 
@@ -271,7 +271,7 @@ a {
     grid-template-columns: 40% 60%;
     border-bottom: solid;
     border-width: 1px;
-    border-color: lightblue;
+    border-color: $color3;
 
     span {
       justify-self: center;
@@ -297,7 +297,7 @@ a {
 
     img {
       width: 500px;
-      box-shadow: 0px 1px 2px $dark-grey;
+      box-shadow: 0px 1px 2px $color2;
       margin: 50px;
     }
   }

@@ -16,7 +16,7 @@ const TournamentDelete = ({tournament} ) => {
     return (
         <div className='tournament-delete'>
             <button
-                className={'modal-opening'}
+                className={'modal-opening red-btn'}
                 onClick={() => {
                     setModalConfirmStatus(true)
                 }}

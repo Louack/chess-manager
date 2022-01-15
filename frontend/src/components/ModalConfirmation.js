@@ -8,7 +8,7 @@ const ModalConfirmation = ({actionType, modalConfirmStatus, setModalConfirmStatu
     useEffect(() => {
         if (actionType === 'delete') {
             setBtnName('Supprimer')
-            setBtnClass('delete-btn')
+            setBtnClass('red-btn')
         }
     }, [])
 
@@ -29,15 +29,15 @@ const ModalConfirmation = ({actionType, modalConfirmStatus, setModalConfirmStatu
 
 
     return (
-        <div>
+        <>
             {modalConfirmStatus && <div className={'modal-background'}>
                 <div className={'modal-container'} ref={containerRef}>
                     <img src="/img/closing-cross.png" alt="closing-cross" onClick={() => {setModalConfirmStatus(false)}}/>
                     <div className={'modal-title'}>
-                        <h2>{title}</h2>
+                        <h3>{title}</h3>
                     </div>
                     <div className={'modal-body'}>
-                        {question}
+                        <span>{question}</span>
                     </div>
                     <button 
                         className={btnClass}
@@ -46,7 +46,7 @@ const ModalConfirmation = ({actionType, modalConfirmStatus, setModalConfirmStatu
                     </button>
                 </div>
             </div>}
-        </div>
+        </>
     );
 };
 
