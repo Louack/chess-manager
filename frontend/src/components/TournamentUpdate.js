@@ -3,6 +3,7 @@ import {useState} from "react";
 import ModalForm from "./ModalForm";
 import TournamentUpdateForm from "./TournamentUpdateForm";
 import useAxios from "../utils/useAxios";
+import { getFormattedUrlApi } from '../utils/genericFunctions';
 
 const TournamentUpdate = ({ tournament, setUpdated }) => {
     const [modalStatus, setModalStatus] = useState(false)
@@ -25,7 +26,7 @@ const TournamentUpdate = ({ tournament, setUpdated }) => {
             setPlayersOptions(tempList)
 
             if (response.data.next != null) {
-                setNextPage(response.data.next)
+                setNextPage(getFormattedUrlApi(response.data.next))
             } else {
                 setNextPage('')
                 if (!defaultPlayers.length) getDefaultPlayers(tempList)

@@ -1,5 +1,9 @@
-FROM node:15.13-alpine
+FROM node:14.18
+
 WORKDIR /frontend
-ENV PATH="./node_modules/.bin:$PATH"
+
+COPY package.json .
+
+RUN npm install
+
 COPY . .
-RUN npm run build

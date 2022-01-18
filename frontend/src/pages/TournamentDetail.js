@@ -7,8 +7,8 @@ import TournamentUpdate from "../components/TournamentUpdate";
 import BasePage from "./BasePage";
 import TournamentDelete from "../components/TournamentDelete";
 import Spinner from '../components/Spinner';
-import getFormattedDate from '../utils/genericFunctions';
 import NotFound from './NotFound';
+import { getFormattedDate } from '../utils/genericFunctions';
 
 const TournamentDetail = () => {
     const [tournament, setTournament] = useState('')

@@ -5,6 +5,7 @@ import PlayersListItem from "../components/PlayersListItem";
 import PlayerCreation from "../components/PlayerCreation";
 import Pagination from '../components/Pagination';
 import Spinner from "../components/Spinner";
+import { getFormattedUrlApi } from '../utils/genericFunctions';
 
 const Players = () => {
     const axios = useAxios()
@@ -28,14 +29,18 @@ const Players = () => {
 
     useEffect(() => {
         if (loading) {
-            axios.get(apiURL)
-                .then((response) => {
-                    setPlayersList(response.data.results)
-                    setApiNext(response.data.next)
-                    setApiPrevious(response.data.previous)
-                    setPlayersCount(response.data.count)
-                    setLoading(false)
-                })
+            try {
+                axios.get(apiURL)
+                    .then((response) => {
+                        setPlayersList(response.data.results)
+                        setApiNext(getFormattedUrlApi(response.data.next))
+                        setApiPrevious(getFormattedUrlApi(response.data.previous))
+                        setPlayersCount(response.data.count)
+                        setLoading(false)
+                    })
+            } catch(error) {
+                console.log(error.response.status)
+            }
         }
     }, [loading]);
 

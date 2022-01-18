@@ -6,6 +6,7 @@ import Pagination from '../components/Pagination';
 import BasePage from "./BasePage";
 import useAxios from '../utils/useAxios';
 import Spinner from "../components/Spinner";
+import { getFormattedUrlApi } from "../utils/genericFunctions";
 
 const TournamentsList = () => {
     let noListDisplayed = (
@@ -81,8 +82,8 @@ const TournamentsList = () => {
                 <Pagination 
                     apiURL={apiURL}
                     setApiURL={setApiURL}
-                    apiPrevious={response.data.previous}
-                    apiNext={response.data.next}
+                    apiPrevious={getFormattedUrlApi(response.data.previous)}
+                    apiNext={getFormattedUrlApi(response.data.next)}
                     objectsCount={response.data.count}
                     setLoading={setLoading}
                 />

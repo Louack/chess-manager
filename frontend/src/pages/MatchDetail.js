@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react'
 import BasePage from "./BasePage";
-import {useParams, Link} from "react-router-dom";
+import {useParams, Link, useNavigate} from "react-router-dom";
 import useAxios from '../utils/useAxios';
 import Spinner from '../components/Spinner';
 import MatchPlayerCard from '../components/MatchPlayerCard';
@@ -18,6 +18,7 @@ const MatchDetail = () => {
     const playerTwoCard = useRef(null)
     const drawCard = useRef(null)
     const axios = useAxios()
+    const navigate = useNavigate()
     const url = `/api/tournaments/${tourID}/rounds/${roundID}/matches/${matchID}/`
 
     const getMatch = async () => {
@@ -74,9 +75,9 @@ const MatchDetail = () => {
             }
         }
 
-    const patchValidation = () => {
-        axios.patch(url, {played: true})
-        reload()
+    const patchValidation = async () => {
+        await axios.patch(url, {played: true})
+        navigate(`/tournaments/${tourID}/rounds/${roundID}/`)
     }
 
     const setClassNames = () => {

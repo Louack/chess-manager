@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from "react-router-dom";
-import getFormattedDate from '../utils/genericFunctions';
+import { getFormattedDate }from '../utils/genericFunctions';
 
 const PlayersListItem = ({tournament, player}) => {
     const [link, setLink] = useState(() => {
