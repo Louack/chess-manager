@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from 'react'
-import { Link } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
 import Header from '../components/Header';
 import NotFound from './NotFound';
 

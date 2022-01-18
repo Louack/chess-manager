@@ -9,7 +9,6 @@ const Navigation = ( {navClass, openUserMenu, setOpenUserMenu} ) => {
 
     const displayUserMenu = () => {
         setOpenUserMenu(!openUserMenu)
-        console.log(openUserMenu)
     }
 
     useEffect(() => {

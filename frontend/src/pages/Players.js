@@ -30,7 +30,6 @@ const Players = () => {
         if (loading) {
             axios.get(apiURL)
                 .then((response) => {
-                    console.log(response.data.results[0])
                     setPlayersList(response.data.results)
                     setApiNext(response.data.next)
                     setApiPrevious(response.data.previous)
