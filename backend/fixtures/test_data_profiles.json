@@ -1,0 +1,11 @@
+[
+  {
+    "model": "user_profiles.profile",
+    "pk": 1,
+    "fields": {
+      "user_id": 1,
+      "players_created": 10,
+      "tournaments_created": 2
+    }
+  }
+]

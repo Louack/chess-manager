@@ -6,7 +6,6 @@ const ModalForm = ({modalStatus, setModalStatus, title, form}) => {
     useEffect(() => {
         const checkOutsideClick = (e) => {
             if (modalStatus && containerRef.current && !containerRef.current.contains(e.target)) {
-                console.log('hey')
                 setModalStatus(false)
             }
           }
