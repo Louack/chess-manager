@@ -7,11 +7,7 @@ export const getFormattedDate = (date) => {
 
 export const getFormattedUrlApi = (url) => {
     if (url) {
-        if (url.includes('backend')) {
-            return url.slice(19)
-        } else {
-            return url.slice(21)
-        }
+        return url.slice(process.env.REACT_APP_PROXY_HOST.length)
     } else {
         return null
     }
