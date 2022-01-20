@@ -34,7 +34,7 @@ const PlayerDetail = () => {
         } else {
             setLoading(false)
         }
-    }, [player, playerID, axios])
+    }, [player])
 
     useEffect(() => {
         if (updated) handleUpdate()
