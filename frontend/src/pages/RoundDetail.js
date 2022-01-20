@@ -80,9 +80,7 @@ const RoundDetail = () => {
                 )
             } else {
                 return (
-                    <div className='main-container'>
-                        <NotFound />
-                    </div>
+                    <NotFound />
                 )
             }
         }

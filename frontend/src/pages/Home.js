@@ -10,8 +10,7 @@ const Home = () => {
     const registerForm = <Registration />
 
     return (
-        <main>
-            <div className='home'>
+        <main className='home'>
                 <img src="/img/home-chess.jpg" alt="home-chess" />
                 <h1>Chess Manager</h1>
                 <div className='login-register'>
@@ -44,7 +43,6 @@ const Home = () => {
                     form={registerForm}
                     />
                 </div>
-            </div>
         </main>
     )
 }

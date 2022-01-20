@@ -1,9 +1,9 @@
 .home {
-  min-height: 40vh;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
   img {
     max-width: 380px;
@@ -15,9 +15,10 @@
     font-size: 2.5rem;
   }
 
-  .login-register {
+  .div {
     display: flex;
     justify-content: center;
+    align-items: center;
   }
   button {
     margin-left: 7px;

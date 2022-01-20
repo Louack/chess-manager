@@ -3,6 +3,7 @@ FROM nikolaik/python-nodejs:python3.9-nodejs14-alpine
 WORKDIR /app/backend
 
 COPY ./backend/requirements.txt /app/backend
+
 RUN  \
     apk update && \
     apk upgrade && \
@@ -34,6 +35,6 @@ WORKDIR /app
 ENV PORT 8000
 EXPOSE 8000
 
-RUN ["chmod", "+x", "/app/entrypoint-build.sh"]
+RUN ["chmod", "+x", "/app/entrypoint-prod.sh"]
 
-ENTRYPOINT [ "/app/entrypoint-build.sh" ]
+ENTRYPOINT [ "/app/entrypoint-prod.sh" ]
