@@ -6,9 +6,13 @@ export const getFormattedDate = (date) => {
 } 
 
 export const getFormattedUrlApi = (url) => {
-    if (url) {
-        return url.slice(process.env.REACT_APP_PROXY_HOST.length)
+    if (process.env.REACT_APP_PROXY_HOST) {
+        if (url) {
+            return url.slice(process.env.REACT_APP_PROXY_HOST.length)
+        } else {
+            return null
+        }
     } else {
-        return null
+        return url
     }
 } 

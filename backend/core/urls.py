@@ -14,7 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
+from django.views.generic import TemplateView
 from rest_framework_simplejwt.views import TokenRefreshView
 from .views import Registration, MyTokenObtainPairView
 
@@ -30,5 +31,6 @@ urlpatterns = [
          name='token_refresh'),
     path('api/profile/', include('apps.user_profiles.urls')),
     path('api/players/', include(router_players.urls)),
-    path('api/', include('apps.tournaments.urls'))
+    path('api/', include('apps.tournaments.urls')),
+    re_path(".*", TemplateView.as_view(template_name="index.html")),
 ]
