@@ -224,8 +224,8 @@ class Tournament(models.Model):
         sorted_players = sorted(
             players, key=lambda player: (
                 - bool(player.avg_place),
-                player.avg_place,
                 - player.tournaments_won,
+                player.avg_place,
                 player.tournaments_played,
                 player.date_created
             ),

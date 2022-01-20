@@ -1,9 +1,5 @@
 #!/bin/bash
 
-while ! nc -z db 5432; do
-  sleep 0.1
-done
-
 cd backend
 
 python manage.py collectstatic --no-input
@@ -11,5 +7,7 @@ python manage.py collectstatic --no-input
 python manage.py makemigrations --no-input
 
 python manage.py migrate --no-input
+
+python fixtures_installation.py --no-input
 
 gunicorn core.wsgi:application -b 0.0.0.0:$PORT

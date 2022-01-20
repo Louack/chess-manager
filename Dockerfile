@@ -35,4 +35,5 @@ ENV PORT 8000
 EXPOSE 8000
 
 RUN ["chmod", "+x", "/app/entrypoint-build.sh"]
+
 ENTRYPOINT [ "/app/entrypoint-build.sh" ]

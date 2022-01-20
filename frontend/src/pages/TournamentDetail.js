@@ -23,7 +23,7 @@ const TournamentDetail = () => {
 
     const getTournament = async () => {
         try {
-            const response = await axios.get(`/api/tournaments/${tourID}`)
+            const response = await axios.get(`/api/tournaments/${tourID}/`)
             setTournament(response.data)
             response.data.open ?
                 setNumbersList(response.data.players_list) :
