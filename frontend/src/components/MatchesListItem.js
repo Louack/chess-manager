@@ -6,7 +6,7 @@ const MatchesListItem = ( {match} ) => {
 
     return (
         <li className='two-elements-item'> 
-            <Link to={`/tournaments/${tourID}/rounds/${roundID}/matches/${match.number}/`} style={match.played ? {backgroundColor: "rgb(121, 165, 121)"} : {backgroundColor: "rgb(253, 98, 98)"}}>
+            <Link to={`/tournaments/${tourID}/rounds/${roundID}/matches/${match.number}/`} style={match.played ? {backgroundColor: "rgb(121, 165, 121)"} : {backgroundColor: "lightblue"}}>
                 <span className='id-item'>#{match.number}</span>
                 <div style={{display: "flex", flexDirection: "column"}}>
                     <span>{match.participant_1.username}</span> 

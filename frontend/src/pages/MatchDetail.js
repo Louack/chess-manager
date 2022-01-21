@@ -47,7 +47,7 @@ const MatchDetail = () => {
                     result_participant_1: 0.5,
                     result_participant_2: 0.5
                 }
-                const response = await axios.put(url, data)
+                await axios.put(url, data)
                 reload()
             }
         }
@@ -61,7 +61,7 @@ const MatchDetail = () => {
                         result_participant_1: 1.0,
                         result_participant_2: 0.0
                     }
-                    const response = await axios.put(url, data)
+                    await axios.put(url, data)
                     reload()
                 } else if (playerTwoCard.current.contains(e.target) && playerTwoCard.current.className !== 'winner') {
                     const data = {
@@ -69,7 +69,7 @@ const MatchDetail = () => {
                         result_participant_1: 0,
                         result_participant_2: 1
                     }
-                    const response = await axios.put(url, data)
+                    await axios.put(url, data)
                     reload()
                 }
             }

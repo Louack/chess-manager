@@ -15,7 +15,7 @@ const Pagination = ({ apiURL, setApiURL, apiNext, apiPrevious, objectsCount, set
     }
 
     useEffect(() => {
-        setTotalPages(Math.ceil(objectsCount / 10))
+        setTotalPages(Math.ceil(objectsCount / 8))
 
         if (apiURL.includes('page') === true) {
             const splittedURL = apiURL.split('')

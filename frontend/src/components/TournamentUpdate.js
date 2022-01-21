@@ -43,6 +43,8 @@ const TournamentUpdate = ({ tournament, setUpdated }) => {
             return playersTempList.map((optionPlayer) => {
                 if (defaultPlayer === optionPlayer.value) {
                     return tempDefaultPlayers.push(optionPlayer)
+                } else {
+                    return null
                 }
             })
         })

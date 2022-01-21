@@ -42,7 +42,7 @@ export const AuthProvider = ({children}) => {
             let refreshExpired = dayjs.unix(decodedRefresh.exp).diff(dayjs()) < 1;
             if (refreshExpired) return removeAuthTokens()
         }
-    }, [])
+    }, [authTokens])
 
     return(
         <AuthContext.Provider value={context}>

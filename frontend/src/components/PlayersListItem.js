@@ -1,19 +1,21 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom";
 import { getFormattedDate }from '../utils/genericFunctions';
 
 const PlayersListItem = ({tournament, player}) => {
-    const [link, setLink] = useState(() => {
+    const [link, setLink] = useState('')
+
+    useEffect(() => {
         if (tournament) {
             if (tournament.open) {
-                return `/players/${player.number}/`
+                setLink(`/players/${player.number}/`)
             } else {
-                return `/tournaments/${tournament.number}/participants/${player.number}/`
+                setLink(`/tournaments/${tournament.number}/participants/${player.number}/`)
             } 
         } else {
-            return `/players/${player.number}/`
+            setLink(`/players/${player.number}/`)
         } 
-    })
+    }, [tournament, player])
 
 
     return (
