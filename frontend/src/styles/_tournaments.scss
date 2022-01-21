@@ -82,7 +82,7 @@
 .winner {
   background-color: $color4;
   padding: 0 15px;
-  margin: 0 15px;
+  margin: 0 0.5vw;
   border-radius: 20px;
   box-shadow: 0px 1px 4px $color2;
 }
@@ -90,7 +90,7 @@
 .winner-locked {
   background-color: $color4;
   padding: 0 15px;
-  margin: 0 15px;
+  margin: 0 0.5vw;
   border-radius: 20px;
   box-shadow: 0px 1px 4px $color2;
 }
@@ -98,7 +98,7 @@
 .loser {
   background-color: $color5;
   padding: 0 15px;
-  margin: 0 15px;
+  margin: 0 0.5vw;
   border-radius: 20px;
   box-shadow: 0px 1px 4px $color2;
   animation: glowingAnimation 4s ease infinite;
@@ -111,7 +111,7 @@
 .loser-locked {
   background-color: $color5;
   padding: 0 15px;
-  margin: 0 15px;
+  margin: 0 0.5vw;
   border-radius: 20px;
   box-shadow: 0px 1px 4px $color2;
 }
@@ -119,7 +119,7 @@
 .draw {
   background-color: $color6;
   padding: 0 15px;
-  margin: 0 15px;
+  margin: 0 0.5vw;
   border-radius: 20px;
   box-shadow: 0px 1px 4px $color2;
   animation: glowingAnimation 4s ease infinite;
@@ -132,14 +132,14 @@
 .draw-locked {
   background-color: $color6;
   padding: 0 15px;
-  margin: 0 15px;
+  margin: 0 0.5vw;
   border-radius: 20px;
   box-shadow: 0px 1px 4px $color2;
 }
 
 .to-be-played {
   padding: 0 15px;
-  margin: 0 15px;
+  margin: 0 0.5vw;
   border-radius: 20px;
   box-shadow: 0px 1px 4px $color2;
   animation: glowingAnimation 4s ease infinite;
@@ -178,5 +178,5 @@
 .result-point {
   font-weight: 500;
   font-size: 3rem;
-  margin: 0 20px;
+  margin: 0 0.5vw;
 }
