@@ -7,17 +7,17 @@ const AppRealization = () => {
         <div className='modal-description'>
             <p>Application réalisée par Loïc Briset et inspirée d'un projet OpenClassrooms</p>
             <h4>Backend</h4>
-            <span>Django Rest Framework</span>
+            <span>- Django Rest Framework</span>
             <h4>Frontend</h4>
-            <span>React JS</span>
+            <span>- React JS</span>
             <h4>Base de données</h4>
-            <span>PostgreSQL</span>
+            <span>- PostgreSQL</span>
             <h4>Conteneurisation</h4>
-            <span>Docker</span>
+            <span>- Docker</span>
             <h4>Déploiement</h4>
-            <span>Heroku</span>
+            <span>- Heroku</span>
             <h4>Intégration continue / Déploiement continu</h4>
-            <span>CircleCI</span>
+            <span>- CircleCI</span>
         </div>
 
     return (
