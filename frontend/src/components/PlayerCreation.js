@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import ModalForm from "./ModalForm";
+import Modal from "./Modal";
 import PlayerCreationForm from "./PlayerCreationForm";
 
 const PlayerCreation = ( {setCreated} ) => {
@@ -16,11 +16,11 @@ const PlayerCreation = ( {setCreated} ) => {
             >
                 Créer un joueur
             </button>
-            < ModalForm
+            < Modal
                 modalStatus={modalStatus}
                 setModalStatus={setModalStatus}
                 title={"Création d'un joueur"}
-                form={form}
+                body={form}
             />
         </div>
     );

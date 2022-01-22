@@ -85,6 +85,19 @@ button {
   align-self: center;
 }
 
+.real-howto {
+  display: flex;
+
+  span {
+    padding: 0 0.5vw;
+
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+}
+
 @keyframes rotation {
   from {
     transform: rotate(0deg);

@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import ModalForm from "../components/ModalForm";
+import Modal from "../components/Modal";
 import Login from "../components/Login";
 import Registration from "../components/Registration";
 
@@ -10,7 +10,7 @@ const Home = () => {
     const registerForm = <Registration />
 
     return (
-        <main className='home'>
+            <main className='home'>
                 <img src="/img/home-chess.jpg" alt="home-chess" />
                 <h1>Chess Manager</h1>
                 <div className='login-register'>
@@ -22,11 +22,11 @@ const Home = () => {
                     >
                         Connexion
                     </button>
-                    < ModalForm
-                    modalStatus={loginModalStatus}
-                    setModalStatus={setLoginModalStatus}
-                    title={"Connexion"}
-                    form={loginForm}
+                    < Modal
+                        modalStatus={loginModalStatus}
+                        setModalStatus={setLoginModalStatus}
+                        title={"Connexion"}
+                        body={loginForm}
                     />
                     <button
                         className={'register-btn'}
@@ -36,14 +36,14 @@ const Home = () => {
                     >
                         Inscription
                     </button>
-                    < ModalForm
-                    modalStatus={registerModalStatus}
-                    setModalStatus={setRegisterModalStatus}
-                    title={"Inscription"}
-                    form={registerForm}
+                    < Modal
+                        modalStatus={registerModalStatus}
+                        setModalStatus={setRegisterModalStatus}
+                        title={"Inscription"}
+                        body={registerForm}
                     />
                 </div>
-        </main>
+            </main>
     )
 }
 

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import ModalForm from "./ModalForm";
+import Modal from "./Modal";
 import PlayerUpdateForm from "./PlayerUpdateForm";
 
 const PlayerUpdate = ( {player, setUpdated} ) => {
@@ -22,11 +22,11 @@ const PlayerUpdate = ( {player, setUpdated} ) => {
             >
                 Modifier
             </button>
-            < ModalForm
+            < Modal
                 modalStatus={modalStatus}
                 setModalStatus={setModalStatus}
                 title={`Modification du joueur n°${player.number}`}
-                form={form}
+                body={form}
             />
         </div>
     );

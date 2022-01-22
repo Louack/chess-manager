@@ -45,6 +45,36 @@
 .modal-body {
   margin: 10px 0px 20px;
 
+  .modal-description {
+    text-align: justify;
+    max-width: 75vw;
+    max-height: 75vh;
+    overflow-y: auto;
+
+    h4 {
+      margin: 10px 0;
+    }
+
+    p {
+      padding: 10px 5px 2px;
+    }
+
+    span {
+      padding: 0 5px;
+      cursor: text;
+      text-decoration: none;
+    }
+
+    ul {
+      list-style-type: decimal;
+      padding: 0 20px;
+
+      li {
+        padding: 2px 0;
+      }
+    }
+  }
+
   form {
     display: flex;
     flex-direction: column;

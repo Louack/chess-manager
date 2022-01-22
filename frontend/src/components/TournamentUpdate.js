@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import {useState} from "react";
-import ModalForm from "./ModalForm";
+import Modal from "./Modal";
 import TournamentUpdateForm from "./TournamentUpdateForm";
 import useAxios from "../utils/useAxios";
 import { getFormattedUrlApi } from '../utils/genericFunctions';
@@ -79,11 +79,11 @@ const TournamentUpdate = ({ tournament, setUpdated }) => {
             >
                 Modifier
             </button>
-            {readyForRender && < ModalForm
+            {readyForRender && < Modal
                 modalStatus={modalStatus}
                 setModalStatus={setModalStatus}
                 title={`Modification du tournoi n°${tournament.number}`}
-                form={form}
+                body={form}
             />}
         </div>
     );
