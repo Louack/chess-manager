@@ -1,14 +1,14 @@
-#Chess Manager Application
+# Chess Manager Application
 
 This Django/React App is aiming to help people create and manage chess 
 tournaments for 8 players  and is based on the swiss chess tournament playing 
 system.
 
-##Developpment setup (without Docker)
+## Developpment setup (without Docker)
 
 Clone this rep on your local machine with `git clone https://github.com/Louack/chess-manager.git`
 
-###Backend folder
+### Backend folder
 
 - Create a virtual environement: `py -3 -m venv venv`
 - Activate the virtual env: `venv/scripts/activate`
@@ -26,7 +26,7 @@ DB_HOST=localhost
 - Run the development server (available by default at `http://127.0.0.1:8000`): 
 `py manage.py runserver`
 
-###Frontend folder
+### Frontend folder
 
 - Create `.env` file with proxy variable:
 ```
@@ -36,7 +36,7 @@ REACT_APP_PROXY_HOST=<your backend host, by default http://127.0.0.1:8000>
 - Run the development server (available by default at `http://127.0.0.1:3000`): 
 `npm start` 
 
-##Developpment setup (with Docker)
+## Developpment setup (with Docker)
 
 Clone this rep on your local machine with `git clone https://github.com/Louack/chess-manager.git`
 
