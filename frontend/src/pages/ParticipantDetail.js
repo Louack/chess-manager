@@ -3,7 +3,7 @@ import BasePage from "./BasePage";
 import {useParams, Link} from "react-router-dom";
 import useAxios from "../utils/useAxios";
 import Spinner from '../components/Spinner';
-import NotFound from './NotFound';
+import NotFound from '../components/NotFound';
 
 /**
  * Page displaying detailed information regarding a tournament participant.

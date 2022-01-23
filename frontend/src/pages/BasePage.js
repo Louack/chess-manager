@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import NotFound from './NotFound';
+import NotFound from '../components/NotFound';
 
 
 /**

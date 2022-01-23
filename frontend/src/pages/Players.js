@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import BasePage from "./BasePage";
 import useAxios from "../utils/useAxios";
 import PlayersListItem from "../components/PlayersListItem";
-import PlayerCreation from "../components/PlayerCreation";
+import PlayerCreation from "../components/modals/PlayerCreation";
 import Pagination from '../components/Pagination';
 import Spinner from "../components/Spinner";
 import { getFormattedUrlApi } from '../utils/genericFunctions';

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import Modal from './Modal';
+import Modal from './modals/Modal';
 
 /**
  * Description of the stacks used to realize the complete App. 

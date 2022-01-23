@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import TournamentsListItem from "../components/TournamentsListItem";
 import TournamentsListHead from "../components/TournamentsListHead";
-import TournamentCreation from "../components/TournamentCreation";
+import TournamentCreation from "../components/modals/TournamentCreation";
 import Pagination from '../components/Pagination';
 import BasePage from "./BasePage";
 import useAxios from '../utils/useAxios';

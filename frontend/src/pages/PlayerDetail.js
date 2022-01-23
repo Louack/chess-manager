@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react';
 import BasePage from "./BasePage";
 import {useParams} from "react-router-dom";
 import useAxios from "../utils/useAxios";
-import PlayerUpdate from "../components/PlayerUpdate";
-import PlayerDelete from "../components/PlayerDelete";
+import PlayerUpdate from "../components/modals/PlayerUpdate";
+import PlayerDelete from "../components/modals/PlayerDelete";
 import Spinner from '../components/Spinner';
-import NotFound from './NotFound';
+import NotFound from '../components/NotFound';
 
 /**
  * Page displaying detailed information regarding a player and allowing to update or delete it.

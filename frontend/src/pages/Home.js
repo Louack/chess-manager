@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
-import Modal from "../components/Modal";
-import Login from "../components/Login";
-import Registration from "../components/Registration";
+import Modal from "../components/modals/Modal";
+import Login from "../components/forms/Login";
+import Registration from "../components/forms/Registration";
 
 /**
  * Welcome page containing Login and Registration modal forms.

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import Modal from './Modal';
+import Modal from './modals/Modal';
 
 /**
  * User guide to be displayed inside a modal.

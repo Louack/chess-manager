@@ -3,11 +3,11 @@ import {useParams} from "react-router-dom";
 import useAxios from '../utils/useAxios';
 import RoundsListItem from "../components/RoundsListItem";
 import PlayersListItem from "../components/PlayersListItem";
-import TournamentUpdate from "../components/TournamentUpdate";
+import TournamentUpdate from "../components/modals/TournamentUpdate";
 import BasePage from "./BasePage";
-import TournamentDelete from "../components/TournamentDelete";
+import TournamentDelete from "../components/modals/TournamentDelete";
 import Spinner from '../components/Spinner';
-import NotFound from './NotFound';
+import NotFound from '../components/NotFound';
 import { getFormattedDate } from '../utils/genericFunctions';
 
 /**
