@@ -10,6 +10,11 @@ const schema = yup.object().shape({
     password: yup.string().required("Mot de passe requis.")
 });
 
+
+/**
+ * Login form to be displayed inside a modal.
+ * Able to store jwt tokens inside authentication context
+ */
 const Login = () => {
     const [errorMessage, setErrorMessage] = useState('')
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({

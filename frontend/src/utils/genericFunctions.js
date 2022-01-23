@@ -5,6 +5,9 @@ export const getFormattedDate = (date) => {
     return (day + "/" + month + "/" + year)
 } 
 
+/**
+*Allows to slice the proxy host from the API URL.
+ */
 export const getFormattedUrlApi = (url) => {
     if (process.env.REACT_APP_PROXY_HOST) {
         if (url) {

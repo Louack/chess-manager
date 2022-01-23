@@ -17,6 +17,10 @@ const schema = yup.object().shape({
         .required("Prénom requis.")
 });
 
+
+/**
+ * Player post form component to be displayed inside a modal.
+ */
 const PlayerCreationForm = ( {setCreated} ) => {
     const { register, handleSubmit, formState: { errors, isSubmitting} } = useForm({
         resolver: yupResolver(schema)

@@ -1,6 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import Navigation from '../components/Navigation';
 
+
+/**
+ * Responsive header inclduding main title and nav bar.
+ */
 const Header = () => {
     const [openUserMenu, setOpenUserMenu] = useState(false)
 
@@ -63,7 +67,7 @@ const Header = () => {
                 />
             </header>
         )
-}
+    }
 
 export default Header
 

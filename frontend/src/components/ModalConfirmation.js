@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+/**
+ * Modal component able to display different kind of confirmation messages.
+ */
 const ModalConfirmation = ({actionType, modalConfirmStatus, setModalConfirmStatus, title, question, actionToPerform}) => {
     const [btnName, setBtnName] = useState('')
     const [btnClass, setBtnClass] = useState('')

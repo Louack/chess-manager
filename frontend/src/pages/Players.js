@@ -7,6 +7,11 @@ import Pagination from '../components/Pagination';
 import Spinner from "../components/Spinner";
 import { getFormattedUrlApi } from '../utils/genericFunctions';
 
+/**
+ * Page displaying players list with links to players pages.
+ * Allows to create new players.
+ * Includes pagination.
+ */
 const Players = () => {
     const axios = useAxios()
     const [loading, setLoading] = useState(true);

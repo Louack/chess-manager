@@ -17,6 +17,10 @@ const schema = yup.object().shape({
         .oneOf([yup.ref("password"), null])
 });
 
+
+/**
+ * Registration form to be displayed inside a modal.
+ */
 const Registration = () => {
     const { register, handleSubmit, reset, formState: { errors, isSubmitting} } = useForm({
         resolver: yupResolver(schema),

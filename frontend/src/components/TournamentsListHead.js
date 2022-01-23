@@ -1,5 +1,8 @@
 import React from 'react'
 
+/**
+ * Tournaments list header allowing to select different tournament filters.
+ */
 const TournamentsListHead = ({tabs, setTabClassNames, toggleList}) => {
     return (
         <>

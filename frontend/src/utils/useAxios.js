@@ -4,6 +4,10 @@ import dayjs from 'dayjs'
 import { useContext } from 'react'
 import AuthContext from '../context/AuthContext'
 
+/**
+* Custom axios hook including axios interceptors. 
+* To be used for every API call on every private pages.
+ */
 const useAxios = () => {
     const { authTokens, setAuthTokens, removeAuthTokens } = useContext(AuthContext)
 

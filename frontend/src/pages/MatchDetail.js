@@ -6,6 +6,11 @@ import Spinner from '../components/Spinner';
 import MatchPlayerCard from '../components/MatchPlayerCard';
 import NotFound from './NotFound';
 
+/**
+ * Match page containing information regarding a specific match and allowing the user to enter a match outcome.
+ * A match outcome can be modified as long as it is not yet validated.
+ * Match player cards are changing css classes depending of the outcome.
+ */
 const MatchDetail = () => {
     const { tourID, roundID, matchID } = useParams()
     const [loading, setLoading] = useState(true)

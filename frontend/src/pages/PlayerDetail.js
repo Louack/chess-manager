@@ -7,6 +7,9 @@ import PlayerDelete from "../components/PlayerDelete";
 import Spinner from '../components/Spinner';
 import NotFound from './NotFound';
 
+/**
+ * Page displaying detailed information regarding a player and allowing to update or delete it.
+ */
 const PlayerDetail = () => {
     const { playerID } = useParams()
     const axios = useAxios()

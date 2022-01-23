@@ -6,7 +6,9 @@ const AuthContext = createContext()
 
 export default AuthContext;
 
-
+/**
+ * Provides authentication information, including stored jwt tokens.
+ */
 export const AuthProvider = ({children}) => {
     let checkToken = () => {
         return localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null

@@ -3,6 +3,9 @@ import Modal from "../components/Modal";
 import Login from "../components/Login";
 import Registration from "../components/Registration";
 
+/**
+ * Welcome page containing Login and Registration modal forms.
+ */
 const Home = () => {
     const [loginModalStatus, setLoginModalStatus] = useState(false)
     const [registerModalStatus, setRegisterModalStatus] = useState(false)

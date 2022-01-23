@@ -5,6 +5,9 @@ import TournamentUpdateForm from "./TournamentUpdateForm";
 import useAxios from "../utils/useAxios";
 import { getFormattedUrlApi } from '../utils/genericFunctions';
 
+/**
+ * Button component calling a tournament update modal.
+ */
 const TournamentUpdate = ({ tournament, setUpdated }) => {
     const [modalStatus, setModalStatus] = useState(false)
     const [playersOptions, setPlayersOptions] = useState([])

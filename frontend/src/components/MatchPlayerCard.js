@@ -1,5 +1,8 @@
 import React from 'react';
 
+/**
+ * Component displaying player information on match detail page.
+ */
 const MatchPlayerCard = ( {player} ) => {
     return (
         <div className='match-player-card'> 

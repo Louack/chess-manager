@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
+/**
+ * Basic custom pagination component for players and tournaments lists.
+ */
 const Pagination = ({ apiURL, setApiURL, apiNext, apiPrevious, objectsCount, setLoading }) => {
     const [currentPage, setCurrentPage] = useState('');
     const [totalPages, setTotalPages] = useState('');

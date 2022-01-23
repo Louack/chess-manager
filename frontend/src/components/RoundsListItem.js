@@ -1,6 +1,9 @@
 import React from 'react'
 import { Link, useParams } from "react-router-dom";
 
+/**
+ * List and link item component displaying some round information.
+ */
 const RoundsListItem = ({ round }) => {
     const { tourID } = useParams()
     

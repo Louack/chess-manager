@@ -1,5 +1,8 @@
 import React from 'react';
 
+/**
+ * 404 error component.
+ */
 const NotFound = () => {
     return (
         <div className='main-container'>

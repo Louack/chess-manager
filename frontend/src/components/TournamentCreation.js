@@ -5,6 +5,9 @@ import TournamentCreationForm from "./TournamentCreationForm";
 import useAxios from "../utils/useAxios";
 import { getFormattedUrlApi } from '../utils/genericFunctions';
 
+/**
+ * Button component calling a tournament creation modal.
+ */
 const TournamentCreation = () => {
     const [modalStatus, setModalStatus] = useState(false)
     const [playersOptions, setPlayersOptions] = useState([])

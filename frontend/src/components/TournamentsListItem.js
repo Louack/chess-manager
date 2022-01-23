@@ -2,7 +2,9 @@ import React from 'react'
 import { Link }  from "react-router-dom";
 import { getFormattedDate } from '../utils/genericFunctions';
 
-
+/**
+ * List and link item component displaying some tournament information.
+ */
 const TournamentsListItem = ({tournament}) => {
 
     return (

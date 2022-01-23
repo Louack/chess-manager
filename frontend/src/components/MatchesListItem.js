@@ -1,6 +1,9 @@
 import React from 'react'
 import { Link, useParams } from "react-router-dom";
 
+/**
+ * List and link item component displaying some match information.
+ */
 const MatchesListItem = ( {match} ) => {
     const { tourID, roundID } = useParams()
 

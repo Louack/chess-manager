@@ -21,6 +21,9 @@ const schema = yup.object().shape({
         })).required()
 });
 
+/**
+ * Tournament update form component to be displayed inside a modal.
+ */
 const TournamentUpdateForm = ({tournament, setUpdated, playersOptions, defaultPlayers}) => {
     const [lockedError, setLockedError] = useState('')
     const axios = useAxios()

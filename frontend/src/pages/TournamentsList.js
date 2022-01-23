@@ -8,6 +8,12 @@ import useAxios from '../utils/useAxios';
 import Spinner from "../components/Spinner";
 import { getFormattedUrlApi } from "../utils/genericFunctions";
 
+/**
+ * Page displaying tournaments list with links to tournaments pages.
+ * Allows to filter tournaments by status (incoming, on-going, completed).
+ * Allows to create new tournaments.
+ * Includes pagination.
+ */
 const TournamentsList = () => {
     let noListDisplayed = (
         <span className="tour-list-instruction"> 

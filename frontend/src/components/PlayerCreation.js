@@ -2,6 +2,9 @@ import React, {useState} from 'react';
 import Modal from "./Modal";
 import PlayerCreationForm from "./PlayerCreationForm";
 
+/**
+ * Button component calling a player creation modal.
+ */
 const PlayerCreation = ( {setCreated} ) => {
     const [modalStatus, setModalStatus] = useState(false)
     const form = <PlayerCreationForm setCreated={setCreated}/>

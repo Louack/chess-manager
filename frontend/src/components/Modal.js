@@ -1,5 +1,9 @@
 import React, { useRef, useEffect } from 'react';
 
+
+/**
+ * Modal component able to display description texts and forms.
+ */
 const Modal = ({modalStatus, setModalStatus, title, body}) => {
     const containerRef = useRef()
 

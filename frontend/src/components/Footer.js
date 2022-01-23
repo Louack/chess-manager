@@ -2,6 +2,9 @@ import React from 'react';
 import AppExplained from './AppExplained';
 import AppRealization from './AppRealization';
 
+/**
+ * Footer component containing app explanation / realization and external links.
+ */
 const Footer = ({ footerClass }) => {
   return (
         <footer className={footerClass}>
@@ -20,7 +23,7 @@ const Footer = ({ footerClass }) => {
                 </div>
             </div>
         </footer>
-  )
-};
+        )
+    };
 
 export default Footer;

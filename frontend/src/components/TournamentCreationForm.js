@@ -22,6 +22,9 @@ const schema = yup.object().shape({
         })).required()
 });
 
+/**
+ * Tournament post form component to be displayed inside a modal.
+ */
 const TournamentCreationForm = ({ playersOptions }) => {
     const { register, handleSubmit, control, formState: { errors, isSubmitting} } = useForm({
         defaultValues: {

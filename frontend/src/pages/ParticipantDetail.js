@@ -5,6 +5,9 @@ import useAxios from "../utils/useAxios";
 import Spinner from '../components/Spinner';
 import NotFound from './NotFound';
 
+/**
+ * Page displaying detailed information regarding a tournament participant.
+ */
 const ParticipantDetail = () => {
     const { tourID, partID } = useParams()
     const axios = useAxios()

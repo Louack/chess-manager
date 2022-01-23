@@ -3,6 +3,10 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import NotFound from './NotFound';
 
+
+/**
+ * Base page used for all private routes and 404 errors.
+ */
 const BasePage = ({main}) => {
     const [mainClass, setMainClass] = useState(() => {
         if (window.innerWidth > 1400) {

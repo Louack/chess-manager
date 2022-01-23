@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 
 
-const Navigation = ( {navClass, openUserMenu, setOpenUserMenu} ) => {
+/**
+ * Navigation tab to be displayed inside header.
+ */
+const Navigation = ({ navClass, openUserMenu, setOpenUserMenu }) => {
     const { removeAuthTokens } = useContext(AuthContext)
     const navRef = useRef()
 

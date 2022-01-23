@@ -16,6 +16,9 @@ const schema = yup.object().shape({
         .required("Prénom requis.")
 });
 
+/**
+ * Player update form component to be displayed inside a modal.
+ */
 const PlayerUpdateForm = ( {player, setUpdated, setModalStatus} ) => {
     const { register, handleSubmit, formState: { errors, isSubmitting} } = useForm({
         defaultValues: {

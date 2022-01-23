@@ -10,6 +10,11 @@ import Spinner from '../components/Spinner';
 import NotFound from './NotFound';
 import { getFormattedDate } from '../utils/genericFunctions';
 
+/**
+ * Page displaying detailed information regarding a tournament.
+ * Includes links to rounds and participants pages.
+ * Allows to update or delete the tournament.
+ */
 const TournamentDetail = () => {
     const [tournament, setTournament] = useState('')
     const [playersList, setPlayersList] = useState([])

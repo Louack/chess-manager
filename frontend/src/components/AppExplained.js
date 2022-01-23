@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import Modal from './Modal';
 
+/**
+ * User guide to be displayed inside a modal.
+ */
 const AppExplained = () => {
     const [modalStatus, setModalStatus] = useState(false)
     const body = 
@@ -29,18 +32,15 @@ const AppExplained = () => {
 
     return (
         <>
-        <span onClick={() => {
-                    setModalStatus(true)
-                }}
-        >
-            Mode d'emploi
-        </span>
-        < Modal
-                    modalStatus={modalStatus}
-                    setModalStatus={setModalStatus}
-                    title={"Mode d'emploi de l'application"}
-                    body={body}
-                />
+            <span onClick={() => {setModalStatus(true)}}>
+                Mode d'emploi
+            </span>
+            < Modal
+                modalStatus={modalStatus}
+                setModalStatus={setModalStatus}
+                title={"Mode d'emploi de l'application"}
+                body={body}
+            />
         </>
     )
 };

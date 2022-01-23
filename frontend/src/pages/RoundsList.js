@@ -1,6 +1,9 @@
 import  {useEffect} from 'react'
 import {useNavigate, useParams} from "react-router-dom";
 
+/**
+ * Redirects to tournament detail page.
+ */
 const RoundsList = () => {
     const { tourID } = useParams()
     const navigate = useNavigate();

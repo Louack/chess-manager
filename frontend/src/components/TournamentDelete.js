@@ -3,6 +3,9 @@ import ModalConfirmation from "./ModalConfirmation";
 import useAxios from "../utils/useAxios";
 import {useNavigate} from "react-router-dom";
 
+/**
+ * Component calling a confirmation modal before tournament deletion.
+ */
 const TournamentDelete = ({tournament} ) => {
     const [modalConfirmStatus, setModalConfirmStatus] = useState(false)
     const axios = useAxios()

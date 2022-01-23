@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom";
 import { getFormattedDate }from '../utils/genericFunctions';
 
+
+/**
+ * List and link item component displaying some player information.
+ */
 const PlayersListItem = ({tournament, player}) => {
     const [link, setLink] = useState('')
 

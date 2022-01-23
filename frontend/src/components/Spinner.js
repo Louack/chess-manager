@@ -1,5 +1,8 @@
 import React from 'react'
 
+/**
+ * Component displaying a spinning circle.
+ */
 const Spinner = () => {
     return (
         <div className='spinner'>

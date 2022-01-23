@@ -1,6 +1,10 @@
 import React, {useState} from 'react';
 import Modal from './Modal';
 
+/**
+ * Description of the stacks used to realize the complete App. 
+ * To be displayed inside a modal.
+ */
 const AppRealization = () => {
     const [modalStatus, setModalStatus] = useState(false)
     const body = 
@@ -22,18 +26,15 @@ const AppRealization = () => {
 
     return (
         <>
-        <span onClick={() => {
-                    setModalStatus(true)
-                }}
-        >
-            Réalisation
-        </span>
-        < Modal
-                    modalStatus={modalStatus}
-                    setModalStatus={setModalStatus}
-                    title={"Réalisation de l'application"}
-                    body={body}
-                />
+            <span onClick={() => {setModalStatus(true)}}>
+                Réalisation
+            </span>
+            < Modal
+                modalStatus={modalStatus}
+                setModalStatus={setModalStatus}
+                title={"Réalisation de l'application"}
+                body={body}
+            />
         </>
     )
 };

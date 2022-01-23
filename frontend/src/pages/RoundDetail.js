@@ -6,6 +6,10 @@ import MatchesListItem from "../components/MatchesListItem";
 import Spinner from '../components/Spinner';
 import NotFound from './NotFound';
 
+/**
+ * Page displaying detailed information regarding a tournament round.
+ * Includes links to matches pages.
+ */
 const RoundDetail = () => {
     const { tourID, roundID } = useParams()
     const [round, setRound] = useState('')
