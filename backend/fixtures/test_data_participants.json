@@ -16,7 +16,8 @@
       "number": 2,
       "tournament": 2,
       "player": 2,
-      "rank": 2
+      "rank": 2,
+      "total_points": 1
     }
   },
   {
@@ -36,7 +37,8 @@
       "number": 4,
       "tournament": 2,
       "player": 4,
-      "rank": 4
+      "rank": 4,
+      "total_points": 0.5
     }
   },
   {
@@ -76,7 +78,8 @@
       "number": 8,
       "tournament": 2,
       "player": 8,
-      "rank": 8
+      "rank": 8,
+      "total_points": 0.5
     }
   }
 ]

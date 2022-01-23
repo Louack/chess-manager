@@ -5,7 +5,7 @@
     "fields": {
       "number": 1,
       "tournament": 2,
-      "finished_matches": 1,
+      "finished_matches": 2,
       "participants_pairs": "[\"[\\\"1\\\", \\\"2\\\"]\", \"[\\\"3\\\", \\\"4\\\"]\", \"[\\\"5\\\", \\\"6\\\"]\", \"[\\\"7\\\", \\\"8\\\"]\"]"
     }
   }

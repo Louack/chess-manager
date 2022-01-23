@@ -48,11 +48,11 @@
       "number": 4,
       "tournament": 2,
       "round": 1,
-      "played": false,
+      "played": true,
       "number_participant_1": 4,
-      "result_participant_1": null,
+      "result_participant_1": 0.5,
       "number_participant_2": 8,
-      "result_participant_2": null
+      "result_participant_2": 0.5
     }
   }
 ]
