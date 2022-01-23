@@ -25,10 +25,17 @@ from core.exceptions import APIException404
 
 
 class ChessBaseViewset(viewsets.ModelViewSet):
+    """
+    Base viewset used for all views instead tournament root view.
+    """
     tournament = None
     round_obj = None
 
     def get_tournament(self):
+        """
+        Try to get a tournament object based on tournament_number in kwargs and
+         return it.
+        """
         tournament_number = self.kwargs['tournament_number']
         try:
             tournament = Tournament.objects.get(
@@ -40,6 +47,10 @@ class ChessBaseViewset(viewsets.ModelViewSet):
         return tournament
 
     def get_round(self):
+        """
+        Try to get a round object based on round_number in kwargs and
+        return it.
+        """
         round_number = self.kwargs['round_number']
         try:
             round_obj = Round.objects.get(
@@ -52,6 +63,9 @@ class ChessBaseViewset(viewsets.ModelViewSet):
 
 
 class TournamentViewset(viewsets.ModelViewSet):
+    """
+    View managing tournament CRUD.
+    """
     permission_classes = [IsAuthenticated, TournamentAccess]
     lookup_field = 'number'
     pagination_class = CustomPagination
@@ -77,6 +91,9 @@ class TournamentViewset(viewsets.ModelViewSet):
 
 
 class RoundViewset(ChessBaseViewset):
+    """
+    View managing round CRUD. Only 'read' is allowed.
+    """
     http_method_names = ['get', 'head', 'options', 'trace']
     permission_classes = [IsAuthenticated, RoundAccess]
     lookup_field = 'number'
@@ -100,6 +117,9 @@ class RoundViewset(ChessBaseViewset):
 
 
 class MatchViewset(ChessBaseViewset):
+    """
+    View managing match CRUD.
+    """
     http_method_names = ['get', 'put', 'patch', 'head', 'options', 'trace']
     permission_classes = [IsAuthenticated, MatchAccess]
     lookup_field = 'number'
@@ -125,6 +145,9 @@ class MatchViewset(ChessBaseViewset):
 
 
 class ParticipantViewset(ChessBaseViewset):
+    """
+    View managing participant CRUD. Only 'read' is allowed.
+    """
     http_method_names = ['get', 'head', 'options', 'trace']
     permission_classes = [IsAuthenticated, ParticipantAccess]
     lookup_field = 'number'

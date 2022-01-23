@@ -5,6 +5,10 @@ from apps.tournaments.models import Tournament, Participant, Round, Match
 
 
 class TournamentListSerializer(serializers.ModelSerializer):
+    """
+    Only used for 'list' action. A tounrmanent item contains less info than a
+    tournament from the detailed serializer
+    """
     class Meta:
         model = Tournament
         fields = (
@@ -22,6 +26,11 @@ class TournamentListSerializer(serializers.ModelSerializer):
 
 
 class TournamentDetailSerializer(TournamentListSerializer):
+    """
+    Displays more fields than the list serializer. Also has a 'ranking' field,
+    where participants are sorted depending on the total_points and rank, and
+    a place is attributed to each participant.
+    """
     ranking = serializers.SerializerMethodField()
 
     class Meta:
@@ -65,6 +74,10 @@ class TournamentDetailSerializer(TournamentListSerializer):
             return "This tournament is not started."
 
     def create(self, validated_data):
+        """
+        Custom create method where the request user's profile is extracted from
+        the view's context and added as the "creator" field.
+        """
         creator = self.context['profile']
 
         if 'players_list' in validated_data.keys():
@@ -85,6 +98,10 @@ class TournamentDetailSerializer(TournamentListSerializer):
         return tournament
 
     def update(self, instance, validated_data):
+        """
+        Custom update method conditioning method access to the locked status of
+         a tournament.
+        """
         if instance.locked:
             raise APIException400("A locked tournament cannot be modified.")
         else:
@@ -92,6 +109,9 @@ class TournamentDetailSerializer(TournamentListSerializer):
 
 
 class RoundListSerializer(serializers.ModelSerializer):
+    """
+    Only used for 'list' action.
+    """
     versus = serializers.SerializerMethodField()
 
     class Meta:
@@ -104,6 +124,9 @@ class RoundListSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_versus(instance):
+        """
+        Creates a list of usernames participants pairs
+        """
         versus_list = list()
         for pairs in instance.participants_pairs:
             participant_1 = Participant.objects.get(
@@ -120,10 +143,13 @@ class RoundListSerializer(serializers.ModelSerializer):
                     participant_2.player.username
                 ]
             )
-        return  versus_list
+        return versus_list
 
 
 class RoundDetailSerializer(serializers.ModelSerializer):
+    """
+    Used for all actions except 'list' action.
+    """
     matches = serializers.SerializerMethodField()
 
     class Meta:
@@ -136,6 +162,10 @@ class RoundDetailSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_matches(instance):
+        """
+        Displays a list of matches containing dictionaries with all info
+        regarding a match.
+        """
         matches = list()
         matches_list = [
             match for match in
@@ -168,6 +198,9 @@ class RoundDetailSerializer(serializers.ModelSerializer):
 
 
 class MatchListSerializer(serializers.ModelSerializer):
+    """
+    Only used for 'list' action.
+    """
     class Meta:
         model = Match
         fields = (
@@ -177,6 +210,10 @@ class MatchListSerializer(serializers.ModelSerializer):
 
 
 class MatchDetailSerializer(serializers.ModelSerializer):
+    """
+    Used for all actions except 'list' action.
+    """
+
     class Meta:
         model = Match
         fields = (
@@ -189,6 +226,10 @@ class MatchDetailSerializer(serializers.ModelSerializer):
         )
 
     def update(self, instance, validated_data):
+        """
+        Custom update method conditioning method access to the played status of
+        a match.
+        """
         if instance.played:
             raise APIException400("A played match cannot be modified.")
         else:
@@ -196,6 +237,10 @@ class MatchDetailSerializer(serializers.ModelSerializer):
 
 
 class ParticipantListSerializer(serializers.ModelSerializer):
+    """
+     Only used for "list" action. Has methods linking participant to some
+     corresponding player attributes.
+    """
     tournament_number = serializers.SerializerMethodField()
     player_number = serializers.SerializerMethodField()
 
@@ -218,6 +263,10 @@ class ParticipantListSerializer(serializers.ModelSerializer):
 
 
 class ParticipantDetailSerializer(ParticipantListSerializer):
+    """
+    Used for all actions except 'list' action. Has more methods than the list
+    serializer, inking the participant to some corresponding player attributes.
+    """
     username = serializers.SerializerMethodField()
     last_name = serializers.SerializerMethodField()
     first_name = serializers.SerializerMethodField()

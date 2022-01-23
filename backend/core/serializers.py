@@ -5,6 +5,9 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
+    """
+    Controls new user creation with password check.
+    """
     password = serializers.CharField(required=True,
                                      write_only=True,
                                      validators=[validate_password])
@@ -33,6 +36,9 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    """
+    Custom token serializer adding "username" field to both JWT.
+    """
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)

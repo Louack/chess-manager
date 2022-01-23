@@ -14,6 +14,9 @@ from core.exceptions import APIException400
 
 
 class PlayerViewset(viewsets.ModelViewSet):
+    """
+    View managing a playerd CRUD.
+    """
     permission_classes = [IsAuthenticated, PlayersAccess]
     lookup_field = 'number'
     pagination_class = CustomPagination
@@ -38,6 +41,10 @@ class PlayerViewset(viewsets.ModelViewSet):
         return context
 
     def destroy(self, request, *args, **kwargs):
+        """
+        Prevents delete action if the player is involved in at least one
+        tournament.
+        """
         player = self.get_object()
         participants = [player for player in Participant.objects.filter(
             player=player

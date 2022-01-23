@@ -6,12 +6,14 @@ from .views import (TournamentViewset,
                     RoundViewset,
                     MatchViewset)
 
+# /api/tournaments/{tournament_number}/
 router_tournaments = SimpleRouter()
 router_tournaments.register(
     r'tournaments',
     TournamentViewset,
     basename='tournaments')
 
+# /api/tournaments/{tournament_number}/rounds/{round_number}/
 router_rounds = NestedSimpleRouter(
     router_tournaments,
     r'tournaments',
@@ -23,6 +25,7 @@ router_rounds.register(
     basename='rounds'
 )
 
+# /api/tournaments/{tournament_number}/rounds/{round_number}/matches/{match_number}/
 router_matches = NestedSimpleRouter(
     router_rounds,
     r'rounds',
@@ -34,6 +37,7 @@ router_matches.register(
     basename='matches'
 )
 
+# /api/tournaments/{tournament_number}/participants/{participant_number}/
 router_participants = NestedSimpleRouter(
     router_tournaments,
     r'tournaments',

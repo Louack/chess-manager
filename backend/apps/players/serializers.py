@@ -5,6 +5,9 @@ from apps.tournaments.models import Participant
 
 
 class PlayerListSerializer(serializers.ModelSerializer):
+    """
+    Only used for 'list' action.
+    """
     class Meta:
         model = Player
         fields = (
@@ -18,6 +21,9 @@ class PlayerListSerializer(serializers.ModelSerializer):
 
 
 class PlayerDetailSerializer(serializers.ModelSerializer):
+    """
+    Used for all actions except 'list' action.
+    """
     tournaments_list = serializers.SerializerMethodField()
 
     class Meta:
@@ -39,6 +45,9 @@ class PlayerDetailSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_tournaments_list(instance):
+        """
+        Returns all tournaments number for which a player was involved.
+        """
         tournaments = [
             participant.tournament.number for participant in
             Participant.objects.filter(player=instance)
@@ -46,6 +55,10 @@ class PlayerDetailSerializer(serializers.ModelSerializer):
         return tournaments
 
     def create(self, validated_data):
+        """
+        Custom create method where the request user's profile is extracted from
+        the view's context and added as the "creator" field.
+        """
         creator = self.context['profile']
         player = Player.objects.create(
             creator=creator,

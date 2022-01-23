@@ -9,6 +9,9 @@ class TournamentFilter(filters.FilterSet):
     )
 
     def filter_sort_by(self, queryset, name, value):
+        """
+        filters by incresing or decreasing order
+        """
         values = value.lower().split(',')
         return queryset.order_by(*values)
 

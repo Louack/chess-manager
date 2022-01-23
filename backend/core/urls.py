@@ -23,14 +23,22 @@ from apps.players.urls import router_players
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
     path('api/register/', Registration.as_view(),
          name='registration'),
+
     path('api/token/', MyTokenObtainPairView.as_view(),
          name='token_obtain_pair'),
+
     path('api/token/refresh/', TokenRefreshView.as_view(),
          name='token_refresh'),
+
     path('api/profile/', include('apps.user_profiles.urls')),
+
     path('api/players/', include(router_players.urls)),
+
     path('api/', include('apps.tournaments.urls')),
-    re_path(".*", TemplateView.as_view(template_name="index.html")),
+
+    # frontend URLs for production build.
+    re_path(".*", TemplateView.as_view(template_name="index.html"))
 ]

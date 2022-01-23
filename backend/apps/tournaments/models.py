@@ -8,6 +8,10 @@ from apps.user_profiles.models import Profile
 
 
 class Tournament(models.Model):
+    """
+    Instances have info regarding chess tournaments and methods allowing to
+    fine tune them.
+    """
     creator = models.ForeignKey(
         to=Profile,
         on_delete=models.CASCADE,
@@ -89,12 +93,21 @@ class Tournament(models.Model):
         return self.name
 
     def add_tournament_number(self):
+        """
+        Increases the creator tournaments_created field by 1 and add a number
+        based on this field to the tournament.
+        """
         if not self.number:
             self.creator.tournaments_created += 1
             self.creator.save()
             self.number = self.creator.tournaments_created
 
     def check_players_list(self):
+        """
+        Checks if players ID are only represented once in the players_list and
+        if those IDs are corresponding to actual players ID stored in the
+        database.
+        """
         players_do_not_exist = []
         previous_player_ids = []
         for player_id in self.players_list:
@@ -110,9 +123,13 @@ class Tournament(models.Model):
                 players_do_not_exist.append(player_id)
         if players_do_not_exist:
             raise APIException400('The following player IDs do '
-                               f'not exist: {players_do_not_exist}')
+                                  f'not exist: {players_do_not_exist}')
 
     def create_round_or_end_tournament(self):
+        """
+        Checks the numbers of finished rounds and decides if the tournament
+        should create a new round or proceed with its finalization.
+        """
         if self.finished_rounds < self.total_rounds:
             new_round = Round.objects.create(
                 number=self.finished_rounds + 1,
@@ -126,6 +143,9 @@ class Tournament(models.Model):
         super().save()
 
     def handle_first_save(self):
+        """
+        To be executed when a tournament is first created.
+        """
         self.created = True
         self.check_players_list()
         if self.locked:
@@ -134,6 +154,10 @@ class Tournament(models.Model):
         super().save()
 
     def handle_lock_at_update(self):
+        """
+        Checks the evolution of the tournament lock status and proceed with
+        the appropriate method.
+        """
         if self.locked and not self.__original_locked:
             self.lock_tournament()
         elif self.locked and self.__original_locked:
@@ -144,10 +168,17 @@ class Tournament(models.Model):
             raise APIException400('A locked tournament cannot be modified')
 
     def handle_tournament_update(self):
+        """
+        To be executed when a tournament is updated/already created.
+        """
         self.check_players_list()
         self.handle_lock_at_update()
 
     def lock_tournament(self):
+        """
+        if the players_list is complete, changes the tournament status and
+        proceed with the participants creation and rounds creation methods.
+        """
         if len(self.players_list) == 8:
             self.open = False
             self.on_going = True
@@ -159,18 +190,30 @@ class Tournament(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
+        """
+        Custom save method where 2 routes can be taken depending on the
+        tournament created field status.
+        """
         if not self.created:
             self.handle_first_save()
         else:
             self.handle_tournament_update()
 
     def check_finished_rounds_update(self):
+        """
+        Allows a locked tournament update, only if the finished_rounds field
+        has been modified.
+        """
         if self.finished_rounds != self.__original_finished_rounds:
             self.create_round_or_end_tournament()
         else:
             raise APIException400('A locked tournament cannot be modified')
 
     def add_participants(self):
+        """
+        Based on the players_list, creates the corresponding participants
+        objects.
+        """
         for number, player_id in enumerate(self.players_list, 1):
             player = Player.objects.get(
                 number=player_id,
@@ -184,6 +227,9 @@ class Tournament(models.Model):
             )
 
     def get_participants(self):
+        """
+        returns participants objects list.
+        """
         participants = [
             participant for participant in Participant.objects.filter(
                 tournament=self
@@ -192,6 +238,13 @@ class Tournament(models.Model):
         return participants
 
     def finalize_tournament(self):
+        """
+        Executes all end of tournament methods and updates all appropriate
+        fields:
+        - calculate the new average place of participants.
+        - increase player tournaments_played and tournaments_won fields.
+        - define all the new players ranks of the creator.
+        """
         sorted_participants = self.sort_participants()
         players = [participant.player for participant in sorted_participants]
         for place, player in enumerate(players, 1):
@@ -203,6 +256,10 @@ class Tournament(models.Model):
         self.define_new_ranks()
 
     def sort_participants(self, numbers=False):
+        """
+        Returns a sorted list of participants instances or participants numbers
+        based on the total_points and rank fields.
+        """
         participants = self.get_participants()
         sorted_participants = sorted(
             participants, key=lambda participant: (
@@ -219,6 +276,10 @@ class Tournament(models.Model):
             return sorted_participants
 
     def define_new_ranks(self):
+        """
+        Defines new ranks for all creator's players, mainly based on the
+        tournaments_won and the average_place.
+        """
         players = [player for player
                    in Player.objects.filter(creator=self.creator)]
         sorted_players = sorted(
@@ -236,6 +297,9 @@ class Tournament(models.Model):
 
 
 class Round(models.Model):
+    """
+    A tournament instance round. Manages the matches and participants pairing.
+    """
     number = models.IntegerField(
         editable=False,
         blank=True,
@@ -274,6 +338,10 @@ class Round(models.Model):
         return f'Round {self.number}'
 
     def initialize_matches(self):
+        """
+        Creates all round's matches based on the paired_participants.
+        Triggered by the tournament.
+        """
         self.participants_pairs = self.match_participants()
         self.save()
         for number, pair in enumerate(self.participants_pairs, 1):
@@ -287,6 +355,10 @@ class Round(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
+        """
+        Custom save method checking if a round is finished or not. Updates and
+        save the corresponding tournament accordingly.
+        """
         participants = self.tournament.get_participants()
         matches_number = len(participants) // 2
         if self.finished_matches == matches_number:
@@ -295,6 +367,10 @@ class Round(models.Model):
         super().save()
 
     def match_participants(self):
+        """
+        Initializes participants pairing by checking which pairing methods
+        must be executed, depending on the round number.
+        """
         pairs_list = []
         sorted_participants = self.tournament.sort_participants(numbers=True)
         if self.number == 1:
@@ -311,6 +387,10 @@ class Round(models.Model):
 
     @staticmethod
     def get_first_round_pairs(pairs_list, participants):
+        """
+        Pairing method executed for first round. Cut a sorted participants list in two lists and pairs
+        participants sharing the same index.
+        """
         half = len(participants) // 2
         for i in range(half):
             pair = [
@@ -321,6 +401,11 @@ class Round(models.Model):
         return pairs_list
 
     def get_last_rounds_pairs(self, pairs_list, participants):
+        """
+        Pairing method executed for all rounds except first round. For a sorted
+        participants list, pairs the first participant with the second. If they
+         already played before, pairs the first with the third and so on...
+        """
         previous_pairs = self.get_previous_participants_pairs()
         n = 1
         try:
@@ -346,6 +431,10 @@ class Round(models.Model):
         return pairs_list
 
     def get_previous_participants_pairs(self):
+        """
+        Checks all the previous rounds participants pairs and return them in a
+        single list.
+        """
         previous_participants_pairs = []
         for number in range(1, self.number):
             round_obj = Round.objects.get(
@@ -357,6 +446,9 @@ class Round(models.Model):
 
 
 class Match(models.Model):
+    """
+    A round match with two participants where a match result can be decided.
+    """
     RESULT_CHOICES = (
         (0, 0),
         (0.5, 0.5),
@@ -419,12 +511,19 @@ class Match(models.Model):
         return f'Match {self.number}'
 
     def check_results(self):
+        """
+        Checks if the entered results are valid.
+        """
         if self.result_participant_1 and self.result_participant_2:
             res_sum = self.result_participant_1 + self.result_participant_2
             if res_sum != 1:
                 raise APIException400('Points sum must be equal to 1.')
 
     def finalize_match(self):
+        """
+        Finalize a played match by updating the two participants total_points
+        and the round finished_matches field.
+        """
         if type(self.result_participant_1 and
                 self.result_participant_2) == float:
             self.update_participants_total_points()
@@ -435,6 +534,10 @@ class Match(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
+        """
+        Custom save allowing to only modify not played match. Checks the
+        validity of the results format and finalize the match if needed.
+        """
         if self.__original_played:
             raise APIException400('Match has already been played.')
         else:
@@ -464,6 +567,11 @@ class Match(models.Model):
 
 
 class Participant(models.Model):
+    """
+    Instance linking a player to a tournament. Allows to retrieve a player's
+    rank at the moment of the tournament locking and to get a record of the
+    participant's total_points.
+    """
     number = models.IntegerField(
         editable=False,
         blank=True,

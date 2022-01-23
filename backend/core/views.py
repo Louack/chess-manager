@@ -6,10 +6,16 @@ from .serializers import RegistrationSerializer, MyTokenObtainPairSerializer
 
 
 class Registration(generics.CreateAPIView):
+    """
+    View managing user registration.
+    """
     serializer_class = RegistrationSerializer
     permission_classes = [AllowAny]
 
 
 class MyTokenObtainPairView(TokenObtainPairView):
+    """
+    View managing JWT obtaining.
+    """
     serializer_class = MyTokenObtainPairSerializer
 

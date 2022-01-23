@@ -3,6 +3,11 @@ from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
+    """
+    Profile instances are linked to User and records the number of tournaments
+    and player created by the user. Is also used to be linked to Player and
+    Tournament objects.
+    """
     user = models.OneToOneField(
         to=User,
         on_delete=models.CASCADE,

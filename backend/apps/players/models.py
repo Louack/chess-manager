@@ -5,6 +5,10 @@ from apps.user_profiles.models import Profile
 
 
 class Player(models.Model):
+    """
+    Player object involved in chess tournament. Can be registered in tournament
+    players_list field. Tournament participant objects are built on them.
+    """
     creator = models.ForeignKey(
         to=Profile,
         on_delete=models.CASCADE,
@@ -77,6 +81,10 @@ class Player(models.Model):
         return self.username
 
     def check_player_number_and_rank(self):
+        """
+        Increases creator players_created field by 1 and set the new player
+        rank.
+        """
         self.creator.players_created += 1
         self.creator.save()
         self.number = self.creator.players_created
@@ -84,12 +92,20 @@ class Player(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
+        """
+        Custom save executing custom methods if player is new.
+        """
         if not self.number and not self.rank:
             self.check_username_field_uniqueness()
             self.check_player_number_and_rank()
         super().save()
 
     def calcultate_new_average_place(self, place):
+        """
+        Calculates player tournaments average place by taking into account the
+        number of tournaments played, the current average place and the newly
+        place obtained at the last tournament.
+        """
         if not self.avg_place:
             self.avg_place = place
         else:
@@ -99,6 +115,9 @@ class Player(models.Model):
             self.avg_place = round(avg_place, 2)
 
     def check_username_field_uniqueness(self):
+        """
+        Checks in the DB if the username given is free.
+        """
         usernames = [
             player.username for player
             in Player.objects.filter(creator=self.creator)

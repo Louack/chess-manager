@@ -7,5 +7,8 @@ from .models import Profile
 
 @receiver(post_save, sender=User)
 def user_creation_handler(instance, created, **kwargs):
+    """
+    Creates a Profile object each time a new user is created.
+    """
     if created:
         Profile.objects.create(user=instance)

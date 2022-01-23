@@ -4,6 +4,9 @@ from apps.user_profiles.models import Profile
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+    """
+    Returns info regarding a user.
+    """
     username = serializers.SerializerMethodField()
 
     class Meta:

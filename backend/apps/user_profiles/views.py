@@ -8,6 +8,9 @@ from ..user_profiles.serializers import ProfileSerializer
 
 
 class ProfileView(generics.ListAPIView):
+    """
+    View managing a CRUD profile. Only 'read' is allowed.
+    """
     serializer_class = ProfileSerializer
     permission_classes = [IsAuthenticated, ProfileAccess]
 
