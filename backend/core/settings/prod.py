@@ -4,7 +4,17 @@ Settings extension to be used for production.
 
 import os
 import dj_database_url
+import sentry_sdk
+
 from core.settings.base import *
+from sentry_sdk.integrations.django import DjangoIntegration
+
+sentry_sdk.init(
+    dsn=os.getenv('SENTRY_DSN'),
+    integrations=[DjangoIntegration()],
+    traces_sample_rate=1.0,
+    send_default_pii=True
+)
 
 # project directory
 ROOT_DIR = BASE_DIR.parent.parent
