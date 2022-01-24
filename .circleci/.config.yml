@@ -1,0 +1,48 @@
+version: 2.1
+
+orbs:
+  python: circleci/python@1.5.0
+
+jobs:
+  backend-test:
+    docker:
+      - image: cimg/python:3.10.2
+        environment:
+            DB_USER: root
+      - image: cimg/postgres:14.0
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_DB: circle-test_test
+    working_directory: ~/chess-manager/backend/
+    steps:
+      - checkout:
+          path: ~/chess-manager/
+      - python/install-packages:
+          pkg-manager: pip
+      - run: python manage.py makemigrations
+      - run: python manage.py migrate
+      - run: python manage.py test
+
+  deploy-to-heroku:
+    machine: true
+    working_directory: ~/chess-manager/
+    steps:
+      - checkout:
+          path: ~/chess-manager/
+      - run:
+          name: deploy to heroku
+          command: |
+            sudo curl https://cli-assets.heroku.com/install.sh | sh
+            HEROKU_API_KEY=$HEROKU_API_KEY heroku container:login
+            HEROKU_API_KEY=$HEROKU_API_KEY heroku container:push web --app=$APP_NAME
+            HEROKU_API_KEY=$HEROKU_API_KEY heroku container:release web --app=$APP_NAME
+workflows:
+  sample:
+    jobs:
+      - backend-test
+      - deploy-to-heroku:
+            requires:
+              - backend-test
+            filters:
+              branches:
+                only: master
