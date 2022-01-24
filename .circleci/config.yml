@@ -36,6 +36,7 @@ jobs:
             HEROKU_API_KEY=$HEROKU_API_KEY heroku container:login
             HEROKU_API_KEY=$HEROKU_API_KEY heroku container:push web --app=$APP_NAME
             HEROKU_API_KEY=$HEROKU_API_KEY heroku container:release web --app=$APP_NAME
+
 workflows:
   sample:
     jobs:
