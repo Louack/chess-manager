@@ -8,7 +8,7 @@ const AppExplained = () => {
     const [modalStatus, setModalStatus] = useState(false)
     const body = 
         <div className='modal-description'>
-            <p>Cette application a pour but de créer et gérer des tournois d'échecs de 4 rondes pour 8 joueurs.</p>
+            <p>Cette application de bureau a pour but de suivre et gérer des tournois d'échecs de 4 rondes pour 8 joueurs.</p>
             <h4>Première utilisation : étapes à suivre</h4>
             <ul>
                 <li>Créer 8 joueurs.</li>
