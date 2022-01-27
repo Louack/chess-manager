@@ -3,6 +3,7 @@
 This Django/React desktop app is aiming to help people create and manage chess 
 tournaments for 8 players  and is based on the swiss chess tournament playing 
 system.
+This is also my very first React app as a python backend developper.
 
 ## Developpment setup (without Docker)
 
@@ -53,7 +54,13 @@ separator is set to `LF` in order to launch correctly the backend container !!!
 ```
 TEST_DATA_REQUIRED=<1> or <true>, if you want to install test data when a new user is created
 ```
+## First use
 
+Once on the homepage, you can register a new user by chosing a username and a password.
+If the registration succeeds, you can then log into the site. Once logged in, you will find 
+a link opening the app user guide inside the footer.
+
+If you chose to install test data, ten players and two tournaments will be directly available.
 ## Testing / Coverage
 
 At the time being, testing / coverage are only available for the backend part.
@@ -91,7 +98,7 @@ heroku config:add PROD_HOST=<app name>.herokuapp.com --app=<app name>
 heroku config:add REACT_APP_PROXY_HOST=<app name>.herokuapp.com --app=<app name>
 heroku config:add SECRET_KEY=<your secret key> --app=<app name>
 heroku config:add SENTRY_DSN=<your DSN> --app=<app name>
-heroku config:add TEST_DATA_REQURED=<1 or true if you want test data, anything else if not> --app=<app name>
+heroku config:add TEST_DATA_REQURED=<true> --app=<app name>, if you want test data
 ```
 
 - Push and release your app:
@@ -102,7 +109,7 @@ heroku container:release web --app=<app name>
 
 You can access the app bash by running: `heroku run bash --app=<app name>`
 
-## CI/CD
+## Continuous Integration & Continuous Development (CI/CD)
 
 CI and CD are performed with CircleCI (https://app.circleci.com/)
 - Log into CircleCI with your GitHub account

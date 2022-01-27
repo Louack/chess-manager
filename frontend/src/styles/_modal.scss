@@ -47,7 +47,7 @@
 
   .modal-description {
     text-align: justify;
-    max-width: 60vw;
+    max-width: 75vw;
     max-height: 75vh;
     overflow-y: auto;
 
@@ -57,6 +57,11 @@
 
     p {
       padding: 10px 5px 2px;
+      max-width: 700px;
+
+      b {
+        font-weight: 500;
+      }
     }
 
     span {
@@ -68,9 +73,35 @@
     ul {
       list-style-type: decimal;
       padding: 0 20px;
+      max-width: 700px;
 
       li {
         padding: 2px 0;
+      }
+    }
+    .used-techs {
+      display: flex;
+      align-self: center;
+      text-align: center;
+
+      .tech {
+        display: flex;
+        flex-direction: column;
+        margin: 0 10px;
+
+        img {
+          align-self: center;
+          max-height: 50px;
+          margin: 0;
+          &:hover {
+            cursor: auto;
+          }
+        }
+
+        span {
+          align-self: center;
+          max-width: 100px;
+        }
       }
     }
   }
