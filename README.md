@@ -72,6 +72,10 @@ Depending on your development setup, enter the backend directory / the backend c
 ```
 python manage.py test apps
 ```
+OR
+```
+pytest apps
+```
 
 ### Coverage
 ```
@@ -81,6 +85,12 @@ coverage html
 ```
 
 HTML coverage reports are stored in htmlcov folder, in the backend root directory.
+
+## PEP8
+
+PEP8 compliance can be checked with the command `flake8`
+
+Non-compliant files will be displayed.
 
 ## First Deployment
 

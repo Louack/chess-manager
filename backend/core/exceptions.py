@@ -7,4 +7,3 @@ class APIException404(APIException):
 
 class APIException400(APIException):
     status_code = 400
-

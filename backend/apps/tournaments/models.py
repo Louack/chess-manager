@@ -388,8 +388,8 @@ class Round(models.Model):
     @staticmethod
     def get_first_round_pairs(pairs_list, participants):
         """
-        Pairing method executed for first round. Cut a sorted participants list in two lists and pairs
-        participants sharing the same index.
+        Pairing method executed for first round. Cut a sorted participants list
+        in two lists and pairsparticipants sharing the same index.
         """
         half = len(participants) // 2
         for i in range(half):

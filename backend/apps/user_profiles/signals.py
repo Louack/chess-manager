@@ -112,5 +112,3 @@ def start_tour_2_round_2(tournament):
             match.result_participant_2 = 0.5
             match.played = True
         match.save()
-
-

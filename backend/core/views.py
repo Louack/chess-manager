@@ -18,4 +18,3 @@ class MyTokenObtainPairView(TokenObtainPairView):
     View managing JWT obtaining.
     """
     serializer_class = MyTokenObtainPairSerializer
-

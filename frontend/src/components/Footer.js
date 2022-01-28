@@ -14,10 +14,10 @@ const Footer = ({ footerClass }) => {
                     <AppRealization />
                 </div>
                 <div className='footer-external-links'>
-                    <a href = "https://github.com/Louack" target="_blank" rel='noreferrer'>
+                    <a href = "https://github.com/Louack/chess-manager/" target="_blank" rel='noreferrer'>
                         <img src='/img/github-icon.png' alt='github-icon' />
                     </a>
-                    <a href = "https://www.linkedin.com/in/loïc-briset-366a0a220" target="_blank" rel='noreferrer'>
+                    <a href = "https://www.linkedin.com/in/loic-briset/" target="_blank" rel='noreferrer'>
                         <img src='/img/linkedin-icon.png' alt='linkedin-icon-icon' />
                     </a>
                 </div>
