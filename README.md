@@ -88,7 +88,7 @@ HTML coverage reports are stored in htmlcov folder, in the backend root director
 
 ## PEP8
 
-PEP8 compliance can be checked with the command `flake8`
+PEP8 compliance can be checked at the backend level, with the command: `flake8` 
 
 Non-compliant files will be displayed.
 

@@ -16,9 +16,11 @@ const Footer = ({ footerClass }) => {
                 <div className='footer-external-links'>
                     <a href = "https://github.com/Louack/chess-manager/" target="_blank" rel='noreferrer'>
                         <img src='/img/github-icon.png' alt='github-icon' />
+                        <span>GitHub</span>
                     </a>
                     <a href = "https://www.linkedin.com/in/loic-briset/" target="_blank" rel='noreferrer'>
                         <img src='/img/linkedin-icon.png' alt='linkedin-icon-icon' />
+                        <span>LindekIn</span>
                     </a>
                 </div>
             </div>
