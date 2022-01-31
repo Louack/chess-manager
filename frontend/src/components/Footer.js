@@ -20,7 +20,7 @@ const Footer = ({ footerClass }) => {
                     </a>
                     <a href = "https://www.linkedin.com/in/loic-briset/" target="_blank" rel='noreferrer'>
                         <img src='/img/linkedin-icon.png' alt='linkedin-icon-icon' />
-                        <span>LindekIn</span>
+                        <span>LinkedIn</span>
                     </a>
                 </div>
             </div>
