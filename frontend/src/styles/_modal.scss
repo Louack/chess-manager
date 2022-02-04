@@ -27,9 +27,10 @@
     margin-top: 10px;
   }
 
-  img {
+  .closing-cross {
     align-self: flex-end;
-    max-height: 1rem;
+    height: 1rem;
+    width: 1rem;
     margin-bottom: 1rem;
 
     &:hover {
@@ -91,7 +92,7 @@
 
         img {
           align-self: center;
-          max-height: 50px;
+          height: 50px;
           margin: 0;
           &:hover {
             cursor: auto;
