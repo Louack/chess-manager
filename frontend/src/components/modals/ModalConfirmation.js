@@ -35,7 +35,7 @@ const ModalConfirmation = ({actionType, modalConfirmStatus, setModalConfirmStatu
         <>
             {modalConfirmStatus && <div className={'modal-background'}>
                 <div className={'modal-container'} ref={containerRef}>
-                    <img src="/img/closing-cross.png" alt="closing-cross" onClick={() => {setModalConfirmStatus(false)}}/>
+                    <img src="/img/closing-cross.png" alt="closing-cross" className='closing-cross' onClick={() => {setModalConfirmStatus(false)}}/>
                     <div className={'modal-title'}>
                         <h3>{title}</h3>
                     </div>
