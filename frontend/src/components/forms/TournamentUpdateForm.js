@@ -52,6 +52,7 @@ const TournamentUpdateForm = ({tournament, setUpdated, playersOptions, defaultPl
 
     const getCleanedData = (data, locked) => {
         let cleanedData = {}
+        data.tournament_date.setDate(data.tournament_date.getDate() + 1);
         cleanedData.tournament_date = data.tournament_date.toISOString().split('T')[0]
         cleanedData.name = data.name
         cleanedData.players_list = []
