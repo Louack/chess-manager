@@ -37,7 +37,11 @@ const Registration = () => {
         } catch(error) {
             let response = error.response;
             if (response.status === 400) {
-                response.data.username && setErrorMessage("Ce nom d'utilisateur est incorrect.");
+                response.data.username ? 
+                    setErrorMessage("Ce nom d'utilisateur est incorrect ou est déjà utilisé.") : 
+                    response.data.password ? 
+                        setErrorMessage("Ce mot de passe est trop commun.") : 
+                        setErrorMessage("Bad request");
             }
         }
     }
